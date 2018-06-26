@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lone Wolf 2018</title>
+
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        #app {
+            padding: 10px;
+            align-self: stretch;
+            margin: auto;
+            width: 800px;
+        }
+
+        #additional_info {
+            white-space: nowrap;
+            border: 8px solid #f7f7f7;
+        }
+
+        input:required {
+            border: 1px dashed red;
+        }
+
+        select {
+            padding-left: ;
+        }
+
+    </style>
+    <script src="https://unpkg.com/vue"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+<body>
+
+
+<div id="app">
+    <!--Not needed only for Mock-up-->
+    <div class="is-size-4 has-text-centered is-italic has-text-weight-semibold">
+        <span>Go to the bottom to see the data you fill in:</span><span style='background-color: yellow'>
+        <br>The Key is yellow: </span><span
+            style="background-color: green">The Data is Green</span>
+    </div>
+    <br>
+
+    <!--Dropdown Box for Overall Class Selection-->
+    <div class="field is-horizontal">
+        <!--Remove comment below to stretch the dropdown-->
+        <!--<div class="field is-horizontal has-addons">-->
+        <div class="field-label">
+            <label class="label">Schedule/ Class</label>
+        </div>
+        <div class="field-body">
+            <div class="control is-expanded">
+                <div class="select is-fullwidth">
+                    <select v-model='form.schedule_class' aria-required="true">
+                        <option disabled value=''>Select Schedule/Class</option>
+                        <option>Expert Schedule</option>
+                        <option>Amateur Schedule</option>
+                        <option>Class 60 and class 70 Riders</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--First Name-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">First Name</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.first_name" class="input" type="text" placeholder="First Name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Last Name-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Last Name</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.last_name" class="input" type="text" placeholder="Last Name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Gender-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Gender</label>
+        </div>
+        <div class="field-body">
+            <label class="radio">
+                <input v-model="form.gender" type="radio" name="question" value="Male">
+                Male
+            </label>
+            <label class="radio">
+                <input v-model="form.gender" type="radio" name="question" value="Female">
+                Female
+            </label>
+        </div>
+    </div>
+
+    <!--Date of Birth-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Date of Birth e.g. 01/31/1980</label>
+        </div>
+        <div class="field-body">
+            <div class="field control columns">
+                <span class="column">
+                    <input v-model="form.birth_month" class="input" type="text" placeholder='Month e.g. 01'>
+                </span>
+                <span class="column">
+                    <input v-model="form.birth_day" class="input" type="text" placeholder='Day e.g. 31'>
+                </span>
+                <span class="column">
+                    <input v-model="form.birth_year" class="input" type="text" placeholder='Year e.g. 1980'>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!--Email-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Email</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.email" class="input" type="text" placeholder="Email">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Phone Number-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Phone Number</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.phone" class="input" type="text" placeholder="Phone Number">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Country-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Country</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.country" class="input" type="text" placeholder="Country">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Address-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Address</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.address" class="input" type="text" placeholder="Address">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Address line 2-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Address line 2</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.address_line_2" class="input" type="text" placeholder="Address line 2">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--City-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">City</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.city" class="input" type="text" placeholder="City">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--State-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">State</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.state" class="input" type="text" placeholder="State">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Zip-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Zip</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.zip" class="input" type="text" placeholder="Zip">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Emergency contact name-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Emergency contact name</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.emergency_contact_name" class="input" type="text"
+                                       placeholder="Emergency contact name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--Emergency contact phone-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Emergency contact phone</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.emergency_contact_phone" class="input" type="text"
+                                        placeholder="Emergency contact phone">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--How did you hear about this event?-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">How did you hear about this event?</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.hear_about_us" class="input" type="text"
+                                                   placeholder="How did you hear about this event?">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--Schedule Class-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Schedule Class</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.schedule_class" class="input" type="text" placeholder="Schedule Class">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--Escort Name-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Escort Name</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.escort_name" class="input" type="text" placeholder="Escort Name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--AMA Membership-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">AMA Membership</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.ama_membership" class="input" type="text" placeholder="AMA Membership">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--OMRA membership-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">OMRA membership</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.omra_membership" class="input" type="text" placeholder="OMRA membership">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--Bike Make-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Bike Make</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input v-model="form.bike_make" class="input" type="text" placeholder="Bike Make - Should this be a dropdown or open textfield">
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--Ride Together-->
+    <div class="field is-horizontal">
+        <div class="field-label">
+            <label class="label">Ride Together</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <textarea v-model="form.ride_together" class="input" type="text" placeholder="This should change to a statement and not a  text field"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="field">
+        <div class="control">
+            <label class="checkbox">
+                <input type="checkbox">
+                I agree to the <a href="#">Waiver Modal</a>
+            </label>
+        </div>
+        <br>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link">Submit</button>
+            </div>
+            <div class="control">
+                <button class="button is-text">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <br>-----------------------------------------------------------------------------------------------
+    <br><br>
+
+    <div id="additional_info"
+         class="tag is-info is-rounded is-size-5 has-text-centered is-italic has-text-weight-semibold">Below is an
+        example
+        of how the data can be loaded to the database...
+    </div>
+    <br>
+    <div id='additional_info'
+         class="tag is-info is-rounded is-size-5 has-text-centered is-italic has-text-weight-semibold">Currently it's an
+        object (dictionary)(in Key: value) format... See Below
+    </div>
+
+    <br>
+    <div style="font-size: 25px" v-for="(value,key) of form">
+
+        <span style='background-color: yellow'>{{key}}: </span><span style="background-color: green">{{ value }}</span>
+
+    </div>
+
+
+</div>
+
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            form: {
+                first_name: '',
+                last_name: '',
+                gender: '',
+                birth_year: '',
+                birth_month: '',
+                birth_day: '',
+                birth_date: 'This will be year/month/day', //this.birth_year + '/' + this.birth_month +'/'+ this.birth_day
+                email: '',
+                phone: '',
+                country: '',
+                address: '',
+                address_line_2: '',
+                city: '',
+                state: '',
+                zip: '',
+                emergency_contact_name: '',
+                emergency_contact_phone: '',
+                schedule_class: '',
+                escort_name: '',
+                ama_membership: '',
+                omra_membership: '',
+                bike_make: '',
+                ride_together: '',
+                expert_schedule_class: '',
+
+            }
+        },
+
+    });
+
+
+</script>
+
+</body>
+</html>
