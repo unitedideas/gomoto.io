@@ -5,10 +5,9 @@ This is setting up the GIT
 
 ##### Capstone Proposal
 
-The Capstone is a web application that touches on every major technology we covered: Python, HTML, CSS, JavaScript, and Django. Below are the criteria for your proposal. It's difficult to be certain how long each feature will take to develop. Therefore you should plan out multiple 'milestones' for your project. That way, if you reach milestone 2 but not 3, you still have something worthwhile to present and be proud of. It also gives you the opportunity to plan out what you'd like to work on after the class is finished. I can help you sculpt out an idea, and I'll tell you very plainly whether a goal is attainable given our time constraints. I highly recommend doing some sketches of pages. This document is for you as much as it is for me. By planning thoroughly and precisely, the implementation will be much easier. Please do not change your idea after we start working on our capstones, it wastes your time and your end result won't be as good. Your proposal is due by the time we start our capstones (3-4 weeks before the end of the course).
 
 - Your proposal must be in a markdown `.md` file [more info](https://help.github.com/articles/basic-writing-and-formatting-syntax/)
-- Your proposal must set specific and attainable goals
+- 
 - Your proposal must cover all major topics we've covered
 - Your proposal must include the sections below
 
@@ -17,29 +16,42 @@ The Capstone is a web application that touches on every major technology we cove
 
 GoMoto.io is a way to quickly assess and sort dirt bikes according to what aspects you care about most. GoMoto takes your weighted inputs for characteristics of dirt bikes that you have weighted as higher importance; compares and prioritizes these characteristics, then sorts and displays the dirt bikes in the order that's best for you.
 
+Your proposal must set specific and attainable goals
+
+Wireframe Model View (WMV):
+
 Features:
-    Milestone 1:
-    Minimalistic user interface
-    Simplistic input interface (sliders for input weights)
+   GoMoto.io - Milestone 1:
+    Minimalistic user interface (HTML/ CSS)
+    Simplistic input interface (sliders for input weights) (HTML/ CSS)
+    Take the user inputs from sliders and present the top 3 dirt bikes to the user (Django, Python, VUE?, Javascript)
+    
+Motorcycle Registration Form:
+    Registration - Milestone 1:
+    Minimalistic user interface. One select event page that will direct to the event page. The event page will be protected from the (HTML/ CSS)
+    Simplistic input interface (sliders for input weights) (HTML/ CSS)
+    Take the user inputs from sliders and present the top 3 dirt bikes to the user (Django, Python, VUE?, Javascript)
 
-Milestone 2:
-    Manufacturing brand filtering
+    
+   GoMoto.io - Milestone 2:
+    Manufacturing brand filtering (Django)
 
-Milestone 3:
-    User accounts
-    Save favorite dirt bikes
+   GoMoto.io - Milestone 3:
+    User accounts (Django)
+    Save favorite dirt bikes (Django)
 
-Milestone 4:
-    Compare favorite dirt bike specifications
+   GoMoto.io - Milestone 4:
+    Compare favorite dirt bike specifications (JS, Django)
 
 
 Libraries:
     CSS:
         Bulma
+        reCaptcha
 
 Frameworks:
-    
-    Django - 
+    Django
+    VUE
  
 
 
