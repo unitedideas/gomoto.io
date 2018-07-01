@@ -6,7 +6,6 @@
 
 My aim is to create an easy way to compare dirt bikes and make a decision on which one a user should get by consolidating data, allow the user to weight the most common properties based on their preference, and then wrap that in a simple visual and easy to use interface.
 
-
 - #### Model View (WMV):
     Image and link TBD
 
