@@ -51,7 +51,8 @@ Features:
 ### Libraries:
 - https://materializecss.com/
 - https://bulma.io/
-- https://www.google.com/recaptcha/intro/v3beta.html  
+- https://www.google.com/recaptcha/intro/v3beta.html
+- https://bevacqua.github.io/dragula/
   
   
 ###Frameworks
