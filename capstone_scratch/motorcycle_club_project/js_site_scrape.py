@@ -1,3 +1,4 @@
+# Fail 1,2,3
 # import sys
 # import PyQt5
 # from PyQt5.QtWidgets import QApplication
@@ -46,23 +47,20 @@
     # </html>
 
 
+
+# Gets all the items and the div contains an image src, the 'title' of the bike (it contains the year, make, model, and most of the time it has an MSRP (price)
+
+# documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+
 import dryscrape
 from bs4 import BeautifulSoup
 session = dryscrape.Session()
 session.visit('https://www.dirtrider.com/Off-Road-Motorcycle-search-hub')
 response = session.body()
 soup = BeautifulSoup(response, "lxml")
-print(soup.find_all(class_="result_item"))
-
-
-
-    # from selenium import webdriver
-    # driver = webdriver.PhantomJS()
-    # driver.get("http://avi.im/stuff/js-or-no-js.html")
-    # p_element = driver.find_element_by_id(id_='intro-text')
-    # print(p_element.text)
-
-
-
+result_item = soup.find_all(class_="result_image")
+for link in result_item:
+    for a in soup.find_all('a'):
+        print(link.get('href'))
 
 
