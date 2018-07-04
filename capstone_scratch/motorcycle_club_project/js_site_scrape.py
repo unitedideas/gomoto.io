@@ -60,7 +60,7 @@ response = session.body()
 soup = BeautifulSoup(response, "lxml")
 result_item = soup.find_all(class_="result_image")
 for link in result_item:
-    for a in soup.find_all('a'):
+    for link in soup.find_all('a'):
         print(link.get('href'))
 
 
