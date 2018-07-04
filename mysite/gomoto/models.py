@@ -33,7 +33,7 @@ class Bikes(models.Model):
     make = models.CharField(max_length=300)
     model = models.CharField(max_length=300)
     engine_type = models.CharField(max_length=300)
-    weight = models.FloatField()
+    dry_weight = models.FloatField()
     displacement = models.IntegerField()
     seatheight = models.FloatField()
     price =  models.FloatField()
@@ -53,4 +53,4 @@ class Bikes(models.Model):
 
 
     def __str__(self):
-        return self.make + " this " + self.model
+        return self.make + " " + self.model
