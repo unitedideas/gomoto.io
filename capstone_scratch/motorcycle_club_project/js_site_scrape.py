@@ -61,38 +61,48 @@ def has_class_but_no_id(tag):
     return tag.has_attr('class') and not tag.has_attr('id')
 
 
-page_count = 47
+general_count = 1
 
 data_list = []
 
 
-# def session(page_count):
-sess = dryscrape.Session()
-print('Visiting the URL...')
+def session(page_count):
+    print(page_count)
+    page = '?page=' + str(page_count)
+    if page_count == 0:
+        full_url = base_url + '/Off-Road-Motorcycle-search-hub'
+    else:
+        full_url = base_url + '/Off-Road-Motorcycle-search-hub' + page
 
-sess.set_attribute('auto_load_images', False)
-sess.visit(base_url + '/Off-Road-Motorcycle-search-hub')
-print('Status: ', sess.status_code())
+    sess = dryscrape.Session()
+    print('Visiting the URL...')
+    sess.set_attribute('auto_load_images', False)
 
-response = sess.body()
-soup = BeautifulSoup(response, "lxml")
-result_items = soup.find_all(class_="result_item")
-print(type(result_items))
-print('There are ' + str(len(result_items)) + ' items')
+    sess.visit(full_url)
 
+    print('Status: ', sess.status_code())
 
-count = 1
+    response = sess.body()
+    soup = BeautifulSoup(response, "lxml")
+    return soup
 
-while page_count > 1:
+page_count = 4
+
+while page_count > 0:
+    soup = session(page_count)
+
+    result_items = soup.find_all(class_="result_item")
+    print('There are ' + str(len(result_items)) + ' items')
+
     for item in result_items:
         for anchor in item.find_all('a'):
             # print(anchor.get('href'))
 
-            if count % 2 == 0:
+            if general_count % 2 == 0:
                 # print(str(anchor) + '\n')
                 print(anchor.get_text())
-                print(count / 2)
-            count += 1
+                print(general_count / 2)
+            general_count += 1
     page_count -= 1
 
 # loop over ever page
