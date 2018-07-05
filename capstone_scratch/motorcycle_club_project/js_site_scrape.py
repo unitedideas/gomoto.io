@@ -1,4 +1,3 @@
-
 import dryscrape
 from bs4 import BeautifulSoup
 
@@ -12,15 +11,22 @@ def full_url(sub_url):
 def has_class_but_no_id(tag):
     return tag.has_attr('class') and not tag.has_attr('id')
 
+
 page_count = 2
 general_count = 1
 
 data_list = []
 
 
+def bike_page(sub_url, bike_text):
+    print('For bike: ' + bike_text)
+    return sub_url
+
+
 def page_session(page_count):
     print(page_count)
     page = '?page=' + str(page_count)
+
     if page_count == 0:
         full_url = base_url + '/Off-Road-Motorcycle-search-hub'
     else:
@@ -35,15 +41,14 @@ def page_session(page_count):
     print('Status: ', sess.status_code())
 
     response = sess.body()
-    soup = BeautifulSoup(response, "lxml")
-    return soup
-
+    page_soup = BeautifulSoup(response, "lxml")
+    return page_soup
 
 
 while page_count > 0:
-    soup = page_session(page_count)
+    page_soup = page_session(page_count)
+    result_items = page_soup.find_all(class_="result_item")
 
-    result_items = soup.find_all(class_="result_item")
     print('There are ' + str(len(result_items)) + ' items')
 
     for item in result_items:
@@ -51,21 +56,24 @@ while page_count > 0:
             print(image.get('src'))
 
         for anchor in item.find_all('a'):
+            if general_count % 3 == 0:
+                bike_text = anchor.get_text()
+                sub_url = anchor.get('href')
 
-            # if general_count % 0 == 0:
-            print(anchor.get('href'))
-            print('\n')
-            # print(str(anchor) + '\n')
-            print(anchor.get_text())
-            print(general_count / 2)
+                print(bike_page(sub_url, bike_text))
+
+
+                print('\n')
+                # print(str(anchor) + '\n')
+
+                print(general_count / 2)
             general_count += 1
     page_count -= 1
 
 # psudo Process Code:
-    # loop over ever page
-    # look over the results on the page
-    # visit the link for that result
-
+# loop over ever page
+# look over the results on the page
+# visit the link for that result
 
 
 # Failed attempts 1,2,3...
