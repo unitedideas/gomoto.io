@@ -1,11 +1,13 @@
 import dryscrape
 from bs4 import BeautifulSoup
+import time
+import requests
 
 base_url = 'https://www.dirtrider.com'
 
 
 def full_url(sub_url):
-    print('Full url: ' + base_url + full_url)
+    print('Full url: ' + base_url + sub_url)
     return base_url + sub_url
 
 
@@ -13,15 +15,39 @@ def has_class_but_no_id(tag):
     return tag.has_attr('class') and not tag.has_attr('id')
 
 
-page_count = 2
-general_count = 1
 
-data_list = []
+def bike_page(bike_page_url):
 
+    bike_dict = {}
 
-# def bike_page(sub_url, bike_text):
-#     print('Bike year, Make, Model: ' + bike_text)
-#     return sub_url
+    time.sleep(3)
+
+    sess = dryscrape.Session()
+    print('Visiting the URL...')
+    sess.set_attribute('auto_load_images', False)
+
+    sess.visit(bike_page_url)
+
+    print('Status: ', sess.status_code())
+
+    response = sess.body()
+    bike_soup = BeautifulSoup(response, "lxml")
+
+    result_items = page_soup.find_all(class_="buyers-guide--intro-stats-item")
+
+    print(result_items)
+    #
+    # for item in result_items:
+    #     for image in item.find_all('img'):
+    #         print("Image: " + image.get('src'))
+    #
+    #     for anchor in item.find_all('a'):
+    #         if general_count % 2 == 0:
+    #             bike_text = anchor.get_text()
+    #             sub_url = anchor.get('href')
+    #             bike_page_url = full_url(sub_url)
+
+    return "bike_data " + str(general_count)
 
 
 def page_session(page_count):
@@ -46,6 +72,13 @@ def page_session(page_count):
     return page_soup
 
 
+page_count = 2
+general_count = 1
+
+data_list_of_dicts = []
+
+
+
 while page_count > 0:
     page_soup = page_session(page_count)
     result_items = page_soup.find_all(class_="result_item")
@@ -53,21 +86,38 @@ while page_count > 0:
     print('There are ' + str(len(result_items)) + ' items')
 
     for item in result_items:
-        for image in item.find_all('img'):
-            print("Image: " + image.get('src'))
 
-        for anchor in item.find_all('a'):
-            if general_count % 2 == 0:
-                bike_text = anchor.get_text()
-                sub_url = anchor.get('href')
+        anchor = item.find_all('a')[0]
 
-                bike_page = full_url(sub_url)
+        bike_text = anchor.get_text()
+        sub_url = anchor.get('href')
+        bike_page_url = full_url(sub_url)
 
-                print('\n')
-                # print(str(anchor) + '\n')
+        data_list_of_dicts.append(bike_page(bike_page_url))
 
-                print('Page count: ' + str(general_count / 2))
-            general_count += 1
+        print(data_list_of_dicts)
+
+        print('\n')
+        # print(str(anchor) + '\n')
+
+        print('Page count: ' + str(general_count))
+
+
+        # for anchor in item.find_all('a'):
+        #     if general_count % 2 == 0:
+        #         bike_text = anchor.get_text()
+        #         sub_url = anchor.get('href')
+        #         bike_page_url = full_url(sub_url)
+        #
+        #         data_list_of_dicts.append(bike_page(bike_page_url))
+        #
+        #         print(data_list_of_dicts)
+        #
+        #         print('\n')
+        #         # print(str(anchor) + '\n')
+        #
+        #         print('Page count: ' + str(general_count / 2))
+        #     general_count += 1
     page_count -= 1
 
 
