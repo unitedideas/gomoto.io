@@ -20,17 +20,27 @@ def bike_page(bike_page_url):
 
     bike_dict = {}
 
-    time.sleep(2)
-    bike_page_data = requests.get('bike_page_url')
+    # time.sleep(2)
+
+
+    bike_page_data = requests.get(bike_page_url)
 
     bike_page_text = bike_page_data.text
-    print(bike_page_data.status_code)
+
+    print(bike_page_text)
+
     print('Visiting the Bike Page URL...')
-    print(bike_page_data.status_code)
 
-    bike_page_text = BeautifulSoup(response, "lxml")
+    print('Status: ' + str(bike_page_data.status_code))
 
-    result_items = page_soup.find_all(class_="buyers-guide--intro-stats-item")
+    bike_page_text = BeautifulSoup(markup, "lxml")
+
+
+    #Start getting the data here
+    #These are the first four items
+    data_points = page_soup.find_all(class_="buyers-guide--intro-stats-item")
+
+    #Need to get the remaining items from below
 
     print(result_items)
     #
