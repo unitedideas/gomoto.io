@@ -2,6 +2,7 @@ import dryscrape
 from bs4 import BeautifulSoup
 import time
 import requests
+import re
 
 base_url = 'https://www.dirtrider.com'
 
@@ -33,12 +34,22 @@ def bike_page(bike_page_url):
 
     print('Status: ' + str(bike_page_data.status_code))
 
-    bike_page_text = BeautifulSoup(bike_page_text, "lxml")
+    bike_soup = BeautifulSoup(bike_page_text, "lxml")
+
+    # print(bike_soup)
 
 
     #Start getting the data here
     #These are the first four items
-    data_points = page_soup.find_all(class_="buyers-guide--intro-stats-item")
+
+    data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
+
+    for data in data_points:
+        if data.find(string='MSRP') is not None:
+            print(data.span.text)
+            print('<------------>')
+
+        # print(data_points)
 
     #Need to get the remaining items from below
 

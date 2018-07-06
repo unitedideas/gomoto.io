@@ -32,12 +32,14 @@ class Bikes(models.Model):
     year = models.IntegerField()
     make = models.CharField(max_length=300)
     model = models.CharField(max_length=300)
-    engine_type = models.CharField(max_length=300)
-    dry_weight = models.FloatField()
+    price =  models.FloatField(null=True, blank=True)
+    starter = models.CharField(max_length=300)
+    #for nullable values
+    dry_weight = models.FloatField(null=True, blank=True)
+    wet_weight = models.FloatField(null=True, blank=True)
     displacement = models.IntegerField()
     seatheight = models.FloatField()
-    price =  models.FloatField()
-    horsepower =  models.FloatField()
+
 
     category = models.CharField(
         max_length=300,
