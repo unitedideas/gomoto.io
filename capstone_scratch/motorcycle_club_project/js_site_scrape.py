@@ -5,6 +5,7 @@ base_url = 'https://www.dirtrider.com'
 
 
 def full_url(sub_url):
+    print('Full url: ' + base_url + full_url)
     return base_url + sub_url
 
 
@@ -18,13 +19,13 @@ general_count = 1
 data_list = []
 
 
-def bike_page(sub_url, bike_text):
-    print('For bike: ' + bike_text)
-    return sub_url
+# def bike_page(sub_url, bike_text):
+#     print('Bike year, Make, Model: ' + bike_text)
+#     return sub_url
 
 
 def page_session(page_count):
-    print(page_count)
+    print('Bike Count: ' + str(page_count))
     page = '?page=' + str(page_count)
 
     if page_count == 0:
@@ -53,22 +54,23 @@ while page_count > 0:
 
     for item in result_items:
         for image in item.find_all('img'):
-            print(image.get('src'))
+            print("Image: " + image.get('src'))
 
         for anchor in item.find_all('a'):
-            if general_count % 3 == 0:
+            if general_count % 2 == 0:
                 bike_text = anchor.get_text()
                 sub_url = anchor.get('href')
 
-                print(bike_page(sub_url, bike_text))
-
+                bike_page = full_url(sub_url)
 
                 print('\n')
                 # print(str(anchor) + '\n')
 
-                print(general_count / 2)
+                print('Page count: ' + str(general_count / 2))
             general_count += 1
     page_count -= 1
+
+
 
 # psudo Process Code:
 # loop over ever page
