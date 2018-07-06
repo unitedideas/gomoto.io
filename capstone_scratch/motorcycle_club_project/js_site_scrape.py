@@ -20,18 +20,15 @@ def bike_page(bike_page_url):
 
     bike_dict = {}
 
-    time.sleep(3)
+    time.sleep(2)
+    bike_page_data = requests.get('bike_page_url')
 
-    sess = dryscrape.Session()
-    print('Visiting the URL...')
-    sess.set_attribute('auto_load_images', False)
+    bike_page_text = bike_page_data.text
+    print(bike_page_data.status_code)
+    print('Visiting the Bike Page URL...')
+    print(bike_page_data.status_code)
 
-    sess.visit(bike_page_url)
-
-    print('Status: ', sess.status_code())
-
-    response = sess.body()
-    bike_soup = BeautifulSoup(response, "lxml")
+    bike_page_text = BeautifulSoup(response, "lxml")
 
     result_items = page_soup.find_all(class_="buyers-guide--intro-stats-item")
 
@@ -60,7 +57,7 @@ def page_session(page_count):
         full_url = base_url + '/Off-Road-Motorcycle-search-hub' + page
 
     sess = dryscrape.Session()
-    print('Visiting the URL...')
+    print('Visiting the Main Page URL...')
     sess.set_attribute('auto_load_images', False)
 
     sess.visit(full_url)
@@ -76,7 +73,6 @@ page_count = 2
 general_count = 1
 
 data_list_of_dicts = []
-
 
 
 while page_count > 0:
