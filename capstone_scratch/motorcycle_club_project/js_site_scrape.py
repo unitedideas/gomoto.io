@@ -27,13 +27,13 @@ def bike_page(bike_page_url):
 
     bike_page_text = bike_page_data.text
 
-    print(bike_page_text)
+    # print(bike_page_text)
 
     print('Visiting the Bike Page URL...')
 
     print('Status: ' + str(bike_page_data.status_code))
 
-    bike_page_text = BeautifulSoup(markup, "lxml")
+    bike_page_text = BeautifulSoup(bike_page_text, "lxml")
 
 
     #Start getting the data here
@@ -42,7 +42,7 @@ def bike_page(bike_page_url):
 
     #Need to get the remaining items from below
 
-    print(result_items)
+    # print(bike_page_text)
     #
     # for item in result_items:
     #     for image in item.find_all('img'):
@@ -106,7 +106,7 @@ while page_count > 0:
         print('\n')
         # print(str(anchor) + '\n')
 
-        print('Page count: ' + str(general_count))
+    print('Pages Remaining: ' + str(page_count))
 
 
         # for anchor in item.find_all('a'):
