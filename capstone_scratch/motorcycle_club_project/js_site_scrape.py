@@ -1,8 +1,9 @@
-import dryscrape
+import dryscrape, time, requests, re
 from bs4 import BeautifulSoup
-import time
-import requests
-import re
+
+# from .models import Bike
+
+
 
 base_url = 'https://www.dirtrider.com'
 
@@ -16,17 +17,43 @@ def has_class_but_no_id(tag):
     return tag.has_attr('class') and not tag.has_attr('id')
 
 
+def check_data_key_top_four(data_points, top_four_keys):
+
+    #for the non-table items
+    for key in top_four_keys:
+        if data.find(string=key) is not None:
+            data_text = data.span.text
+            # Regex the string and then change to an int
+            print('top four keys')
+            print('<------------>')
+            return ()
+
+        #if none of the keys exist set value of sent key to None
+        else:
+            return None
+
+def check_data_key_table_items(data_points, key):
+
+    #for the table items
+    if data.find(string=key) is not None:
+        data_text = data.span.text
+        # Regex the string and then change to an int
+        print('table keys')
+        print('<------------>')
+        return ('table keys')
+
+    #if none of the keys exist set value of sent key to None
+    else:
+        return None
+
 
 def bike_page(bike_page_url):
 
-    bike_dict = {}
-
     # time.sleep(2)
-
 
     bike_page_data = requests.get(bike_page_url)
 
-    bike_page_text = bike_page_data.text
+    bike_page_text = bike_page_data.content
 
     # print(bike_page_text)
 
@@ -36,34 +63,27 @@ def bike_page(bike_page_url):
 
     bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
-    # print(bike_soup)
-
-
     #Start getting the data here
-    #These are the first four items
 
+    #Data for the non-table items
     data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
 
-    for data in data_points:
-        if data.find(string='MSRP') is not None:
-            print(data.span.text)
-            print('<------------>')
+    # check_data_key_top_four(data_points, top_four_keys)
 
-        # print(data_points)
+    print(data_points)
 
-    #Need to get the remaining items from below
+    for key in top_four_keys:
+        if key in str(data_points):
+            print('it worked for: ' + key)
 
-    # print(bike_page_text)
-    #
-    # for item in result_items:
-    #     for image in item.find_all('img'):
-    #         print("Image: " + image.get('src'))
-    #
-    #     for anchor in item.find_all('a'):
-    #         if general_count % 2 == 0:
-    #             bike_text = anchor.get_text()
-    #             sub_url = anchor.get('href')
-    #             bike_page_url = full_url(sub_url)
+    table_data_points = ""
+
+    # bike = Bike()
+
+    # bike.year = #...
+    # ...
+    # bike.save()
+
 
     return "bike_data " + str(general_count)
 
@@ -94,6 +114,7 @@ page_count = 2
 general_count = 1
 
 data_list_of_dicts = []
+top_four_keys = ['MSRP', 'Displacement (CC)', 'Seat Height (in)', 'Wet Weight (lbs)','Dry Weight (lbs)']
 
 
 while page_count > 0:

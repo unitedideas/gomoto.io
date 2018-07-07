@@ -49,10 +49,21 @@ Features:
 #
 
 ### Libraries:
-- https://materializecss.com/
-- https://bulma.io/
-- https://www.google.com/recaptcha/intro/v3beta.html
-- https://bevacqua.github.io/dragula/
+#### BeautifulSoup
+    - https://www.crummy.com/software/BeautifulSoup/
+#### Materializecss
+    - https://materializecss.com/
+#### Bulma
+    - https://bulma.io/
+#### Recaptcha
+    - https://www.google.com/recaptcha/intro/v3beta.html
+#### Dragula
+    - https://bevacqua.github.io/dragula/
+#### Dryscrape(headless browser scraping)
+    - http://dryscrape.readthedocs.io/en/latest/
+#### Requests(static page scraping)
+    - http://dryscrape.readthedocs.io/en/latest/
+
   
   
 ###Frameworks
