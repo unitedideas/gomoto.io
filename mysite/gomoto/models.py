@@ -3,7 +3,7 @@ import datetime
 
 # Create your models here.
 
-class Bikes(models.Model):
+class Bike(models.Model):
     OFF_ROAD = 'Off-road'
     MOTOCROSS = 'Motocross'
     ADVENTURE = 'Adventure'

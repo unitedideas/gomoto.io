@@ -1,8 +1,17 @@
-import dryscrape, time, requests, re, os, django
-
+import dryscrape, time, requests, re
+import os
+import sys
+import django
 from bs4 import BeautifulSoup
+import os, sys
 
-from gomoto.models import Bikes
+
+
+
+from mysite.gomoto.models import Bike
+
+
+
 
 base_url = 'https://www.dirtrider.com'
 
@@ -87,8 +96,8 @@ def bike_page(bike_page_url):
 
     data_points = bike_soup.find(class_='page-title')
     make = data_points.get_text()
-    bike = Bikes()
-    bike.make = make
+    # bike = Bike()
+    # bike.make = make
     #     if key in str(data_points):
     #         print('it worked for: ' + key)
 
@@ -96,7 +105,7 @@ def bike_page(bike_page_url):
 
     # table_data_points = ""
     #
-    # bike = Bikes()
+    # bike = Bike()
     #
     # bike.year = #...
     # # ...
@@ -237,3 +246,5 @@ while page_count > 0:
 
 
 # documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+
+
