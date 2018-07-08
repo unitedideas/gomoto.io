@@ -193,7 +193,7 @@ make_list = [
     ('yamaha', 'Yamaha'),
     ('zero', 'Zero')
 ]
-page_count = 2
+page_count = 1
 general_count = 1
 data_list_of_dicts = []
 top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
@@ -226,6 +226,21 @@ while page_count > 0:
     page_count -= 1
 
     print('Pages Remaining: ' + str(page_count))
+
+
+
+print('Writting to CSV File...')
+
+keys = data_list_of_dicts[0].keys()
+with open('dirt_bike_data.csv', 'w') as output_file:
+    dict_writer = csv.DictWriter(output_file, keys)
+    dict_writer.writeheader()
+    dict_writer.writerows(data_list_of_dicts)
+
+
+
+
+    #################### NoGo Code Below ################
 
     # for anchor in item.find_all('a'):
     #     if general_count % 2 == 0:
