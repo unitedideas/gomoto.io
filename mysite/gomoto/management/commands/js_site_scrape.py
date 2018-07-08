@@ -1,17 +1,8 @@
-import dryscrape, time, requests, re
-import os
-import sys
-import django
+import dryscrape, time, requests, re, os, sys
+
 from bs4 import BeautifulSoup
-import os, sys
-
-
-
 
 from mysite.gomoto.models import Bike
-
-
-
 
 base_url = 'https://www.dirtrider.com'
 
@@ -26,8 +17,7 @@ def has_class_but_no_id(tag):
 
 
 def check_data_key_top_four(data_points, top_four_keys):
-
-    #for the non-table items
+    # for the non-table items
     for key in top_four_keys:
         if data.find(string=key) is not None:
             data_text = data.span.text
@@ -36,13 +26,13 @@ def check_data_key_top_four(data_points, top_four_keys):
             print('<------------>')
             return ()
 
-        #if none of the keys exist set value of sent key to None
+        # if none of the keys exist set value of sent key to None
         else:
             return None
 
-def check_data_key_table_items(data_points, key):
 
-    #for the table items
+def check_data_key_table_items(data_points, key):
+    # for the table items
     if data.find(string=key) is not None:
         data_text = data.span.text
         # Regex the string and then change to an int
@@ -50,13 +40,12 @@ def check_data_key_table_items(data_points, key):
         print('<------------>')
         return ('table keys')
 
-    #if none of the keys exist set value of sent key to None
+    # if none of the keys exist set value of sent key to None
     else:
         return None
 
 
 def bike_page(bike_page_url):
-
     # time.sleep(2)
 
     bike_page_data = requests.get(bike_page_url)
@@ -71,9 +60,9 @@ def bike_page(bike_page_url):
 
     bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
-    #Start getting individual bike data
+    # Start getting individual bike data
 
-    #Data for the non-table items
+    # Data for the non-table items
     data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
 
     # check_data_key_top_four(data_points, top_four_keys)
@@ -84,7 +73,6 @@ def bike_page(bike_page_url):
     # for key in top_four_keys:
     #     if key in str(data_points):
     #         print('it worked for: ' + key)
-
 
     data_points = bike_soup.find(class_='left-cell cell text-cell buyers-guide--specs')
     those = data_points.find_all('span')
@@ -110,7 +98,6 @@ def bike_page(bike_page_url):
     # bike.year = #...
     # # ...
     # bike.save()
-
 
     return "bike_data " + str(general_count)
 
@@ -141,12 +128,12 @@ page_count = 2
 general_count = 1
 
 data_list_of_dicts = []
-top_four_keys = [('MSRP','price'),('Displacement (CC)','displacement'), ('Seat Height (in)', 'seatheight'), ('Wet Weight (lbs)','wet_weight'),('Dry Weight (lbs)','dry_weight')]
+top_four_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
+                 ('Wet Weight (lbs)', 'wet_weight'), ('Dry Weight (lbs)', 'dry_weight')]
 
-table_keys = [('Starter','starter'),('Manufacturer Type','category'),('Engine Type','engine_type')]
+table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Engine Type', 'engine_type')]
 
 title_keys = ['year', 'make', 'model', ]
-
 
 while page_count > 0:
     page_soup = page_session(page_count)
@@ -155,7 +142,6 @@ while page_count > 0:
     print('There are ' + str(len(result_items)) + ' items')
 
     for item in result_items:
-
         anchor = item.find_all('a')[0]
 
         sub_url = anchor.get('href')
@@ -171,25 +157,22 @@ while page_count > 0:
 
     print('Pages Remaining: ' + str(page_count))
 
-
-        # for anchor in item.find_all('a'):
-        #     if general_count % 2 == 0:
-        #         bike_text = anchor.get_text()
-        #         sub_url = anchor.get('href')
-        #         bike_page_url = full_url(sub_url)
-        #
-        #         data_list_of_dicts.append(bike_page(bike_page_url))
-        #
-        #         print(data_list_of_dicts)
-        #
-        #         print('\n')
-        #         # print(str(anchor) + '\n')
-        #
-        #         print('Page count: ' + str(general_count / 2))
-        #     general_count += 1
+    # for anchor in item.find_all('a'):
+    #     if general_count % 2 == 0:
+    #         bike_text = anchor.get_text()
+    #         sub_url = anchor.get('href')
+    #         bike_page_url = full_url(sub_url)
+    #
+    #         data_list_of_dicts.append(bike_page(bike_page_url))
+    #
+    #         print(data_list_of_dicts)
+    #
+    #         print('\n')
+    #         # print(str(anchor) + '\n')
+    #
+    #         print('Page count: ' + str(general_count / 2))
+    #     general_count += 1
     page_count -= 1
-
-
 
 # psudo Process Code:
 # loop over ever page
@@ -246,5 +229,3 @@ while page_count > 0:
 
 
 # documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
-
-
