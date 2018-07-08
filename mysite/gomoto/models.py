@@ -27,17 +27,17 @@ class Bikes(models.Model):
         (TWO_STROKE, 'Two-stroke'),
         (ELECTRIC, "Electric"),
 
-
     )
-    year = models.IntegerField()
-    make = models.CharField(max_length=300)
-    model = models.CharField(max_length=300)
+
+    year = models.IntegerField(null=True, blank=True)
+    make = models.CharField(max_length=300, null=True, blank=True)
+    model = models.CharField(max_length=300, null=True, blank=True)
     price =  models.FloatField(null=True, blank=True)
     starter = models.CharField(max_length=300)
     #for nullable values
     dry_weight = models.FloatField(null=True, blank=True)
     wet_weight = models.FloatField(null=True, blank=True)
-    displacement = models.IntegerField()
+    displacement = models.IntegerField(null=True, blank=True)
     seatheight = models.FloatField()
 
 

@@ -1,9 +1,8 @@
-import dryscrape, time, requests, re
+import dryscrape, time, requests, re, os, django
+
 from bs4 import BeautifulSoup
 
-# from .models import Bike
-
-
+from gomoto.models import Bikes
 
 base_url = 'https://www.dirtrider.com'
 
@@ -63,25 +62,44 @@ def bike_page(bike_page_url):
 
     bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
-    #Start getting the data here
+    #Start getting individual bike data
 
     #Data for the non-table items
     data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
 
     # check_data_key_top_four(data_points, top_four_keys)
 
-    print(data_points)
+    # print(data_points)
 
-    for key in top_four_keys:
-        if key in str(data_points):
-            print('it worked for: ' + key)
+    print(' Top Four ' + str(len(data_points)))
+    # for key in top_four_keys:
+    #     if key in str(data_points):
+    #         print('it worked for: ' + key)
 
-    table_data_points = ""
 
-    # bike = Bike()
+    data_points = bike_soup.find(class_='left-cell cell text-cell buyers-guide--specs')
+    those = data_points.find_all('span')
+    print(those[0].get_text())
+    print(' Table Items ' + str(len(data_points)))
+    # for key in top_four_keys:
+    #     if key in str(data_points):
+    #         print('it worked for: ' + key)
 
+    data_points = bike_soup.find(class_='page-title')
+    make = data_points.get_text()
+    bike = Bikes()
+    bike.make = make
+    #     if key in str(data_points):
+    #         print('it worked for: ' + key)
+
+    #         class="page-title"
+
+    # table_data_points = ""
+    #
+    # bike = Bikes()
+    #
     # bike.year = #...
-    # ...
+    # # ...
     # bike.save()
 
 
@@ -89,7 +107,7 @@ def bike_page(bike_page_url):
 
 
 def page_session(page_count):
-    print('Bike Count: ' + str(page_count))
+    print('Page Count: ' + str(page_count))
     page = '?page=' + str(page_count)
 
     if page_count == 0:
@@ -114,7 +132,11 @@ page_count = 2
 general_count = 1
 
 data_list_of_dicts = []
-top_four_keys = ['MSRP', 'Displacement (CC)', 'Seat Height (in)', 'Wet Weight (lbs)','Dry Weight (lbs)']
+top_four_keys = [('MSRP','price'),('Displacement (CC)','displacement'), ('Seat Height (in)', 'seatheight'), ('Wet Weight (lbs)','wet_weight'),('Dry Weight (lbs)','dry_weight')]
+
+table_keys = [('Starter','starter'),('Manufacturer Type','category'),('Engine Type','engine_type')]
+
+title_keys = ['year', 'make', 'model', ]
 
 
 while page_count > 0:
@@ -127,8 +149,8 @@ while page_count > 0:
 
         anchor = item.find_all('a')[0]
 
-        bike_text = anchor.get_text()
         sub_url = anchor.get('href')
+
         bike_page_url = full_url(sub_url)
 
         data_list_of_dicts.append(bike_page(bike_page_url))
