@@ -1,106 +1,19 @@
-import dryscrape, time, requests, re, os, sys
-
+import dryscrape, time, requests, re, csv
+from django.core.management.base import BaseCommand
 from bs4 import BeautifulSoup
 
-from mysite.gomoto.models import Bike
+# from mysite.gomoto.models import Bike
 
 base_url = 'https://www.dirtrider.com'
 
 
 def full_url(sub_url):
-    print('Full url: ' + base_url + sub_url)
+    # print('Full url: ' + base_url + sub_url)
     return base_url + sub_url
 
 
-def has_class_but_no_id(tag):
-    return tag.has_attr('class') and not tag.has_attr('id')
-
-
-def check_data_key_top_four(data_points, top_four_keys):
-    # for the non-table items
-    for key in top_four_keys:
-        if data.find(string=key) is not None:
-            data_text = data.span.text
-            # Regex the string and then change to an int
-            print('top four keys')
-            print('<------------>')
-            return ()
-
-        # if none of the keys exist set value of sent key to None
-        else:
-            return None
-
-
-def check_data_key_table_items(data_points, key):
-    # for the table items
-    if data.find(string=key) is not None:
-        data_text = data.span.text
-        # Regex the string and then change to an int
-        print('table keys')
-        print('<------------>')
-        return ('table keys')
-
-    # if none of the keys exist set value of sent key to None
-    else:
-        return None
-
-
-def bike_page(bike_page_url):
-    # time.sleep(2)
-
-    bike_page_data = requests.get(bike_page_url)
-
-    bike_page_text = bike_page_data.content
-
-    # print(bike_page_text)
-
-    print('Visiting the Bike Page URL...')
-
-    print('Status: ' + str(bike_page_data.status_code))
-
-    bike_soup = BeautifulSoup(bike_page_text, "lxml")
-
-    # Start getting individual bike data
-
-    # Data for the non-table items
-    data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
-
-    # check_data_key_top_four(data_points, top_four_keys)
-
-    # print(data_points)
-
-    print(' Top Four ' + str(len(data_points)))
-    # for key in top_four_keys:
-    #     if key in str(data_points):
-    #         print('it worked for: ' + key)
-
-    data_points = bike_soup.find(class_='left-cell cell text-cell buyers-guide--specs')
-    those = data_points.find_all('span')
-    print(those[0].get_text())
-    print(' Table Items ' + str(len(data_points)))
-    # for key in top_four_keys:
-    #     if key in str(data_points):
-    #         print('it worked for: ' + key)
-
-    data_points = bike_soup.find(class_='page-title')
-    make = data_points.get_text()
-    # bike = Bike()
-    # bike.make = make
-    #     if key in str(data_points):
-    #         print('it worked for: ' + key)
-
-    #         class="page-title"
-
-    # table_data_points = ""
-    #
-    # bike = Bike()
-    #
-    # bike.year = #...
-    # # ...
-    # bike.save()
-
-    return "bike_data " + str(general_count)
-
+# def has_class_but_no_id(tag):
+#     return tag.has_attr('class') and not tag.has_attr('id')
 
 def page_session(page_count):
     print('Page Count: ' + str(page_count))
@@ -124,14 +37,169 @@ def page_session(page_count):
     return page_soup
 
 
+
+
+
+def bike_page(bike_page_url):
+    # time.sleep(2)
+    bike_dict = {}
+
+    bike_page_data = requests.get(bike_page_url)
+
+    bike_page_text = bike_page_data.content
+
+    # print(bike_page_text)
+
+    print('Visiting the Bike Page URL...')
+
+    print('Status: ' + str(bike_page_data.status_code))
+
+    bike_soup = BeautifulSoup(bike_page_text, "lxml")
+
+    # Getbike image src
+
+    data_points = bike_soup.find(class_='field-image')
+    image = data_points.find('img')
+    if image['data-1000src']:
+        bike_dict['img_src'] = image['data-1000src']
+    elif image['src']:
+        bike_dict['img_src'] = image['src']
+    else:
+        bike_dict['img_src'] = None
+
+    #Data for the non-table items
+    data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
+    # data_values = data_points[count].span.get_text()
+    # print(data_values)
+
+    # check_data_key_top_four(data_points, top_four_keys)
+
+    # print(data_points)
+    # print('Top Five ' + str(len(data_points)))
+    count = 0
+    for key in top_five_keys:
+        value = None
+        if key[0] in str(data_points):
+            data_value = data_points[count].span.get_text()
+            # print(data_value)
+            # print('it worked for: ' + key[1])
+            value = data_value
+            if key[0]=='MSRP':
+                # data_value = data_points[count].span.get_text()
+                # re.
+                value =  ''.join(re.findall(r'\d+', data_value))
+
+            if value:
+                value = int(value)
+            bike_dict[key[1]] = value
+            # print(bike_dict[key[1]])
+            count += 1
+        else:
+            bike_dict[key[1]] = value
+            # print('No Data for: ' + key[1])
+
+    #Get data from tables
+
+    data_points = bike_soup.find(class_='left-cell cell text-cell buyers-guide--specs')
+    spans = data_points.find_all('span')
+    for key in table_keys:
+        value = None
+        # print(span)
+        # print(span[count].get_text())
+        for span in spans:
+            if key[0] in span:
+                value = span.next_sibling.get_text()
+                bike_dict[key[1]] = value
+            else:
+                bike_dict[key[1]] = value
+
+            if key[0] == 'Valve Configuration' and bike_dict[key[1]] == None:
+                bike_dict[key[1]] = 'Electric'
+
+            if bike_dict[key[1]] == 'Competition':
+                bike_dict[key[1]] = 'Motocross'
+
+            if bike_dict[key[1]] == 'Reed  Valve':
+                bike_dict[key[1]] = 'Two-stroke'
+            elif bike_dict[key[1]] == 'Electric':
+                bike_dict[key[1]] = 'Electric'
+            else:
+                bike_dict[key[1]] = 'Four-stroke'
+
+
+
+    #Get year, make, model
+
+    data_points = bike_soup.find(class_='page-title')
+    title = data_points.get_text().lower()
+    print(title)
+
+    # year
+    year = ''.join(re.findall(r'\d{4}', title))
+    bike_dict['year'] = int(year)
+
+    # make
+    for make in make_list:
+        if make[0] in title:
+            bike_dict['make'] = make[1] #Could have used title() method here ¯\_(ツ)_/¯
+            # print(bike_dict['make'])
+
+        # This is still execution todo item
+        # else:
+        #     hope = ''.join(re.findall(r'\b[^\d\W]+a{1}\b', title))
+        #     bike_dict['make'] = hope
+            # model
+
+            model = ''.join(re.findall(r'(?<=' + make[0] + '\s).*', title))
+            bike_dict['model'] = model.title()
+            # print(bike_dict['model'])
+
+
+
+
+    # bike = Bike()
+    # bike.make = make
+    #     if key in str(data_points):
+    #         print('it worked for: ' + key)
+
+    #         class="page-title"
+
+    # table_data_points = ""
+    #
+    # bike = Bike()
+    #
+    # bike.year = #...
+    # # ...
+    # bike.save()
+
+    return bike_dict
+
+
+make_list = [
+    ('aprilia', 'Aprilia'),
+    ('beta', 'Beta'),
+    ('bmw', 'BMW'),
+    ('ducati', 'Ducati'),
+    ('gas gas', 'Gas Gas'),
+    ('honda', 'Honda'),
+    ('husaberg', 'Husaberg'),
+    ('husqvarna', 'Husqvarna'),
+    ('hyosung', 'Hyosung'),
+    ('kawasaki', 'Kawasaki'),
+    ('ktm', 'KTM'),
+    ('moto guzzi', 'moto Guzzi'),
+    ('suzuki', 'Suzuki'),
+    ('triumph', 'Triumph'),
+    ('yamaha', 'Yamaha'),
+    ('zero', 'Zero')
+]
 page_count = 2
 general_count = 1
-
 data_list_of_dicts = []
-top_four_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
+top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
                  ('Wet Weight (lbs)', 'wet_weight'), ('Dry Weight (lbs)', 'dry_weight')]
 
-table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Engine Type', 'engine_type')]
+table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve Configuration', 'engine_type')]
 
 title_keys = ['year', 'make', 'model', ]
 
@@ -139,7 +207,7 @@ while page_count > 0:
     page_soup = page_session(page_count)
     result_items = page_soup.find_all(class_="result_item")
 
-    print('There are ' + str(len(result_items)) + ' items')
+    print('There are ' + str(len(result_items)) + ' items on this page')
 
     for item in result_items:
         anchor = item.find_all('a')[0]
@@ -152,8 +220,10 @@ while page_count > 0:
 
         print(data_list_of_dicts)
 
-        print('\n')
+        print('\n','\n','\n')
         # print(str(anchor) + '\n')
+
+    page_count -= 1
 
     print('Pages Remaining: ' + str(page_count))
 
@@ -172,7 +242,7 @@ while page_count > 0:
     #
     #         print('Page count: ' + str(general_count / 2))
     #     general_count += 1
-    page_count -= 1
+    # page_count -= 1
 
 # psudo Process Code:
 # loop over ever page
@@ -229,3 +299,31 @@ while page_count > 0:
 
 
 # documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+
+# def check_data_key_top_four(data_points, top_four_keys):
+#     # for the non-table items
+#     for key in top_four_keys:
+#         if data.find(string=key) is not None:
+#             data_text = data.span.text
+#             # Regex the string and then change to an int
+#             print('top four keys')
+#             print('<------------>')
+#             return ()
+#
+#         # if none of the keys exist set value of sent key to None
+#         else:
+#             return None
+#
+#
+# def check_data_key_table_items(data_points, key):
+#     # for the table items
+#     if data.find(string=key) is not None:
+#         data_text = data.span.text
+#         # Regex the string and then change to an int
+#         print('table keys')
+#         print('<------------>')
+#         return ('table keys')
+#
+#     # if none of the keys exist set value of sent key to None
+#     else:
+#         return None

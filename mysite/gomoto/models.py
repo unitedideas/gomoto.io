@@ -39,6 +39,7 @@ class Bike(models.Model):
     wet_weight = models.FloatField(null=True, blank=True)
     displacement = models.IntegerField(null=True, blank=True)
     seatheight = models.FloatField()
+    img_src = models.CharField(max_length=300, null=True, blank=True)
 
 
     category = models.CharField(
