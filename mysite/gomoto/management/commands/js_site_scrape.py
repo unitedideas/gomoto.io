@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # write the code here
-        page_count = 5
+        page_count = 48
         general_count = 1
         data_list_of_dicts = []
         missed_pages = []
@@ -139,6 +139,8 @@ class Command(BaseCommand):
                     # print('No Data for: ' + key[1])
 
             # Get data from tables
+            cat_list = ['Off-Road', 'Motocross', 'Adventure', 'Trials', 'Mini']
+
 
             data_points = bike_soup.find(class_='panel-pane pane-entity-field pane-node-field-page-sections')
             spans = data_points.find_all('span')
@@ -165,7 +167,7 @@ class Command(BaseCommand):
                     elif bike_dict[key[1]] == 'Electric':
                         bike_dict[key[1]] = 'Electric'
 
-                    if bike_dict['category'] == None:
+                    if bike_dict['category'] not in cat_list:
                         bike_dict['category'] = 'Off-Road'
 
 
@@ -178,9 +180,12 @@ class Command(BaseCommand):
 
             # year
             year = ''.join(re.findall(r'\d{4}', title))
-            bike_dict['year'] = int(year)
+
             if len(year) > 4:
                 year = year[0:4]
+
+            bike_dict['year'] = int(year)
+
 
             # make
             for make in make_list:
