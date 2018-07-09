@@ -3,6 +3,10 @@ import datetime
 
 # Create your models here.
 
+
+
+
+
 class Bike(models.Model):
     OFF_ROAD = 'Off-road'
     MOTOCROSS = 'Motocross'
@@ -14,7 +18,7 @@ class Bike(models.Model):
     ELECTRIC = "Electric"
 
     TYPE_OF_BIKE = (
-        (OFF_ROAD, 'Off-road'),
+        (OFF_ROAD, 'Off-Road'),
         (MOTOCROSS, 'Motocross'),
         (ADVENTURE, 'Adventure'),
         (TRIALS, 'Trials'),
@@ -29,6 +33,11 @@ class Bike(models.Model):
 
     )
 
+    # {'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2019/2018_Kawasaki_KLX_140G.jpg?itok=us-b03Ng',
+    # 'price': 3699, 'displacement': 144, 'seatheight': 34, 'wet_weight': 218, 'dry_weight': None,
+    # 'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'SOHC', 'year': 2019,
+    # 'make': 'Kawasaki', 'model': 'Klx140G'}
+
     year = models.IntegerField(null=True, blank=True)
     make = models.CharField(max_length=300, null=True, blank=True)
     model = models.CharField(max_length=300, null=True, blank=True)
@@ -40,6 +49,7 @@ class Bike(models.Model):
     displacement = models.IntegerField(null=True, blank=True)
     seatheight = models.FloatField()
     img_src = models.CharField(max_length=300, null=True, blank=True)
+    # engine_type = models.CharField(max_length=300, null=True, blank=True)
 
 
     category = models.CharField(
