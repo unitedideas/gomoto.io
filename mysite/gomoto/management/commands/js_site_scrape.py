@@ -44,6 +44,10 @@ def page_session(page_count):
 
 def bike_page(bike_page_url):
     # time.sleep(2)
+
+    if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro':
+        return
+
     bike_dict = {}
 
     bike_page_data = requests.get(bike_page_url)
@@ -62,6 +66,8 @@ def bike_page(bike_page_url):
     bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
     # Getbike image src
+
+
 
     data_points = bike_soup.find(class_='field-image')
 
@@ -214,11 +220,15 @@ table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve
 
 title_keys = ['year', 'make', 'model', ]
 
+missed_pages = [1]
+
 while page_count > 0:
     page_soup = page_session(page_count)
     result_items = page_soup.find_all(class_="result_item")
 
     print('There are ' + str(len(result_items)) + ' items on this page')
+    if str(len(result_items)) == 0:
+        missed_pages.append(page_count)
 
     for item in result_items:
         anchor = item.find_all('a')[0]
@@ -238,6 +248,28 @@ while page_count > 0:
     page_count -= 1
 
     print('Pages Remaining: ' + str(page_count))
+
+
+
+while missed_pages:
+    page_soup = page_session(missed_pages[0])
+    result_items = page_soup.find_all(class_="result_item")
+
+    print('There are ' + str(len(result_items)) + ' items on this page')
+    if str(len(result_items)) == 0:
+        missed_pages.append(page_count)
+
+    for item in result_items:
+        anchor = item.find_all('a')[0]
+
+        sub_url = anchor.get('href')
+        # print(sub_url)
+
+        bike_page_url = full_url(sub_url)
+
+        data_list_of_dicts.append(bike_page(bike_page_url))
+
+    missed_pages.pop(0)
 
 
 
