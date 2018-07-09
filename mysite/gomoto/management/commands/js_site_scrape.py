@@ -210,7 +210,7 @@ make_list = [
     ('yamaha', 'Yamaha'),
     ('zero', 'Zero')
 ]
-page_count = 48
+page_count = 1
 general_count = 1
 data_list_of_dicts = []
 top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
@@ -220,7 +220,7 @@ table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve
 
 title_keys = ['year', 'make', 'model', ]
 
-missed_pages = [1]
+missed_pages = [15]
 
 while page_count > 0:
     page_soup = page_session(page_count)
