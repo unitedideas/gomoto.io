@@ -187,7 +187,7 @@ make_list = [
     ('zero', 'Zero')
 ]
 
-page_count = 8
+page_count = 48
 general_count = 1
 data_list_of_dicts = []
 missed_pages = []
