@@ -8,7 +8,7 @@ base_url = 'https://www.dirtrider.com'
 
 
 def full_url(sub_url):
-    # print('Full url: ' + base_url + sub_url)
+    print('Full url: ' + base_url + sub_url)
     return base_url + sub_url
 
 
@@ -43,7 +43,7 @@ def bike_page(bike_page_url):
     # time.sleep(2)
     bike_dict = {}
 
-    if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro':
+    if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
         bike_dict = {
             'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct',
             'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320,
@@ -142,7 +142,7 @@ def bike_page(bike_page_url):
 
     data_points = bike_soup.find(class_='page-title')
     title = data_points.get_text().lower()
-    print(title)
+    # print(title)
 
     # year
     year = ''.join(re.findall(r'\d{4}', title))
@@ -187,7 +187,7 @@ make_list = [
     ('zero', 'Zero')
 ]
 
-page_count = 48
+page_count = 8
 general_count = 1
 data_list_of_dicts = []
 missed_pages = []
