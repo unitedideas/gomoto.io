@@ -32,7 +32,7 @@ def page_session(page_count):
 
     sess.visit(full_url)
 
-    print('Status: ', sess.status_code())
+    # print('Status: ', sess.status_code())
 
     response = sess.body()
     page_soup = BeautifulSoup(response, "lxml")
@@ -59,7 +59,7 @@ def bike_page(bike_page_url):
 
     # print(bike_page_text)
 
-    print('Visiting the Bike Page URL...')
+    # print('Visiting the Bike Page URL...')
     print(bike_page_url)
 
     print('Status: ' + str(bike_page_data.status_code))
@@ -144,7 +144,7 @@ def bike_page(bike_page_url):
 
     data_points = bike_soup.find(class_='page-title')
     title = data_points.get_text().lower()
-    print(title)
+    # print(title)
 
     # year
     year = ''.join(re.findall(r'\d{4}', title))
@@ -188,7 +188,7 @@ make_list = [
     ('yamaha', 'Yamaha'),
     ('zero', 'Zero')
 ]
-page_count = 1
+page_count = 14
 general_count = 1
 data_list_of_dicts = []
 top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
