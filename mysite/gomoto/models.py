@@ -4,9 +4,6 @@ import datetime
 # Create your models here.
 
 
-
-
-
 class Bike(models.Model):
     OFF_ROAD = 'Off-Road'
     MOTOCROSS = 'Motocross'
@@ -43,13 +40,11 @@ class Bike(models.Model):
     model = models.CharField(max_length=300, null=True, blank=True)
     price =  models.FloatField(null=True, blank=True)
     starter = models.CharField(max_length=300,null=True, blank=True)
-    #for nullable values
     dry_weight = models.FloatField(null=True, blank=True)
     wet_weight = models.FloatField(null=True, blank=True)
     displacement = models.IntegerField(null=True, blank=True)
     seatheight = models.FloatField(null=True, blank=True)
     img_src = models.CharField(max_length=300, null=True, blank=True)
-    # engine_type = models.CharField(max_length=300, null=True, blank=True)
 
 
     category = models.CharField(
