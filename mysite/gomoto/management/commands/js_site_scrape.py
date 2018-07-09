@@ -43,8 +43,6 @@ def bike_page(bike_page_url):
     # time.sleep(2)
     bike_dict = {}
 
-    # bike_page_url = 'https://www.dirtrider.com/2016-husqvarna-701-enduro'
-
     if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro':
         bike_dict = {
             'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct',
@@ -60,9 +58,9 @@ def bike_page(bike_page_url):
     # print(bike_page_text)
 
     # print('Visiting the Bike Page URL...')
-    print(bike_page_url)
+    # print(bike_page_url)
 
-    print('Status: ' + str(bike_page_data.status_code))
+    # print('Status: ' + str(bike_page_data.status_code))
 
     bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
@@ -144,7 +142,7 @@ def bike_page(bike_page_url):
 
     data_points = bike_soup.find(class_='page-title')
     title = data_points.get_text().lower()
-    # print(title)
+    print(title)
 
     # year
     year = ''.join(re.findall(r'\d{4}', title))
@@ -188,9 +186,12 @@ make_list = [
     ('yamaha', 'Yamaha'),
     ('zero', 'Zero')
 ]
-page_count = 14
+
+page_count = 48
 general_count = 1
 data_list_of_dicts = []
+missed_pages = []
+
 top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
                  ('Wet Weight (lbs)', 'wet_weight'), ('Dry Weight (lbs)', 'dry_weight')]
 
@@ -198,15 +199,18 @@ table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve
 
 title_keys = ['year', 'make', 'model', ]
 
-missed_pages = []
-
 while page_count > 0:
     page_soup = page_session(page_count)
     result_items = page_soup.find_all(class_="result_item")
 
-    print('There are ' + str(len(result_items)) + ' items on this page')
-    if str(len(result_items)) == 0:
+    # print('result_items len : ' + str(len(result_items)))
+
+    # print('There are ' + str(len(result_items)) + ' items on this page')
+
+    if len(result_items) == 0:
         missed_pages.append(page_count)
+        print('Adding page ' + str(page_count) + ' to missed_pages')
+        print('Missed pages are ' + str(missed_pages))
     else:
         for item in result_items:
             anchor = item.find_all('a')[0]
@@ -235,9 +239,17 @@ while len(missed_pages) > 0:
 
     print('There are ' + str(len(result_items)) + ' items on this page')
 
-    if str(len(result_items)) == 0:
+    if len(result_items) == 0:
         missed_pages.append(missed_pages[0])
+        print('Adding page ' + str(missed_pages[0]) + ' back to missed_pages')
     else:
+        for i in range(len(missed_pages) - 1, -1, -1):
+            # print(missed_pages[i])
+            if missed_pages[0] == missed_pages[i]:
+                del missed_pages[i]
+                # print('Remaining missed_pages are: ' + str(missed_pages))
+
+        # print(len(missed_pages))
         for item in result_items:
             anchor = item.find_all('a')[0]
 
@@ -248,12 +260,11 @@ while len(missed_pages) > 0:
 
             data_list_of_dicts.append(bike_page(bike_page_url))
 
-        missed_pages.pop(0)
-
     print('Missd Pages Remaining: ' + str(len(missed_pages)))
 
-print('Writting to CSV File...')
+# Write to CSV
 
+print('Writting to CSV File...')
 keys = data_list_of_dicts[0].keys()
 with open('dirt_bike_data.csv', 'w') as output_file:
     dict_writer = csv.DictWriter(output_file, keys)
