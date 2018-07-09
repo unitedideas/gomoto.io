@@ -18,11 +18,13 @@ def full_url(sub_url):
 def page_session(page_count):
     print('Page Count: ' + str(page_count))
     page = '?page=' + str(page_count)
+    print(page)
 
     if page_count == 0:
         full_url = base_url + '/Off-Road-Motorcycle-search-hub'
     else:
-        full_url = base_url + '/Off-Road-Motorcycle-search-hub' + page
+        full_url = base_url + '/Off-Road-Motorcycle-search-hub'+ page
+        print(full_url)
 
     sess = dryscrape.Session()
     print('Visiting the Main Page URL...')
@@ -48,9 +50,12 @@ def bike_page(bike_page_url):
 
     bike_page_text = bike_page_data.content
 
+
+
     # print(bike_page_text)
 
     print('Visiting the Bike Page URL...')
+    print(bike_page_url)
 
     print('Status: ' + str(bike_page_data.status_code))
 
@@ -59,6 +64,8 @@ def bike_page(bike_page_url):
     # Getbike image src
 
     data_points = bike_soup.find(class_='field-image')
+
+
     image = data_points.find('img')
     if image['data-1000src']:
         bike_dict['img_src'] = image['data-1000src']
@@ -90,7 +97,12 @@ def bike_page(bike_page_url):
                 value =  ''.join(re.findall(r'\d+', data_value))
 
             if value:
-                value = int(value)
+                ## try/ except is only here because of 1 edge case int conversion
+                try:
+                    value = int(value)
+                except:
+                    value = 12499
+
             bike_dict[key[1]] = value
             # print(bike_dict[key[1]])
             count += 1
@@ -100,7 +112,7 @@ def bike_page(bike_page_url):
 
     #Get data from tables
 
-    data_points = bike_soup.find(class_='left-cell cell text-cell buyers-guide--specs')
+    data_points = bike_soup.find(class_='panel-pane pane-entity-field pane-node-field-page-sections')
     spans = data_points.find_all('span')
     for key in table_keys:
         value = None
@@ -123,8 +135,7 @@ def bike_page(bike_page_url):
                 bike_dict[key[1]] = 'Two-stroke'
             elif bike_dict[key[1]] == 'Electric':
                 bike_dict[key[1]] = 'Electric'
-            else:
-                bike_dict[key[1]] = 'Four-stroke'
+
 
 
 
@@ -193,7 +204,7 @@ make_list = [
     ('yamaha', 'Yamaha'),
     ('zero', 'Zero')
 ]
-page_count = 1
+page_count = 48
 general_count = 1
 data_list_of_dicts = []
 top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
@@ -213,14 +224,15 @@ while page_count > 0:
         anchor = item.find_all('a')[0]
 
         sub_url = anchor.get('href')
+        # print(sub_url)
 
         bike_page_url = full_url(sub_url)
 
         data_list_of_dicts.append(bike_page(bike_page_url))
 
-        print(data_list_of_dicts)
+        # print(data_list_of_dicts)
 
-        print('\n','\n','\n')
+        # print('\n','\n','\n')
         # print(str(anchor) + '\n')
 
     page_count -= 1
