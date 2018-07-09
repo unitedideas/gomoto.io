@@ -18,15 +18,15 @@ def full_url(sub_url):
 def page_session(page_count):
     print('Page Count: ' + str(page_count))
     page = '?page=' + str(page_count)
-    print(page)
 
     if page_count == 0:
         full_url = base_url + '/Off-Road-Motorcycle-search-hub'
     else:
-        full_url = base_url + '/Off-Road-Motorcycle-search-hub'+ page
+        full_url = base_url + '/Off-Road-Motorcycle-search-hub' + page
         print(full_url)
 
     sess = dryscrape.Session()
+
     print('Visiting the Main Page URL...')
     sess.set_attribute('auto_load_images', False)
 
@@ -39,9 +39,6 @@ def page_session(page_count):
     return page_soup
 
 
-
-
-
 def bike_page(bike_page_url):
     # time.sleep(2)
     bike_dict = {}
@@ -49,14 +46,16 @@ def bike_page(bike_page_url):
     # bike_page_url = 'https://www.dirtrider.com/2016-husqvarna-701-enduro'
 
     if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro':
-        bike_dict = {'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct', 'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320, 'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'SOHC', 'year': 2016, 'make': 'Husqvarna', 'model': '701 Enduro'}
+        bike_dict = {
+            'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct',
+            'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320,
+            'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'SOHC', 'year': 2016, 'make': 'Husqvarna',
+            'model': '701 Enduro'}
         return bike_dict
 
     bike_page_data = requests.get(bike_page_url)
 
     bike_page_text = bike_page_data.content
-
-
 
     # print(bike_page_text)
 
@@ -69,10 +68,7 @@ def bike_page(bike_page_url):
 
     # Getbike image src
 
-
-
     data_points = bike_soup.find(class_='field-image')
-
 
     image = data_points.find('img')
     if image['data-1000src']:
@@ -82,7 +78,7 @@ def bike_page(bike_page_url):
     else:
         bike_dict['img_src'] = None
 
-    #Data for the non-table items
+    # Data for the non-table items
     data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
     # data_values = data_points[count].span.get_text()
     # print(data_values)
@@ -99,10 +95,10 @@ def bike_page(bike_page_url):
             # print(data_value)
             # print('it worked for: ' + key[1])
             value = data_value
-            if key[0]=='MSRP':
+            if key[0] == 'MSRP':
                 # data_value = data_points[count].span.get_text()
                 # re.
-                value =  ''.join(re.findall(r'\d+', data_value))
+                value = ''.join(re.findall(r'\d+', data_value))
 
             if value:
                 ## try/ except is only here because of 1 edge case int conversion
@@ -118,7 +114,7 @@ def bike_page(bike_page_url):
             bike_dict[key[1]] = value
             # print('No Data for: ' + key[1])
 
-    #Get data from tables
+    # Get data from tables
 
     data_points = bike_soup.find(class_='panel-pane pane-entity-field pane-node-field-page-sections')
     spans = data_points.find_all('span')
@@ -144,10 +140,7 @@ def bike_page(bike_page_url):
             elif bike_dict[key[1]] == 'Electric':
                 bike_dict[key[1]] = 'Electric'
 
-
-
-
-    #Get year, make, model
+    # Get year, make, model
 
     data_points = bike_soup.find(class_='page-title')
     title = data_points.get_text().lower()
@@ -160,22 +153,18 @@ def bike_page(bike_page_url):
     # make
     for make in make_list:
         if make[0] in title:
-            bike_dict['make'] = make[1] #Could have used title() method here ¯\_(ツ)_/¯
+            bike_dict['make'] = make[1]  # Could have used title() method here ¯\_(ツ)_/¯
             # print(bike_dict['make'])
 
-        # This is still execution todo item
-        # else:
-        #     hope = ''.join(re.findall(r'\b[^\d\W]+a{1}\b', title))
-        #     bike_dict['make'] = hope
+            # This is still execution todo item
+            # else:
+            #     hope = ''.join(re.findall(r'\b[^\d\W]+a{1}\b', title))
+            #     bike_dict['make'] = hope
             # model
 
             model = ''.join(re.findall(r'(?<=' + make[0] + '\s).*', title))
             bike_dict['model'] = model.title()
             # print(bike_dict['model'])
-
-
-
-
 
     # print(bike_dict)
     return bike_dict
@@ -209,7 +198,7 @@ table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve
 
 title_keys = ['year', 'make', 'model', ]
 
-missed_pages = [15]
+missed_pages = []
 
 while page_count > 0:
     page_soup = page_session(page_count)
@@ -218,52 +207,50 @@ while page_count > 0:
     print('There are ' + str(len(result_items)) + ' items on this page')
     if str(len(result_items)) == 0:
         missed_pages.append(page_count)
+    else:
+        for item in result_items:
+            anchor = item.find_all('a')[0]
 
-    for item in result_items:
-        anchor = item.find_all('a')[0]
+            sub_url = anchor.get('href')
+            # print(sub_url)
 
-        sub_url = anchor.get('href')
-        # print(sub_url)
+            bike_page_url = full_url(sub_url)
 
-        bike_page_url = full_url(sub_url)
+            data_list_of_dicts.append(bike_page(bike_page_url))
 
-        data_list_of_dicts.append(bike_page(bike_page_url))
+            # print(data_list_of_dicts)
 
-        # print(data_list_of_dicts)
-
-        # print('\n','\n','\n')
-        # print(str(anchor) + '\n')
+            # print('\n','\n','\n')
+            # print(str(anchor) + '\n')
 
     page_count -= 1
 
     print('Pages Remaining: ' + str(page_count))
 
+while len(missed_pages) > 0:
 
+    page_soup = page_session(missed_pages[0])
 
-while missed_pages:
-    page = missed_pages[0]
-    page_soup = page_session(page)
     result_items = page_soup.find_all(class_="result_item")
 
     print('There are ' + str(len(result_items)) + ' items on this page')
+
     if str(len(result_items)) == 0:
-        missed_pages.append(page)
+        missed_pages.append(missed_pages[0])
+    else:
+        for item in result_items:
+            anchor = item.find_all('a')[0]
 
-    for item in result_items:
-        anchor = item.find_all('a')[0]
+            sub_url = anchor.get('href')
+            # print(sub_url)
 
-        sub_url = anchor.get('href')
-        # print(sub_url)
+            bike_page_url = full_url(sub_url)
 
-        bike_page_url = full_url(sub_url)
+            data_list_of_dicts.append(bike_page(bike_page_url))
 
-        data_list_of_dicts.append(bike_page(bike_page_url))
-
-    missed_pages.pop(0)
+        missed_pages.pop(0)
 
     print('Missd Pages Remaining: ' + str(len(missed_pages)))
-
-
 
 print('Writting to CSV File...')
 
@@ -272,9 +259,6 @@ with open('dirt_bike_data.csv', 'w') as output_file:
     dict_writer = csv.DictWriter(output_file, keys)
     dict_writer.writeheader()
     dict_writer.writerows(data_list_of_dicts)
-
-
-
 
     #################### NoGo Code Below ################
 
