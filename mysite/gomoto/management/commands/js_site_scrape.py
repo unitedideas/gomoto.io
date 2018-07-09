@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # write the code here
-        page_count = 1
+        page_count = 19
         general_count = 1
         data_list_of_dicts = []
         missed_pages = []
@@ -52,15 +52,24 @@ class Command(BaseCommand):
 
         def bike_page(bike_page_url):
             # time.sleep(2)
-            bike_dict = {}
+            bike_dict = {'img_src': 'https://www.harpersphoto.co.uk/user/products/large/no%20image.gif',
+                    'price': 99999, 'displacement': 0, 'seatheight': 0, 'wet_weight': None, 'dry_weight': None,
+                    'starter': 'Kick', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 1900, 'make': 'Unknown',
+                    'model': 'Unknown'}
 
-            if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
+            if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2014-ktm-150-sx' or bike_page_url == 'https://www.dirtrider.com/2014-triumph-tiger-800-xc-abs-se' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
                 bike_dict = {
                     'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct',
                     'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320,
-                    'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'SOHC', 'year': 2016, 'make': 'Husqvarna',
+                    'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 2016, 'make': 'Husqvarna',
                     'model': '701 Enduro'}
-                return bike_dict
+
+                print('saving to table')
+                print(bike_dict)
+                bike = Bike(**bike_dict)
+                # bike.make = make
+                # bike.year = #...
+                bike.save()
 
             bike_page_data = requests.get(bike_page_url)
 
@@ -86,6 +95,12 @@ class Command(BaseCommand):
                 bike_dict['img_src'] = image['src']
             else:
                 bike_dict['img_src'] = None
+
+
+            if Bike.objects.filter(img_src=bike_dict['img_src']).exists():
+                print('SKIPPING BIKE ' + bike_dict['img_src'])
+                return
+
 
             # Data for the non-table items
             data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
@@ -144,10 +159,16 @@ class Command(BaseCommand):
                     if bike_dict[key[1]] == 'Competition':
                         bike_dict[key[1]] = 'Motocross'
 
+
                     if bike_dict[key[1]] == 'Reed  Valve':
                         bike_dict[key[1]] = 'Two-stroke'
                     elif bike_dict[key[1]] == 'Electric':
                         bike_dict[key[1]] = 'Electric'
+
+                    if bike_dict['category'] == None:
+                        bike_dict['category'] = 'Off-Road'
+
+
 
             # Get year, make, model
 
@@ -158,11 +179,14 @@ class Command(BaseCommand):
             # year
             year = ''.join(re.findall(r'\d{4}', title))
             bike_dict['year'] = int(year)
+            if len(year) > 4:
+                year = year[0:4]
 
             # make
             for make in make_list:
                 if make[0] in title:
                     bike_dict['make'] = make[1]  # Could have used title() method here ¯\_(ツ)_/¯
+
                     # print(bike_dict['make'])
 
                     # This is still execution todo item
@@ -173,11 +197,13 @@ class Command(BaseCommand):
 
                     model = ''.join(re.findall(r'(?<=' + make[0] + '\s).*', title))
                     bike_dict['model'] = model.title()
+
                     # print(bike_dict['model'])
 
-            print(bike_dict)
+            # print(bike_dict)
             # return bike_dict
 
+            print('saving to table')
             bike = Bike(**bike_dict)
             # bike.make = make
             # bike.year = #...
@@ -233,8 +259,10 @@ class Command(BaseCommand):
 
                     bike_page_url = full_url(sub_url)
 
-                    data_list_of_dicts.append(bike_page(bike_page_url))
-
+                    try:
+                        data_list_of_dicts.append(bike_page(bike_page_url))
+                    except:
+                        print('ERROR GETTING BIKE ' + bike_page_url)
                     # print(data_list_of_dicts)
 
                     # print('\n','\n','\n')

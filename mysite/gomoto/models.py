@@ -8,7 +8,7 @@ import datetime
 
 
 class Bike(models.Model):
-    OFF_ROAD = 'Off-road'
+    OFF_ROAD = 'Off-Road'
     MOTOCROSS = 'Motocross'
     ADVENTURE = 'Adventure'
     TRIALS = 'Trials'
@@ -42,17 +42,18 @@ class Bike(models.Model):
     make = models.CharField(max_length=300, null=True, blank=True)
     model = models.CharField(max_length=300, null=True, blank=True)
     price =  models.FloatField(null=True, blank=True)
-    starter = models.CharField(max_length=300)
+    starter = models.CharField(max_length=300,null=True, blank=True)
     #for nullable values
     dry_weight = models.FloatField(null=True, blank=True)
     wet_weight = models.FloatField(null=True, blank=True)
     displacement = models.IntegerField(null=True, blank=True)
-    seatheight = models.FloatField()
+    seatheight = models.FloatField(null=True, blank=True)
     img_src = models.CharField(max_length=300, null=True, blank=True)
     # engine_type = models.CharField(max_length=300, null=True, blank=True)
 
 
     category = models.CharField(
+        null=True, blank=True,
         max_length=300,
         choices=TYPE_OF_BIKE,
         default=OFF_ROAD,
@@ -66,4 +67,4 @@ class Bike(models.Model):
 
 
     def __str__(self):
-        return self.make + " " + self.model
+        return str(self.year) + ' ' + self.make + " " + self.model
