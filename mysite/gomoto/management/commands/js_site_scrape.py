@@ -44,11 +44,13 @@ def page_session(page_count):
 
 def bike_page(bike_page_url):
     # time.sleep(2)
+    bike_dict = {}
+
+    # bike_page_url = 'https://www.dirtrider.com/2016-husqvarna-701-enduro'
 
     if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro':
-        return
-
-    bike_dict = {}
+        bike_dict = {'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct', 'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320, 'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'SOHC', 'year': 2016, 'make': 'Husqvarna', 'model': '701 Enduro'}
+        return bike_dict
 
     bike_page_data = requests.get(bike_page_url)
 
@@ -174,21 +176,8 @@ def bike_page(bike_page_url):
 
 
 
-    # bike = Bike()
-    # bike.make = make
-    #     if key in str(data_points):
-    #         print('it worked for: ' + key)
 
-    #         class="page-title"
-
-    # table_data_points = ""
-    #
-    # bike = Bike()
-    #
-    # bike.year = #...
-    # # ...
-    # bike.save()
-
+    # print(bike_dict)
     return bike_dict
 
 
@@ -252,12 +241,13 @@ while page_count > 0:
 
 
 while missed_pages:
-    page_soup = page_session(missed_pages[0])
+    page = missed_pages[0]
+    page_soup = page_session(page)
     result_items = page_soup.find_all(class_="result_item")
 
     print('There are ' + str(len(result_items)) + ' items on this page')
     if str(len(result_items)) == 0:
-        missed_pages.append(page_count)
+        missed_pages.append(page)
 
     for item in result_items:
         anchor = item.find_all('a')[0]
@@ -270,6 +260,8 @@ while missed_pages:
         data_list_of_dicts.append(bike_page(bike_page_url))
 
     missed_pages.pop(0)
+
+    print('Missd Pages Remaining: ' + str(len(missed_pages)))
 
 
 
@@ -285,6 +277,21 @@ with open('dirt_bike_data.csv', 'w') as output_file:
 
 
     #################### NoGo Code Below ################
+
+    # bike = Bike()
+    # bike.make = make
+    #     if key in str(data_points):
+    #         print('it worked for: ' + key)
+
+    #         class="page-title"
+
+    # table_data_points = ""
+    #
+    # bike = Bike()
+    #
+    # bike.year = #...
+    # # ...
+    # bike.save()
 
     # for anchor in item.find_all('a'):
     #     if general_count % 2 == 0:
