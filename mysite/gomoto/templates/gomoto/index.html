@@ -16,111 +16,187 @@
         text-align: center;
         padding-top: 1%;
     }
+
+    .box {
+        width: 50%;
+        height: 100px;
+        background: #000;
+        color: #fff;
+        font-size: 2em;
+        text-align: center;
+        padding-top: 50px;
+        font-family: 'Arial';
+        font-weight: bold;
+    }
+
+    /* The slider itself */
+    .slider {
+        -webkit-appearance: none; /* Override default CSS styles */
+        appearance: none;
+        height: 25px; /* Specified height */
+        background: #d3d3d3; /* Grey background */
+        outline: none; /* Remove outline */
+        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+        opacity: 1; /* Fully shown on mouse-over */
+    }
+
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #4CAF50; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+
+    .slider::-moz-range-thumb {
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #4CAF50; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
+
 </style>
+
+
 <body>
-<div>
-    <div class="halign-wrapper" id="nav_bar" style="background: black;"><img style="width: 30%; height: 20%;"
-                                                                             src="images/GoMoto_Logo.png" height="475"
-                                                                             width="2941"/></div>
-</div>
-
-<div class="row">
-    <div style="background-color: yellowgreen" class="col s10">left</div>
-
-
-    <div style="background-color: greenyellow" class="col s2">
-        <table class="highlight">
-            <thead>
-            <tr>
-                <th>Prioritized</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr>
-                <td><a class="btn right">Light Weight</a></td>
-            </tr>
-            <tr>
-                <td><a class="btn right">Light Weight</a></td>
-            </tr>
-            <tr>
-                <td><a class="btn right">Light Weight</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<!--<div class="section no-pad-bot" id="index-banner">-->
-<!--<div class="container">-->
-
-<!--</div>-->
-<!--</div>-->
-
-
-<!--<div class="container">-->
-<!--<div class="section">-->
-
-<!--&lt;!&ndash;   Icon Section   &ndash;&gt;-->
-<!--<div class="col">-->
-<!--<div>-->
-<!--<div class='s3'>-->
-
-
-<!--<a id="scale-demo" href="#!" class="btn-floating btn-large scale-transition">-->
-<!--<i class="material-icons">add</i>-->
-<!--</a>-->
-
-<!--&lt;!&ndash; Scaled out &ndash;&gt;-->
-<!--<a id="scale-demo" href="#!" class="btn-floating btn-large scale-transition scale-out">-->
-<!--<i class="material-icons">add</i>-->
-<!--</a>-->
-<!--<h2 class="left light-blue-text"><img style="width: 70%;"-->
-<!--src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">-->
-<!--</h2>-->
-<!--<h5 class="center">Bike 1</h5>-->
-
-<!--<p class="light center">Bike 1 Data</p>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="col s12 m4">-->
-<!--<div class="icon-block">-->
-<!--<h2 class="left light-blue-text"><img style="width: 70%;"-->
-<!--src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">-->
-<!--</h2>-->
-<!--<h5 class="center">Bike 2</h5>-->
-
-<!--<p class="light center">Bike 2 Data</p>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="col s12 m4">-->
-<!--<div class="icon-block">-->
-<!--<h2 class="left light-blue-text"><img style="width: 70%;"-->
-<!--src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">-->
-<!--</h2>-->
-<!--<h5 class="center">Bike 3</h5>-->
-
-<!--<p class="light center">Bike 3 Data</p>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--<br><br>-->
-<!--</div>-->
-
-<footer>
+<div id="app">
     <div>
+        <div id="nav_bar" style="background: black;">
+            <img style="width: 30%; height: 20%;" src="images/GoMoto_Logo.png" height="475" width="2941"/>
+        </div>
+    </div>
+
+    <div id="body_container" class="row">
+        <div id="bike_container" style="background-color: yellowgreen" class="col s10">
+
+            <div class="col s10">
+                <div class="icon-block">
+                    <h2 class="left light-blue-text center"><img style="width: 70%;"
+                                                                 src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">
+                    </h2>
+
+                    <h5 class="center">Bike 2</h5>
+
+                    <p class="light center">Bike 2 Data</p>
+                </div>
+            </div>
+            <div class="col s10">
+                <div class="icon-block">
+                    <h2 class="left light-blue-text center"><img style="width: 70%;"
+                                                                 src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">
+                    </h2>
+
+                    <h5 class="center">Bike 2</h5>
+
+                    <p class="light center">Bike 2 Data</p>
+                </div>
+            </div>
+            <div class="col s10">
+                <div class="icon-block">
+                    <h2 class="left light-blue-text center"><img style="width: 70%;"
+                                                                 src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">
+                    </h2>
+
+                    <h5 class="center">Bike 2</h5>
+
+                    <p class="light center">Bike 2 Data</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" v-model="sliderValue" @input="changeWidth" class="slider"
+                       id="myRange">
+            </div>
+            <div class="box" v-bind:style="{width: computedWidth, backgroundColor: computedColor}">
+                {{ width }}%
+            </div>
+        </div>
+
+        <footer>
+            <div>
+
+            </div>
+        </footer>
 
     </div>
-</footer>
+    <!--Scripts-->
+    <script>
+        let app = new Vue({
+            el: '#app',
+            // delimiters: ['[[', ']]'],
+            data: {
+                bike: [],
+                year: '',
+                make: '',
+                model: '',
+                price: '',
+                starter: '',
+                dry_weight: '',
+                wet_weight: '',
+                displacement: '',
+                seatheight: '',
+                img_src: '',
+                category: '',
+                engine_type: '',
+                sliderValue: 50,
+                width: 10,
+
+            },
+            computed: {
+                computedWidth() {
+                    return this.width + '%';
+                },
+                computedColor() {
+                    return `rgba(${this.width},${this.width * 2},${this.width * 1.2})`
+                }
+            },
 
 
-<!--  Scripts-->
-<!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
-<!--<script src="js/materialize.js"></script>-->
-<!--<script src="js/init.js"></script>-->
+            methods: {
 
+                changeWidth() {
+                    this.width = this.sliderValue
+                },
+
+
+                search_by_title() {
+                    let app = this
+                    this.search_author = 'all'
+                    text = this.search_title
+                    if (text === '') text = 'all'
+                    axios.get("{% url 'library:filter_title' %}?search_title=" + text)
+                        .then(response => {
+                            this.books = response.data.books
+                        })
+                },
+
+
+                search_by_author() {
+                    let app = this
+                    this.search_title = ''
+                    axios.get("{% url 'library:filter_author' %}?search_author=" + this.search_author)
+                        .then(response => {
+                            this.books = response.data.books
+                        })
+                }
+            },
+
+            created: function () {
+                this.search_by_title()
+            }
+        })
+    </script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
 </body>
 </html>
