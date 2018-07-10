@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
-# Create your views here.
+import json
+from .models import Bike
 
 def index(request):
-    context = 'Hello World'
-    return HttpResponse(context)
+    return render(request, 'gomoto/index.html', {})
+
+
