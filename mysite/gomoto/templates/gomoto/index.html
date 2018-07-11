@@ -35,12 +35,17 @@
         background-color: rgba(111, 111, 111, .1);
     }
 
-    #m_buttons{
+    #m_buttons {
         margin: 5px;
     }
 
-    .font_30{
+    .font_30 {
         font-size: 30px
+    }
+
+    .btn-large {
+        width: 100%;
+
     }
 </style>
 
@@ -54,7 +59,7 @@
         <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
 
-<!--Start of the bike body (10/12 boxes)-->
+    <!--Start of the bike body (10/12 boxes)-->
     <div id="body_container" class="row">
         <div id="bike_container" class="col s9 greey">
             <div v-for="(bike, index) in bikes">
@@ -70,15 +75,19 @@
                 </div>
             </div>
         </div>
-<!--Start of the Sidebar (2/12 boxes)-->
-    <draggable style="background-color: greenyellow" class="dragArea col s3" v-model="list1" @change="log">
-        <div v-for="(element, index) in list1">
-            <div class="center lrg">
-                <a id="m_buttons" class="waves-effect btn-large"><i style=" font-size: 30px" class="material-icons left">arrow_upward</i>[[element.name]] [[index]]</a>
+        <!--Start of the Sidebar (2/12 boxes)-->
+        <h5 class="center">Prioritize Me</h5>
+        <draggable style="background-color: greenyellow" class="dragArea col s3" v-model="list1" @change="log">
+            <div v-for="(element, index) in list1">
+                <div class="center lrg">
+                    <a id="m_buttons" class="btn-large"><i style=" font-size: 30px" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
+                        [[index]]</a>
+                </div>
             </div>
-        </div>
-    </draggable>
+        </draggable>
     </div>
+
+
     <!--
     arrow_back
     arrow_downward
@@ -89,7 +98,6 @@
     arrow_upward
     keyboard_arrow_down
     keyboard_arrow_up
-
     -->
 
     <script>
