@@ -7,7 +7,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <title>Starter Template - Materialize</title>
+    <title>GoMoto.io</title>
 
     <!-- Materialize CSS  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
@@ -104,53 +104,63 @@
                 <tr>
                     <td><a class="btn">CC</a></td>
                 </tr>
-                <tr>
-                    <td><a class="btn">year</a></td>
-                </tr>
+
                 </tbody>
             </table>
         </div>
 
-        <draggable v-model="myArray" @start="drag=true" @end="drag=false">
-           <div v-for="element in myArray" :key="element.id">[[element.name]]</div>
+        <h5>List 1 draggable</h5>
+        <draggable class="dragArea" v-model="list1" @change="log">
+                <div v-for="(element, index) in list1">
+                    <tr>
+                        <td><a class="btn">[[element.name]] [[index]]</a></td>
+                    </tr>
+                </div>
+
         </draggable>
 
+        <script>
+            let app = new Vue({
+                el: '#app',
+                delimiters: ['[[', ']]'],
+                data: {
+                    bike: [{
+                        year: '',
+                        make: '',
+                        model: '',
+                        price: '',
+                        starter: '',
+                        dry_weight: '',
+                        wet_weight: '',
+                        displacement: '',
+                        seatheight: '',
+                        img_src: '',
+                        category: '',
+                        engine_type: ''
+                    }],
+
+                    list1: [{
+                        id: 1,
+                        name: 'shane'
+                    }, {
+                        id: 2,
+                        name: 'tim'
+                    }, {
+                        id: 3,
+                        name: 'nate'
+                    }, {
+                        id: 4,
+                        name: 'steve'
+                    }],
+                },
+                methods: {
+                    log: function () {
+                        console.log('e.moved.newIndex');
+                    }
+                },
+
+            })
+        </script>
     </div>
-
-    <script>
-        let app = new Vue({
-            el: '#app',
-            delimiters: ['[[', ']]'],
-            data: {
-                bike: ['One', 'two', 'three'],
-                year: '',
-                make: '',
-                model: '',
-                price: '',
-                starter: '',
-                dry_weight: '',
-                wet_weight: '',
-                displacement: '',
-                seatheight: '',
-                img_src: '',
-                category: '',
-                engine_type: '',
-                sliderValue: 50,
-                width: 10,
-                myArray: [{
-                    id: 1,
-                    name: 'ted'
-                },{
-                    id:2,
-                    name: 'darcy'
-                },{
-                    id:3,
-                    name: 'johan'
-                }]
-            },
-
-        })
-    </script>
-</div>
 </body>
 </html>
