@@ -31,136 +31,138 @@
         padding-top: 1%;
     }
 
+    .greey {
+        background-color: rgba(111, 111, 111, .1);
+    }
+
+    #m_buttons{
+        margin: 5px;
+    }
+
+    .font_30{
+        font-size: 30px
+    }
 </style>
 
 
 <body>
-<div id="app">
-    <div>
-        <div id="nav_bar" style="background: black;">
-            {% load static %}
-            <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
-        </div>
+<div class="container" id="app">
+
+
+    <!--Start Navbar-->
+    <div id="nav_bar" style="background: black;">
+        <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
 
+<!--Start of the bike body (10/12 boxes)-->
     <div id="body_container" class="row">
-        <div id="bike_container" style="background-color: yellowgreen" class="col s10">
-
-            <div class="col s10">
-                <div class="icon-block">
-                    <h2 class="left light-blue-text center"><img style="width: 40%;"
-                                                                 src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">
-                    </h2>
-
-                    <h5 class="center">Bike 2</h5>
-
-                    <p class="light center">Bike 2 Data</p>
-                </div>
-            </div>
-            <div class="col s10">
-                <div class="icon-block">
-                    <h2 class="left light-blue-text center"><img style="width: 40%;"
-                                                                 src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">
-                    </h2>
-
-                    <h5 class="center">Bike 2</h5>
-
-                    <p class="light center">Bike 2 Data</p>
-                </div>
-            </div>
-            <div class="col s10">
-                <div class="icon-block">
-                    <h2 class="left light-blue-text center"><img style="width: 40%;"
-                                                                 src="https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg">
-                    </h2>
-
-                    <h5 class="center">Bike 3</h5>
-
-                    <p class="light center">Bike 3 Data</p>
+        <div id="bike_container" class="col s9 greey">
+            <div v-for="(bike, index) in bikes">
+                <div class="row">
+                    <div class="icon-block">
+                        <img class="left light-blue-text center" style="width: 50%"
+                             v-bind:src="bike.img_src">
+                        <div class=" s2">
+                            <h5 class="center">[[bike.year]] [[bike.make]] [[bike.model]]</h5>
+                            <p class="light center">Bike 1 Data</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div style="background-color: greenyellow" class="col s2">
-            <table class="highlight centered">
-                <thead>
-                <tr>
-                    <th>Prioritized</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td><a class="btn">[[bike]]</a></td>
-                </tr>
-                <tr>
-                    <td><a class="btn">Seat Height</a></td>
-                </tr>
-                <tr>
-                    <td><a class="btn">price</a></td>
-                </tr>
-                <tr>
-                    <td><a class="btn">hp</a></td>
-                </tr>
-                <tr>
-                    <td><a class="btn">CC</a></td>
-                </tr>
-
-                </tbody>
-            </table>
+<!--Start of the Sidebar (2/12 boxes)-->
+    <draggable style="background-color: greenyellow" class="dragArea col s3" v-model="list1" @change="log">
+        <div v-for="(element, index) in list1">
+            <div class="center lrg">
+                <a id="m_buttons" class="waves-effect btn-large"><i style=" font-size: 30px" class="material-icons left">arrow_upward</i>[[element.name]] [[index]]</a>
+            </div>
         </div>
-
-        <h5>List 1 draggable</h5>
-        <draggable class="dragArea" v-model="list1" @change="log">
-                <div v-for="(element, index) in list1">
-                    <tr>
-                        <td><a class="btn">[[element.name]] [[index]]</a></td>
-                    </tr>
-                </div>
-
-        </draggable>
-
-        <script>
-            let app = new Vue({
-                el: '#app',
-                delimiters: ['[[', ']]'],
-                data: {
-                    bike: [{
-                        year: '',
-                        make: '',
-                        model: '',
-                        price: '',
-                        starter: '',
-                        dry_weight: '',
-                        wet_weight: '',
-                        displacement: '',
-                        seatheight: '',
-                        img_src: '',
-                        category: '',
-                        engine_type: ''
-                    }],
-
-                    list1: [{
-                        id: 1,
-                        name: 'shane'
-                    }, {
-                        id: 2,
-                        name: 'tim'
-                    }, {
-                        id: 3,
-                        name: 'nate'
-                    }, {
-                        id: 4,
-                        name: 'steve'
-                    }],
-                },
-                methods: {
-                    log: function () {
-                        console.log('e.moved.newIndex');
-                    }
-                },
-
-            })
-        </script>
+    </draggable>
     </div>
+    <!--
+    arrow_back
+    arrow_downward
+    arrow_drop_down
+    arrow_drop_down_circle
+    arrow_drop_up
+    arrow_forward
+    arrow_upward
+    keyboard_arrow_down
+    keyboard_arrow_up
+
+    -->
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            delimiters: ['[[', ']]'],
+            data: {
+                bikes: [{
+                    year: '2000',
+                    make: 'Suzuki',
+                    model: 'dzr 400',
+                    price: '$9999',
+                    starter: 'Electric/ Kick',
+                    dry_weight: '',
+                    wet_weight: '305 lbs',
+                    displacement: '399 cc',
+                    seatheight: '36 in',
+                    img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
+                    category: 'Adventure',
+                    engine_type: 'Four-Stroke'
+                },
+                    {
+                        year: '2015',
+                        make: 'KTM',
+                        model: 'ecx 500',
+                        price: '$12000',
+                        starter: 'electric',
+                        dry_weight: '221 lbs',
+                        wet_weight: '',
+                        displacement: '505 cc',
+                        seatheight: '38 in',
+                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
+                        category: 'Off-Road',
+                        engine_type: 'Four-Stroke'
+                    },
+                    {
+                        year: '1999',
+                        make: 'Yamaha',
+                        model: 'XL 250',
+                        price: '$9000',
+                        starter: 'Kick',
+                        dry_weight: '',
+                        wet_weight: '190 lbs',
+                        displacement: '445 cc',
+                        seatheight: '37 in',
+                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
+                        category: 'MX',
+                        engine_type: 'Two-Stroke'
+                    }],
+
+                list1: [{
+                    id: 1,
+                    name: 'shane'
+                }, {
+                    id: 2,
+                    name: 'tim'
+                }, {
+                    id: 3,
+                    name: 'nate'
+                }, {
+                    id: 4,
+                    name: 'steve'
+                }],
+            },
+            methods: {
+                log: function () {
+                    console.log('e.moved.newIndex');
+                }
+            },
+
+        })
+    </script>
+</div>
+</div>
 </body>
 </html>
