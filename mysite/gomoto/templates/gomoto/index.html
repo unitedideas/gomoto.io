@@ -29,6 +29,7 @@
     #nav_bar {
         text-align: center;
         padding-top: 1%;
+        margin: 0;
     }
 
     .greey {
@@ -39,54 +40,93 @@
         margin: 5px;
     }
 
-    .font_30 {
-        font-size: 30px
-    }
-
     .btn-large {
         width: 100%;
+        color: black;
+        background-color: #3cbcff;
+        font-size: 12px;
+        padding: 5px;
+    }
 
+    #main_content {
+        background-image: image(GoMoto_Logho01(4).png);
+        padding: 0;
+        margin: 0;
+        min-width: 700px;
+    }
+
+    #bike_box {
+        padding: 10px;
+        padding-right: 0;
+        margin-bottom: 20px;
     }
 </style>
 
-
 <body>
 <div class="container" id="app">
-
 
     <!--Start Navbar-->
     <div id="nav_bar" style="background: black;">
         <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
 
-    <!--Start of the bike body (10/12 boxes)-->
-    <div id="body_container" class="row">
-        <div id="bike_container" class="col s9 greey">
-            <div v-for="(bike, index) in bikes">
-                <div class="row">
-                    <div class="icon-block">
-                        <img class="left light-blue-text center" style="width: 50%"
-                             v-bind:src="bike.img_src">
-                        <div class=" s2">
-                            <h5 class="center">[[bike.year]] [[bike.make]] [[bike.model]]</h5>
-                            <p class="light center">Bike 1 Data</p>
+    <!--Start of the bike body (9/12 boxes)-->
+    <div id="main_content" class="greey">
+        <div id="body_container" class="row">
+            <div id="bike_container" class="col s9" style="padding-right: 0px; padding-top: 10px">
+                <div v-for="(bike, index) in bikes">
+                    <div id="bike_box" class=" z-depth-2" style="padding: 10px; margin-bottom: 20px">
+                        <div class="icon-block row" style="margin: 0; padding: 7px">
+                            <img class=" light-blue-text left z-depth-2" style="width: 50%;"
+                                 v-bind:src="bike.img_src">
+                            <div>
+                                <h5 class="center">[[bike.year]] [[bike.make]] [[bike.model]]</h5>
+                                <table class=" highlight">
+                                    <thead>
+                                    <tr>
+                                        <th>Price</th>
+                                        <th>Weight</th>
+                                        <th>Starter</th>
+                                        <th>Displacement</th>
+                                        <th>Seat Height</th>
+                                        <th>Category</th>
+                                        <th>Engine Type</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>[[bike.price]]</td>
+                                        <td>[[bike.weight]]</td>
+                                        <td>[[bike.starter]]</td>
+                                        <td>[[bike.displacement]]</td>
+                                        <td>[[bike.seatheight]]</td>
+                                        <td>[[bike.category]]</td>
+                                        <td>[[bike.engine_type]]</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Start of the Sidebar (2/12 boxes)-->
-        <h5 class="center">Prioritize Me</h5>
-        <draggable style="background-color: greenyellow" class="dragArea col s3" v-model="list1" @change="log">
-            <div v-for="(element, index) in list1">
-                <div class="center lrg">
-                    <a id="m_buttons" class="btn-large"><i style=" font-size: 30px" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
-                        [[index]]</a>
-                </div>
-            </div>
-        </draggable>
-    </div>
 
+            <h5 class="center"> Prioritize Me</h5>
+
+            <!--Start of the Sidebar (3/12 boxes)-->
+            <draggable style="padding-right: 10px; padding-left: 3px" class="dragArea col s3" v-model="list1"
+                       @change="log">
+                <div v-for="(element, index) in list1">
+                    <div class="center">
+                        <div id="m_buttons" class="btn-large"><i style=" font-size: 20px;" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
+                            [[index]]
+                        </div>
+                    </div>
+                </div>
+            </draggable>
+        </div>
+    </div>
 
     <!--
     arrow_back
@@ -117,7 +157,8 @@
                     seatheight: '36 in',
                     img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
                     category: 'Adventure',
-                    engine_type: 'Four-Stroke'
+                    engine_type: 'Four-Stroke',
+                    weight: '305 lbs'
                 },
                     {
                         year: '2015',
@@ -131,7 +172,8 @@
                         seatheight: '38 in',
                         img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
                         category: 'Off-Road',
-                        engine_type: 'Four-Stroke'
+                        engine_type: 'Four-Stroke',
+                        weight: '221 lbs'
                     },
                     {
                         year: '1999',
@@ -145,7 +187,8 @@
                         seatheight: '37 in',
                         img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
                         category: 'MX',
-                        engine_type: 'Two-Stroke'
+                        engine_type: 'Two-Stroke',
+                        weight: '190 lbs'
                     }],
 
                 list1: [{
