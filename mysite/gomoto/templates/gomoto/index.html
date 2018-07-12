@@ -32,12 +32,13 @@
         margin: 0;
     }
 
-    .greey {
-        background-color: rgba(111, 111, 111, .1);
+    .background_color {
+        background-color: ;
     }
 
     #m_buttons {
         margin: 5px;
+        text-align: left;
     }
 
     .btn-large {
@@ -60,28 +61,31 @@
         padding-right: 0;
         margin-bottom: 20px;
     }
+
+    h5{
+        font-family: "American Typewriter";
+    }
+
 </style>
 
 <body>
-<div class="container" id="app">
+<div style="" id="app">
 
     <!--Start Navbar-->
-    <div id="nav_bar" style="background: black;">
+    <div id="nav_bar" style="padding-top: 20px; margin: 0px">
         <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
 
     <!--Start of the bike body (9/12 boxes)-->
-    <div id="main_content" class="greey">
+    <div id="main_content" class="background_color" style= "padding: 0px; margin: 0px">
         <div id="body_container" class="row">
-            <div id="bike_container" class="col s9" style="padding-right: 0px; padding-top: 10px">
+            <div id="bike_container" class="col s10" style="padding-right: 0px; padding-top: 10px">
                 <div v-for="(bike, index) in bikes">
-                    <div id="bike_box" class=" z-depth-2" style="padding: 10px; margin-bottom: 20px">
-                        <div class="icon-block row" style="margin: 0; padding: 7px">
-                            <img class=" light-blue-text left z-depth-2" style="width: 50%;"
-                                 v-bind:src="bike.img_src">
-                            <div>
-                                <h5 class="center">[[bike.year]] [[bike.make]] [[bike.model]]</h5>
-                                <table class=" highlight">
+                    <div id="bike_box" class=" z-depth-2" style="padding: 5px; margin-bottom: 20px">
+                        <div class="icon-block row" style="padding: 15px">
+                            <img class=" light-blue-text left z-depth-2 col s5" style="width: 40%; " v-bind:src="bike.img_src">
+                                <h4 class="center" style="padding-top: 4%;">[[bike.year]] [[bike.make]] [[bike.model]]</h4>
+                                <table align="center" class="centered highlight col l7" style="margin-left: 10px; margin-top: 30px">
                                     <thead>
                                     <tr>
                                         <th>Price</th>
@@ -106,20 +110,19 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <h5 class="center"> Prioritize Me</h5>
+            <h5 class="center" style="padding-top: 10%;"> Prioritize Me</h5>
 
             <!--Start of the Sidebar (3/12 boxes)-->
-            <draggable style="padding-right: 10px; padding-left: 3px" class="dragArea col s3" v-model="list1"
+            <draggable style="padding-left: 3px" class="dragArea col s2" v-model="list1"
                        @change="log">
                 <div v-for="(element, index) in list1">
                     <div class="center">
-                        <div id="m_buttons" class="btn-large"><i style=" font-size: 20px;" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
+                        <div id="m_buttons" class="btn-large"><i style=" font-size: 30px;" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
                             [[index]]
                         </div>
                     </div>
@@ -199,7 +202,19 @@
                     name: 'tim'
                 }, {
                     id: 3,
+                    name: 'godfree'
+                },{
+                    id: 3,
+                    name: 'matthew'
+                },{
+                    id: 3,
+                    name: 'shitner'
+                },{
+                    id: 3,
                     name: 'nate'
+                },{
+                    id: 3,
+                    name: 'dang'
                 }, {
                     id: 4,
                     name: 'steve'
@@ -213,7 +228,6 @@
 
         })
     </script>
-</div>
 </div>
 </body>
 </html>
