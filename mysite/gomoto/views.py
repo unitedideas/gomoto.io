@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from statistics import stdev
+import json, numpy
 
-import json
 from .models import Bike
 
 def index(request):
@@ -9,10 +10,60 @@ def index(request):
 
 
 def get_bikes(request):
+    priorities_list = json.loads(request.body)
+    print('Hi There')
+    print(priorities_list)
 
-    todo_items = TodoAjaxItem.objects.all()
-    data = {'todo_items': []}
-    for todo_item in todo_items:
-        data['todo_items'].append(todo_item.toDictionary())
+    bikes = Bike.objects.filter('price' != None)
 
-    return JsonResponse(data)
+    price_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    seat_height_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    price_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    price_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    price_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    price_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    price_data =[]
+    for bike in bikes:
+        if bike.price is not None:
+            data.append(int(bike.price))
+    price_standard_dev = stdev(data)
+    print(standard_dev)
+
+    return render(request, 'gomoto/index.html', {})
+

@@ -22,6 +22,8 @@
     <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.16.0/vuedraggable.min.js"></script>
 
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 
@@ -85,11 +87,11 @@
                     <div id="bike_box" class=" z-depth-2"
                          style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
                         <div class="icon-block row" style="padding: 15px; ">
-                            <img class=" light-blue-text left z-depth-2 col s5" style="width: 40%; margin: .75rem
+                            <img class=" light-blue-text left z-depth-2 col s5" style="width:35%; margin: .75rem
                             ;border-style: solid; border-color: black;border-width: 10px;padding: 0; "
                                  v-bind:src="bike.img_src">
                             <h4 class="center" style="padding-top: 4%;">[[bike.year]] [[bike.make]] [[bike.model]]</h4>
-                            <table align="center" class="centered highlight col s6 left" style="margin-left: 65px;">
+                            <table align="center" class="centered highlight col s10 l6 left" style="margin-left: 20px;">
                                 <thead>
                                 <tr>
                                     <th>Price</th>
@@ -123,15 +125,15 @@
             <div id="logo">
                 <img style=" display: block; width: 15%;margin: auto;"
                      src="{% static 'gomoto/images/GoMoto_mt_bg.png' %}"/>
+                <h5 class="center" style="padding-top: 1%;"> Prioritize Me</h5>
+
             </div>
-            <h5 class="center" style="padding-top: 1%;"> Prioritize Me</h5>
             <!--Start of the Sidebar (3/12 boxes)-->
-            <draggable style="padding-left: 3px" class="dragArea col s2" v-model="list1"
-                       @change="log">
-                <div v-for="(element, index) in list1">
+            <draggable style="padding-left: 3px" class="dragArea col s2 right" v-model="options"
+                       @change="get_bikes">
+                <div v-for="(element, index) in options">
                     <div class="center">
                         <div id="m_buttons" class="btn-large"><i style=" font-size: 30px;" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
-                            [[index]]
                         </div>
                     </div>
                 </div>
@@ -202,41 +204,55 @@
                         weight: '190 lbs'
                     }],
 
-                list1: [{
-                    id: 1,
-                    name: 'shane'
+                options: [{
+                    id: 'price',
+                    name: 'Low Price'
                 }, {
-                    id: 2,
-                    name: 'tim'
+                    id: 'seatheight',
+                    name: 'Low Seat Height'
                 }, {
-                    id: 3,
-                    name: 'godfree'
+                    id: 'weight',
+                    name: 'Light Weight'
                 }, {
-                    id: 4,
-                    name: 'matthew'
+                    id: 'year',
+                    name: 'Newer Year'
                 }, {
-                    id: 5,
-                    name: 'shitner'
+                    id: 'displacement',
+                    name: 'More CC'
                 }, {
-                    id: 6,
-                    name: 'nate'
-                }, {
-                    id: 7,
-                    name: 'dang'
-                }, {
-                    id: 8,
-                    name: 'steve'
+                    id: 'starter',
+                    name: 'Electric Start'
                 }],
             },
             methods: {
-                log: function (e) {
-                    output_list = []
-                    for (i = 0; i < cars.length; i++) {
-                        text += cars[i] + "<br>";
+
+                get_bikes: function () {
+                    let app = this
+                    priorities_list = []
+
+                    for (i = 0; i < app.options.length; i++) {
+                        priorities_list.push(app.options[i].id)
                     }
-                    console.log(this.list1[1].name)
-                    console.log(this.list1)
+                    console.log(priorities_list)
+                    axios.post("{% url 'gomoto:get_bikes' %}", priorities_list, {
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        }
+                    })
+                        .then(function (response) {
+                            app.bikes = response.data.bikes
+                        })
+                },
+
+                nested_unicorns: function (e) {
+                    log(e)
+                    get_bikes()
+                },
+
+                created: function () {
+                    this.get_bikes()
                 }
+
             },
 
 
@@ -245,3 +261,50 @@
 </div>
 </body>
 </html>
+
+
+<!--{
+                    year: '2000',
+                    make: 'Suzuki',
+                    model: 'dzr 400',
+                    price: '$9999',
+                    starter: 'Electric/ Kick',
+                    dry_weight: '',
+                    wet_weight: '305 lbs',
+                    displacement: '399 cc',
+                    seatheight: '36 in',
+                    img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
+                    category: 'Adventure',
+                    engine_type: 'Four-Stroke',
+                    weight: '305 lbs'
+                },
+                    {
+                        year: '2015',
+                        make: 'KTM',
+                        model: 'ecx 500',
+                        price: '$12000',
+                        starter: 'electric',
+                        dry_weight: '221 lbs',
+                        wet_weight: '',
+                        displacement: '505 cc',
+                        seatheight: '38 in',
+                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
+                        category: 'Off-Road',
+                        engine_type: 'Four-Stroke',
+                        weight: '221 lbs'
+                    },
+                    {
+                        year: '1999',
+                        make: 'Yamaha',
+                        model: 'XL 250',
+                        price: '$9000',
+                        starter: 'Kick',
+                        dry_weight: '',
+                        wet_weight: '190 lbs',
+                        displacement: '445 cc',
+                        seatheight: '37 in',
+                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
+                        category: 'MX',
+                        engine_type: 'Two-Stroke',
+                        weight: '190 lbs'
+                    }-->
