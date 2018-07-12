@@ -33,7 +33,8 @@
     }
 
     .background_color {
-        background-color: ;
+        background-color: grey;
+        z-index: -1;
     }
 
     #m_buttons {
@@ -44,7 +45,7 @@
     .btn-large {
         width: 100%;
         color: black;
-        background-color: #3cbcff;
+        background-color: #ff9900;
         font-size: 12px;
         padding: 5px;
     }
@@ -72,7 +73,7 @@
 <div style="" id="app">
 
     <!--Start Navbar-->
-    <div id="nav_bar" style="padding-top: 20px; margin: 0px">
+    <div id="nav_bar" style="padding-top: 20px; margin: 0px; background-color: black">
         <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
 
@@ -81,11 +82,12 @@
         <div id="body_container" class="row">
             <div id="bike_container" class="col s10" style="padding-right: 0px; padding-top: 10px">
                 <div v-for="(bike, index) in bikes">
-                    <div id="bike_box" class=" z-depth-2" style="padding: 5px; margin-bottom: 20px">
-                        <div class="icon-block row" style="padding: 15px">
-                            <img class=" light-blue-text left z-depth-2 col s5" style="width: 40%; " v-bind:src="bike.img_src">
+                    <div id="bike_box" class=" z-depth-2" style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
+                        <div class="icon-block row" style="padding: 15px; ">
+                            <img class=" light-blue-text left z-depth-2 col s5" style="width: 40%; margin: .75rem
+                            ;border-style: solid; border-color: black;border-width: 10px;padding: 0; " v-bind:src="bike.img_src">
                                 <h4 class="center" style="padding-top: 4%;">[[bike.year]] [[bike.make]] [[bike.model]]</h4>
-                                <table align="center" class="centered highlight col l7" style="margin-left: 10px; margin-top: 30px">
+                                <table align="center" class="centered highlight col s6 left" style="margin-left: 65px;">
                                     <thead>
                                     <tr>
                                         <th>Price</th>
@@ -115,8 +117,11 @@
                 </div>
             </div>
 
-            <h5 class="center" style="padding-top: 10%;"> Prioritize Me</h5>
 
+            <div id="logo">
+                        <img style=" display: block; width: 15%;margin: auto;" src="{% static 'gomoto/images/GoMoto_mt_bg.png' %}"/>
+            </div>
+            <h5 class="center" style="padding-top: 1%;"> Prioritize Me</h5>
             <!--Start of the Sidebar (3/12 boxes)-->
             <draggable style="padding-left: 3px" class="dragArea col s2" v-model="list1"
                        @change="log">
