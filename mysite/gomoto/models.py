@@ -63,3 +63,27 @@ class Bike(models.Model):
 
     def __str__(self):
         return str(self.year) + ' ' + self.make + " " + self.model
+
+
+    def top_3_bikes(self):
+        return {'text': self.text}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

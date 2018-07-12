@@ -63,7 +63,7 @@
         margin-bottom: 20px;
     }
 
-    h5{
+    h5 {
         font-family: "American Typewriter";
     }
 
@@ -78,40 +78,42 @@
     </div>
 
     <!--Start of the bike body (9/12 boxes)-->
-    <div id="main_content" class="background_color" style= "padding: 0px; margin: 0px">
+    <div id="main_content" class="background_color" style="padding: 0px; margin: 0px">
         <div id="body_container" class="row">
             <div id="bike_container" class="col s10" style="padding-right: 0px; padding-top: 10px">
                 <div v-for="(bike, index) in bikes">
-                    <div id="bike_box" class=" z-depth-2" style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
+                    <div id="bike_box" class=" z-depth-2"
+                         style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
                         <div class="icon-block row" style="padding: 15px; ">
                             <img class=" light-blue-text left z-depth-2 col s5" style="width: 40%; margin: .75rem
-                            ;border-style: solid; border-color: black;border-width: 10px;padding: 0; " v-bind:src="bike.img_src">
-                                <h4 class="center" style="padding-top: 4%;">[[bike.year]] [[bike.make]] [[bike.model]]</h4>
-                                <table align="center" class="centered highlight col s6 left" style="margin-left: 65px;">
-                                    <thead>
-                                    <tr>
-                                        <th>Price</th>
-                                        <th>Weight</th>
-                                        <th>Starter</th>
-                                        <th>Displacement</th>
-                                        <th>Seat Height</th>
-                                        <th>Category</th>
-                                        <th>Engine Type</th>
-                                    </tr>
-                                    </thead>
+                            ;border-style: solid; border-color: black;border-width: 10px;padding: 0; "
+                                 v-bind:src="bike.img_src">
+                            <h4 class="center" style="padding-top: 4%;">[[bike.year]] [[bike.make]] [[bike.model]]</h4>
+                            <table align="center" class="centered highlight col s6 left" style="margin-left: 65px;">
+                                <thead>
+                                <tr>
+                                    <th>Price</th>
+                                    <th>Weight</th>
+                                    <th>Starter</th>
+                                    <th>Displacement</th>
+                                    <th>Seat Height</th>
+                                    <th>Category</th>
+                                    <th>Engine Type</th>
+                                </tr>
+                                </thead>
 
-                                    <tbody>
-                                    <tr>
-                                        <td>[[bike.price]]</td>
-                                        <td>[[bike.weight]]</td>
-                                        <td>[[bike.starter]]</td>
-                                        <td>[[bike.displacement]]</td>
-                                        <td>[[bike.seatheight]]</td>
-                                        <td>[[bike.category]]</td>
-                                        <td>[[bike.engine_type]]</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <tbody>
+                                <tr>
+                                    <td>[[bike.price]]</td>
+                                    <td>[[bike.weight]]</td>
+                                    <td>[[bike.starter]]</td>
+                                    <td>[[bike.displacement]]</td>
+                                    <td>[[bike.seatheight]]</td>
+                                    <td>[[bike.category]]</td>
+                                    <td>[[bike.engine_type]]</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -119,7 +121,8 @@
 
 
             <div id="logo">
-                        <img style=" display: block; width: 15%;margin: auto;" src="{% static 'gomoto/images/GoMoto_mt_bg.png' %}"/>
+                <img style=" display: block; width: 15%;margin: auto;"
+                     src="{% static 'gomoto/images/GoMoto_mt_bg.png' %}"/>
             </div>
             <h5 class="center" style="padding-top: 1%;"> Prioritize Me</h5>
             <!--Start of the Sidebar (3/12 boxes)-->
@@ -208,28 +211,34 @@
                 }, {
                     id: 3,
                     name: 'godfree'
-                },{
-                    id: 3,
-                    name: 'matthew'
-                },{
-                    id: 3,
-                    name: 'shitner'
-                },{
-                    id: 3,
-                    name: 'nate'
-                },{
-                    id: 3,
-                    name: 'dang'
                 }, {
                     id: 4,
+                    name: 'matthew'
+                }, {
+                    id: 5,
+                    name: 'shitner'
+                }, {
+                    id: 6,
+                    name: 'nate'
+                }, {
+                    id: 7,
+                    name: 'dang'
+                }, {
+                    id: 8,
                     name: 'steve'
                 }],
             },
             methods: {
-                log: function () {
-                    console.log('e.moved.newIndex');
+                log: function (e) {
+                    output_list = []
+                    for (i = 0; i < cars.length; i++) {
+                        text += cars[i] + "<br>";
+                    }
+                    console.log(this.list1[1].name)
+                    console.log(this.list1)
                 }
             },
+
 
         })
     </script>
