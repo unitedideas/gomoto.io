@@ -25,9 +25,24 @@
     <!-- Axios -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
+
+
 </head>
 
 <style>
+    #welcome {
+
+        font-family: 'Libre Baskerville', serif;
+        font-size: 30px;
+        background: url('{% static ' gomoto/images/gomoto_whip.png ' %}');
+        background-size: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+
+    }
+
     #nav_bar {
         text-align: center;
         padding-top: 1%;
@@ -53,10 +68,9 @@
     }
 
     #main_content {
-        background-image: image(GoMoto_Logho01(4).png);
         padding: 0;
         margin: 0;
-        min-width: 700px;
+        min-width: 820px;
     }
 
     #bike_box {
@@ -71,7 +85,7 @@
 
 </style>
 
-<body>
+<body class="background_color">
 <div style="" id="app">
 
     <!--Start Navbar-->
@@ -82,16 +96,18 @@
     <!--Start of the bike body (9/12 boxes)-->
     <div id="main_content" class="background_color" style="padding: 0px; margin: 0px">
         <div id="body_container" class="row">
-            <div id="bike_container" class="col s10" style="padding-right: 0px; padding-top: 10px">
+
+            <div id="bike_container" class="col s9" style="padding-right: 0px; padding-top: 10px">
                 <div v-for="(bike, index) in bikes">
                     <div id="bike_box" class=" z-depth-2"
                          style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
                         <div class="icon-block row" style="padding: 15px; ">
-                            <img class=" light-blue-text left z-depth-2 col s5" style="width:35%; margin: .75rem
+                            <img class=" light-blue-text left z-depth-2 col s5 m5 l5" style="width:35%; margin: .75rem
                             ;border-style: solid; border-color: black;border-width: 10px;padding: 0; "
                                  v-bind:src="bike.img_src">
-                            <h4 class="center" style="padding-top: 4%;">[[bike.year]] [[bike.make]] [[bike.model]]</h4>
-                            <table align="center" class="centered highlight col s10 l6 left" style="margin-left: 20px;">
+                            <h4 class="center" style="padding-top: 5%; padding-bottom: 2%">[[bike.year]] [[bike.make]]
+                                [[bike.model]]</h4>
+                            <table align="center" class="centered highlight col s10 l6 left" style="margin-left: 6.5%;">
                                 <thead>
                                 <tr>
                                     <th>Price</th>
@@ -120,16 +136,26 @@
                     </div>
                 </div>
             </div>
+            <!--End of the bike body (9/12 boxes)-->
+
+
+            <!--Start Welcome-->
+            <div id="welcome" class=" z-depth-2 col s7 m7 m7 left"
+                 style="display:'' ;margin: 100px 0px 0px 100px; margin-right: 0;" v-html='welcome'>
+                <div style=" position: absolute;top: 0;left: 0;height: inherit; background-color: rgba(248, 247, 216, 0.8)">
+
+                </div>
+            </div>
+            <!--End Welcome-->
 
 
             <div id="logo">
-                <img style=" display: block; width: 15%;margin: auto;"
+                <img style=" display: block; width: 25%;margin: auto;"
                      src="{% static 'gomoto/images/GoMoto_mt_bg.png' %}"/>
-                <h5 class="center" style="padding-top: 1%;"> Prioritize Me</h5>
 
             </div>
             <!--Start of the Sidebar (3/12 boxes)-->
-            <draggable style="padding-left: 3px" class="dragArea col s2 right" v-model="options"
+            <draggable style="padding-left: 3px" class="dragArea col s3 m3 l3 right" v-model="options"
                        @change="get_bikes">
                 <div v-for="(element, index) in options">
                     <div class="center">
@@ -158,51 +184,9 @@
             el: '#app',
             delimiters: ['[[', ']]'],
             data: {
-                bikes: [{
-                    year: '2000',
-                    make: 'Suzuki',
-                    model: 'dzr 400',
-                    price: '$9999',
-                    starter: 'Electric/ Kick',
-                    dry_weight: '',
-                    wet_weight: '305 lbs',
-                    displacement: '399 cc',
-                    seatheight: '36 in',
-                    img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
-                    category: 'Adventure',
-                    engine_type: 'Four-Stroke',
-                    weight: '305 lbs'
-                },
-                    {
-                        year: '2015',
-                        make: 'KTM',
-                        model: 'ecx 500',
-                        price: '$12000',
-                        starter: 'electric',
-                        dry_weight: '221 lbs',
-                        wet_weight: '',
-                        displacement: '505 cc',
-                        seatheight: '38 in',
-                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
-                        category: 'Off-Road',
-                        engine_type: 'Four-Stroke',
-                        weight: '221 lbs'
-                    },
-                    {
-                        year: '1999',
-                        make: 'Yamaha',
-                        model: 'XL 250',
-                        price: '$9000',
-                        starter: 'Kick',
-                        dry_weight: '',
-                        wet_weight: '190 lbs',
-                        displacement: '445 cc',
-                        seatheight: '37 in',
-                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
-                        category: 'MX',
-                        engine_type: 'Two-Stroke',
-                        weight: '190 lbs'
-                    }],
+                bikes: [],
+
+                welcome: 'Welcome to Moto.io. <br> Here you can this simple app was created to save you time trying to pick through all the stats of dirt bikes. Look to the right side of the page and drag your top priorities in order starting with the most important at the top. As you do the top three motorcycles that fit your priorities will adjust on the screen. That\'s it!!!. Have fun. <br> -Shane',
 
                 options: [{
                     id: 'price',
@@ -229,31 +213,47 @@
                 get_bikes: function () {
                     let app = this
                     priorities_list = []
+                    document.getElementById('welcome').style.display = "none";
+
 
                     for (i = 0; i < app.options.length; i++) {
                         priorities_list.push(app.options[i].id)
                     }
                     console.log(priorities_list)
-                    axios.post("{% url 'gomoto:get_bikes' %}", priorities_list, {
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        }
-                    })
+                    axios.post("{% url 'gomoto:get_bikes' %}",
+                        {
+                            priorities_list
+                        }, {
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            }
+                        })
                         .then(function (response) {
+                            console.log(response)
                             app.bikes = response.data.bikes
+                            console.log(bikes)
                         })
                 },
 
-                nested_unicorns: function (e) {
-                    log(e)
-                    get_bikes()
-                },
-
-                created: function () {
-                    this.get_bikes()
+                welcome: function () {
+                    let app = this
+                    axios.get("{% url 'gomoto:welcome' %}")
+                        .then(function (response) {
+                            console.log(response)
+                        })
                 }
-
             },
+
+            // created: function () {
+            //     this.get_bikes()
+            // },
+
+
+            // Getting error when trying to run this on created (TypeError, this.welcom is not a function)
+
+            // created: function () {
+            //     this.welcome()
+            // },
 
 
         })
@@ -263,48 +263,3 @@
 </html>
 
 
-<!--{
-                    year: '2000',
-                    make: 'Suzuki',
-                    model: 'dzr 400',
-                    price: '$9999',
-                    starter: 'Electric/ Kick',
-                    dry_weight: '',
-                    wet_weight: '305 lbs',
-                    displacement: '399 cc',
-                    seatheight: '36 in',
-                    img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
-                    category: 'Adventure',
-                    engine_type: 'Four-Stroke',
-                    weight: '305 lbs'
-                },
-                    {
-                        year: '2015',
-                        make: 'KTM',
-                        model: 'ecx 500',
-                        price: '$12000',
-                        starter: 'electric',
-                        dry_weight: '221 lbs',
-                        wet_weight: '',
-                        displacement: '505 cc',
-                        seatheight: '38 in',
-                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
-                        category: 'Off-Road',
-                        engine_type: 'Four-Stroke',
-                        weight: '221 lbs'
-                    },
-                    {
-                        year: '1999',
-                        make: 'Yamaha',
-                        model: 'XL 250',
-                        price: '$9000',
-                        starter: 'Kick',
-                        dry_weight: '',
-                        wet_weight: '190 lbs',
-                        displacement: '445 cc',
-                        seatheight: '37 in',
-                        img_src: 'https://dirtbikemagazine.com/wp-content/uploads/2014/11/1141.jpg',
-                        category: 'MX',
-                        engine_type: 'Two-Stroke',
-                        weight: '190 lbs'
-                    }-->
