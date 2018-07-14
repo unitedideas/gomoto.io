@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from statistics import *
 from cmath import sqrt
 import json, numpy
-
+from django.db.models import Avg, Max, Min, Sum
 from .models import Bike
 
 
@@ -19,23 +19,29 @@ def get_bikes(request):
 
     print(priorities_list)
 
-    bikes = Bike.objects.filter(price__isnull=False)
-    print(len(bikes))
+    bikes = Bike.objects.filter(category = 'Adventure')
+
+
+
+    for bike in bikes:
+        print(bike.engine_type)
+
 
     response_dictionary = {}
+    bike = ''
+    bikes = Bike.objects.all()
+    bikes = bikes.filter(displacement__gte=10)
+    bikes = bikes.filter(category = 'Trials')
+    print(bikes)
 
-    # standard_dev
-    #
-    # 1. Work out the Mean
-    # 2. for each number: subtract the Mean and square the result
-    # 3. mean of those squared differences
-    # 4. Take the square root of that
 
     price_standard_dev = 0
     data = []
 
-    bikes = bikes.filter(engine_type = 'Two-stroke')
+    bikes = Bike.objects.filter(price__isnull=False)
+    bikes = bikes.filter(engine_type = 'Four-stroke')
     bikes = bikes.filter(category = 'Off-Road')
+    bikes = bikes.filter(displacement__gte=551)
 
     for bike in bikes:
         if bike.price is not None:
@@ -44,8 +50,9 @@ def get_bikes(request):
 
     data = []
     bikes = Bike.objects.filter(seatheight__isnull=False)
-    bikes = bikes.filter(engine_type = 'Two-stroke')
+    bikes = bikes.filter(engine_type = 'Four-stroke')
     bikes = bikes.filter(category = 'Off-Road')
+    bikes = bikes.filter(displacement__gte=551)
 
     for bike in bikes:
         if bike.seatheight is not None:
@@ -54,8 +61,9 @@ def get_bikes(request):
 
     data = []
     bikes = Bike.objects.filter(dry_weight__isnull=False)
-    bikes = bikes.filter(engine_type = 'Two-stroke')
+    bikes = bikes.filter(engine_type = 'Four-stroke')
     bikes = bikes.filter(category = 'Off-Road')
+    bikes = bikes.filter(displacement__gte=551)
 
     for bike in bikes:
         if bike.dry_weight is not None:
@@ -64,8 +72,9 @@ def get_bikes(request):
 
     data = []
     bikes = Bike.objects.filter(wet_weight__isnull=False)
-    bikes = bikes.filter(engine_type = 'Two-stroke')
+    bikes = bikes.filter(engine_type = 'Four-stroke')
     bikes = bikes.filter(category = 'Off-Road')
+    bikes = bikes.filter(displacement__gte=551)
 
     for bike in bikes:
         if bike.wet_weight is not None:
@@ -74,11 +83,14 @@ def get_bikes(request):
 
     data = []
     bikes = Bike.objects.filter(displacement__isnull=False)
-
-    bikes = bikes.filter(engine_type = 'Two-stroke')
+    bikes = bikes.filter(engine_type = 'Four-stroke')
+    print(len(bikes))
     bikes = bikes.filter(category = 'Off-Road')
+    print(len(bikes))
+    bikes = bikes.filter(displacement__gte=551)
+    print(len(bikes))
 
-    print('filter two-stroke '+str(len(bikes)))
+
     for bike in bikes:
         if bike.displacement is not None:
             data.append(int(bike.displacement))
@@ -108,39 +120,46 @@ def welcome(request):
 
 
 def std_dev_calc(set, name):
-    number_standard_dev = numpy.std(set, axis = 0)
-    number_standard_dev = round(number_standard_dev,2)
+    standard_dev = stdev(set)
+    count = 0
+    over_2_count = 0
+    print()
+    print()
+    print('-------------start ' + name + ' bike '+ str(count) + ' -----------')
+    for num in set:
+        std_dev_from_mean = (num - mean(set)) / standard_dev
+        count += 1
+        if std_dev_from_mean > 1 or std_dev_from_mean < -1:
+            over_2_count += 1
+            print()
+            print(num)
+            print(mean(set))
+            print(std_dev_from_mean)
+            print(standard_dev)
+            print()
 
-    mean_number = 0
-    mean_number = mean(set)
-
-    number_minus_mean_list = []
-
-    number_minus_mean = 0
-
-    for number in set:
-        number_minus_mean = number - mean_number
-        number_minus_mean_list.append(number_minus_mean)
-    sqrd_diff_mean = (sum(number_minus_mean_list))/ (len(number_minus_mean_list)-1)
-
-    sqrroot = sqrt(sqrd_diff_mean)
-
-    sqrroot = str(sqrroot)
-    sqrroot = sqrroot[:5]
-
-    numpystd = numpy.std(set)
-
-    print("")
-    print('-------------start ' + name + ' -----------')
-    print('calculated steps ' + sqrroot)
-    print('numpy.std ' + str(numpystd))
-    print('std dev.: ' + str(number_standard_dev))
-    print('-------------end ' + name + ' ------------')
-    print("")
-
-
-
-
+        #
+        #
+        # print()
+        # print('object 1')
+        # print(set[0])
+        # print()
+        # print('mean')
+    print()
+    print('Count of over 2 std devs')
+    print(over_2_count)
+    print()
+        # print(mean(set))
+        # print()
+        # print('std dev.: ' + str(standard_dev))
+        # print()
+        # print('std dev\'s from mean')
+        # print(std_dev_from_mean)
+        # print()
+    print('-------------stop ' + name + ' bike '+ str(count) + ' -----------')
+        # print()
+        # print()
+        # print()
 
 
 
