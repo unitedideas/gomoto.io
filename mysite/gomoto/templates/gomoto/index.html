@@ -32,14 +32,18 @@
 </head>
 
 <style>
-    #welcome {
-
+    .font_Baskerville {
         font-family: 'Libre Baskerville', serif;
         font-size: 30px;
-        background: url('{% static ' gomoto/images/gomoto_whip.png ' %}');
-        background-size: 50%;
+    }
+
+    .faded_bg {
+
+        background-image: url("{% static 'gomoto/images/title_whip.png' %}");
         background-repeat: no-repeat;
         background-position: center;
+        background-size: contain;
+        box-shadow: inset 0 0 0 500px rgba(218, 218, 218, .96);
 
     }
 
@@ -99,7 +103,7 @@
 
             <div id="bike_container" class="col s9" style="padding-right: 0px; padding-top: 10px">
                 <div v-for="(bike, index) in bikes">
-                    <div id="bike_box" class=" z-depth-2"
+                    <div id="bike_box" class="faded_bg z-depth-2"
                          style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
                         <div class="icon-block row" style="padding: 15px; ">
                             <img class=" light-blue-text left z-depth-2 col s5 m5 l5" style="width:35%; margin: .75rem
@@ -140,10 +144,9 @@
 
 
             <!--Start Welcome-->
-            <div id="welcome" class=" z-depth-2 col s7 m7 m7 left"
+            <div id="welcome" class="font_Baskerville faded_bg z-depth-2 col s7 m7 m7 left"
                  style="display:'' ;margin: 100px 0px 0px 100px; margin-right: 0;" v-html='welcome'>
-                <div style=" position: absolute;top: 0;left: 0;height: inherit; background-color: rgba(248, 247, 216, 0.8)">
-
+                <div style=" position: absolute;top: 0;left: 0;height: inherit; background-color: rgba(255,254,223,0.8)">
                 </div>
             </div>
             <!--End Welcome-->
