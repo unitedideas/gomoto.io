@@ -27,9 +27,12 @@ def get_bikes(request):
     count = 0
     for bike in bikes:
         score = 0
+        print('------running for '+ str(bike) + ' -------')
         for property in priorities_list:
+
             print(getattr(bike, property))
             count+=1
+    print('------------ counts ----------------')
     print(count/5)
     print(len(bikes))
     # for priority in priorities_dict:
