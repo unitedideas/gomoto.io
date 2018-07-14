@@ -198,7 +198,7 @@
                     id: 'seatheight',
                     name: 'Low Seat Height'
                 }, {
-                    id: 'weight',
+                    id: 'dry_weight',
                     name: 'Light Weight'
                 }, {
                     id: 'year',
@@ -206,10 +206,12 @@
                 }, {
                     id: 'displacement',
                     name: 'More CC'
-                }, {
-                    id: 'starter',
-                    name: 'Electric Start'
-                }],
+                }
+                //     {
+                //     id: 'starter',
+                //     name: 'Electric Start'
+                // }
+                ],
             },
             methods: {
 
@@ -238,13 +240,6 @@
                         })
                 },
 
-                welcome: function () {
-                    let app = this
-                    axios.get("{% url 'gomoto:welcome' %}")
-                        .then(function (response) {
-                            console.log(response)
-                        })
-                }
             },
 
             // created: function () {

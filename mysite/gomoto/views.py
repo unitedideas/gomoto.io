@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from statistics import *
 from cmath import sqrt
-import json, numpy
+import json, numpy, importlib
 from django.db.models import Avg, Max, Min, Sum
 from .models import Bike
 
@@ -12,93 +12,53 @@ def index(request):
 
 
 def get_bikes(request):
-    priorities_list = json.loads(request.body)
+    priorities_dict = json.loads(request.body)
+    priorities_list = priorities_dict["priorities_list"]
+
+    print(priorities_list)
     print('------------------------------------------------------------')
     print('get_bikes view')
     print('------------------------------------------------------------')
-
-    print(priorities_list)
-
-    bikes = Bike.objects.filter(category = 'Adventure')
-
-
-
-    for bike in bikes:
-        print(bike.engine_type)
-
-
+    print(priorities_dict)
     response_dictionary = {}
-    bike = ''
+    score_list = [1,2,3,4]
     bikes = Bike.objects.all()
-    bikes = bikes.filter(displacement__gte=10)
-    bikes = bikes.filter(category = 'Trials')
-    print(bikes)
-
-
-    price_standard_dev = 0
-    data = []
-
-    bikes = Bike.objects.filter(price__isnull=False)
-    bikes = bikes.filter(engine_type = 'Four-stroke')
-    bikes = bikes.filter(category = 'Off-Road')
-    bikes = bikes.filter(displacement__gte=551)
-
-    for bike in bikes:
-        if bike.price is not None:
-            data.append(int(bike.price))
-    std_dev_calc(data, 'price')
-
-    data = []
-    bikes = Bike.objects.filter(seatheight__isnull=False)
-    bikes = bikes.filter(engine_type = 'Four-stroke')
-    bikes = bikes.filter(category = 'Off-Road')
-    bikes = bikes.filter(displacement__gte=551)
-
-    for bike in bikes:
-        if bike.seatheight is not None:
-            data.append(int(bike.seatheight))
-    std_dev_calc(data, 'seatheight')
-
-    data = []
-    bikes = Bike.objects.filter(dry_weight__isnull=False)
-    bikes = bikes.filter(engine_type = 'Four-stroke')
-    bikes = bikes.filter(category = 'Off-Road')
-    bikes = bikes.filter(displacement__gte=551)
-
-    for bike in bikes:
-        if bike.dry_weight is not None:
-            data.append(int(bike.dry_weight))
-    std_dev_calc(data, 'dry_weight')
-
-    data = []
-    bikes = Bike.objects.filter(wet_weight__isnull=False)
-    bikes = bikes.filter(engine_type = 'Four-stroke')
-    bikes = bikes.filter(category = 'Off-Road')
-    bikes = bikes.filter(displacement__gte=551)
-
-    for bike in bikes:
-        if bike.wet_weight is not None:
-            data.append(int(bike.wet_weight))
-    std_dev_calc(data, 'wet_weight')
-
-    data = []
-    bikes = Bike.objects.filter(displacement__isnull=False)
-    bikes = bikes.filter(engine_type = 'Four-stroke')
     print(len(bikes))
-    bikes = bikes.filter(category = 'Off-Road')
-    print(len(bikes))
-    bikes = bikes.filter(displacement__gte=551)
-    print(len(bikes))
-
-
+    count = 0
     for bike in bikes:
-        if bike.displacement is not None:
-            data.append(int(bike.displacement))
-    std_dev_calc(data, 'displacement')
+        score = 0
+        for property in priorities_list:
+            print(getattr(bike, property))
+            count+=1
+    print(count/5)
+    print(len(bikes))
+    # for priority in priorities_dict:
+    #     values_list = Bike.objects.values_list()
+    #     for value in values_list:
+    #        pass
+            # std_dev_calc(bikes,priority)
 
 
 
-
+    # bike = ''
+    # bikes = Bike.objects.all()
+    # bikes = bikes.filter(displacement__gte=10)
+    # bikes = bikes.filter(category = 'Trials')
+    # print(bikes)
+    #
+    #
+    # price_standard_dev = 0
+    # data = []
+    #
+    # bikes = Bike.objects.filter(price__isnull=False)
+    # bikes = bikes.filter(engine_type = 'Four-stroke')
+    # bikes = bikes.filter(category = 'Off-Road')
+    # bikes = bikes.filter(displacement__gte=551)
+    #
+    # for bike in bikes:
+    #     if bike.price is not None:
+    #         data.append(int(bike.price))
+    # std_dev_calc(data, 'price')
 
 
 
@@ -110,16 +70,12 @@ def get_bikes(request):
 
 
 
-def welcome(request):
-    print('------------------------------------------------------------')
-    print('welcome get_bikes view')
-    print('------------------------------------------------------------')
-    # run some welcome informational screen here
-    welcome = {'welcome':'Welcome to Moto.io. /n Here you can this simple app was created to save you time trying to pick through all the stats of dirt bikes. Look to the right side of the page and drag your top priorities in order starting with the most important at the top. As you do the top three motorcycles that fit your priorities will adjust on the screen. That\'s it!!!. Have fun. \n -Shane'}
-    return render(request, 'gomoto/index.html', {})
+# todo ### start tallying the points for each bike, getting the top 3 scores
+# todo ### supply the top 3 bikes data back to the template (VUE)
 
 
 def std_dev_calc(set, name):
+    scores = []
     standard_dev = stdev(set)
     count = 0
     over_2_count = 0
@@ -131,35 +87,11 @@ def std_dev_calc(set, name):
         count += 1
         if std_dev_from_mean > 1 or std_dev_from_mean < -1:
             over_2_count += 1
-            print()
-            print(num)
-            print(mean(set))
-            print(std_dev_from_mean)
-            print(standard_dev)
-            print()
-
-        #
-        #
-        # print()
-        # print('object 1')
-        # print(set[0])
-        # print()
-        # print('mean')
     print()
-    print('Count of over 2 std devs')
-    print(over_2_count)
+    print(scores)
     print()
-        # print(mean(set))
-        # print()
-        # print('std dev.: ' + str(standard_dev))
-        # print()
-        # print('std dev\'s from mean')
-        # print(std_dev_from_mean)
-        # print()
     print('-------------stop ' + name + ' bike '+ str(count) + ' -----------')
-        # print()
-        # print()
-        # print()
+
 
 
 
