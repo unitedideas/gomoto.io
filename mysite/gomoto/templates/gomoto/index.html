@@ -31,7 +31,34 @@
 
 </head>
 
+
 <style>
+
+    .scale-transition {
+        -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
+        transition: -webkit-transform 0.9s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
+        transition: transform 0.9s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
+        transition: transform 0.9s cubic-bezier(0.53, 0.01, 0.36, 1.63), -webkit-transform 0.9s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
+    }
+
+    .scale-transition.scale-out {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        -webkit-transition: -webkit-transform 0.9s !important;
+        transition: -webkit-transform 0.9s !important;
+        transition: transform 0.9s !important;
+        transition: transform 0.9s, -webkit-transform 0.9s !important;
+    }
+
+    .scale-transition.scale-in {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: -webkit-transform 0.9s !important;
+        transition: -webkit-transform 0.9s !important;
+        transition: transform 0.9s !important;
+        transition: transform 0.9s, -webkit-transform 0.9s !important;
+    }
+
     .font_Baskerville {
         font-family: 'Libre Baskerville', serif;
         font-size: 30px;
@@ -101,7 +128,7 @@
     <div id="main_content" class="background_color" style="padding: 0px; margin: 0px">
         <div id="body_container" class="row">
 
-            <div id="bike_container" class="col s9" style="padding-right: 0px; padding-top: 10px">
+            <div id="bike_container" class="col s9 scale-transition" style="padding-right: 0px; padding-top: 10px">
                 <div v-for="(bike, index) in bikes">
                     <div id="bike_box" class="faded_bg z-depth-2"
                          style="padding: 5px; margin-bottom: 20px; background-color: lightgray ">
@@ -206,24 +233,26 @@
                     name: 'More CC'
                 },
                     {
-                    id: 'weight',
-                    name: 'Weight'
-                }
+                        id: 'weight',
+                        name: 'Weight'
+                    }
                 ],
             },
             methods: {
 
                 get_bikes: function () {
+
                     let app = this
                     priorities_list = []
-                    document.getElementById('welcome').style.display = "none";
+                    document.getElementById('welcome').style.display = "none"
 
 
-                    for (i = 0; i < app.options.length; i++){
+                    for (i = 0; i < app.options.length; i++) {
                         console.log(app.options[i].id)
                         priorities_list.push(app.options[i].id)
                     }
                     console.log(priorities_list)
+
                     axios.post("{% url 'gomoto:get_bikes' %}",
                         {
                             priorities_list
@@ -232,11 +261,16 @@
                                 'X-CSRFToken': '{{ csrf_token }}',
                             }
                         })
+
                         .then(function (response) {
                             console.log(response)
                             app.bikes = response.data.bikes
                             console.log(bikes)
+
+
                         })
+
+
                 },
 
             },

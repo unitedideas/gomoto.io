@@ -94,21 +94,21 @@ def std_dev_calc(property_mean, standard_dev, bikes, priorities_list):
         count_bikes += 1
         for property in priorities_list:
             weighted = count / len(priorities_list)
+            print(weighted)
             bike_prop_value = getattr(bike, property)
             if bike_prop_value is not None:
                 z_score = (bike_prop_value - property_mean) / standard_dev * weighted
-                if property == 'seatheight' or property == 'weighted' or property == 'wet_weight':
+                if property == 'seatheight' or property == 'weight' or property == 'price':
                     z_score *= -1
                 count -= 1
             else:
-                z_score = 0
+                z_score = -1
                 count -= 1
             bike_score += z_score
         all_bikes_scores[bike] = bike_score
 
     all_bikes_scores = sorted(all_bikes_scores.items(), key=operator.itemgetter(1), reverse= True)
     all_bikes_scores = dict(all_bikes_scores[:3])
-    print(all_bikes_scores)
     #
     # for bike in all_bikes_scores:
     #     top_3_bikes.append(bike[0])
