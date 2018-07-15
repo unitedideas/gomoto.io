@@ -4,23 +4,22 @@ from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
 from gomoto.models import Bike
 
+
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # write the code here
-        page_count = 2
+        page_count = 46
         data_list_of_dicts = []
         missed_pages = []
 
-    # from mysite.gomoto.models import Bike
+        # from mysite.gomoto.models import Bike
 
         base_url = 'https://www.dirtrider.com'
-
 
         def full_url(sub_url):
             print('Full url: ' + base_url + sub_url)
             return base_url + sub_url
-
 
         # def has_class_but_no_id(tag):
         #     return tag.has_attr('class') and not tag.has_attr('id')
@@ -48,8 +47,8 @@ class Command(BaseCommand):
             page_soup = BeautifulSoup(response, "lxml")
             return page_soup
 
-
         def bike_page(bike_page_url):
+            bike_dict = {'img_src': None,'price': None, 'displacement': None, 'seatheight': None, 'weight': None,'starter': None, 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': None,'make': 'Unknown','model': 'Unknown'}
 
             print(bike_page_url, end=' < bike_page_url \n')
             bike_page_data = requests.get(bike_page_url)
@@ -63,10 +62,9 @@ class Command(BaseCommand):
 
             bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
-
             # Getbike image src
             data_points = bike_soup.find(class_='field-image')
-            print(data_points)
+            # print(data_points)
 
             image = data_points.find('img')
             if image['data-1000src']:
@@ -76,11 +74,9 @@ class Command(BaseCommand):
             else:
                 bike_dict['img_src'] = None
 
-
             if Bike.objects.filter(img_src=bike_dict['img_src']).exists():
                 print('SKIPPING BIKE ' + bike_dict['img_src'])
                 return
-
 
             # Data for the non-table items
             data_points = bike_soup.find_all(class_="buyers-guide--intro-stats-item")
@@ -121,7 +117,6 @@ class Command(BaseCommand):
             # Get data from tables
             cat_list = ['Off-Road', 'Motocross', 'Adventure', 'Trials', 'Mini']
 
-
             data_points = bike_soup.find(class_='panel-pane pane-entity-field pane-node-field-page-sections')
             spans = data_points.find_all('span')
             for key in table_keys:
@@ -141,7 +136,6 @@ class Command(BaseCommand):
                     if bike_dict[key[1]] == 'Competition':
                         bike_dict[key[1]] = 'Motocross'
 
-
                     if bike_dict[key[1]] == 'Reed Valve':
                         bike_dict[key[1]] = 'Two-stroke'
                     elif bike_dict[key[1]] == 'Electric':
@@ -151,8 +145,6 @@ class Command(BaseCommand):
 
                     if bike_dict['category'] not in cat_list:
                         bike_dict['category'] = 'Off-Road'
-
-
 
             # Get year, make, model
 
@@ -167,7 +159,6 @@ class Command(BaseCommand):
                 year = year[0:4]
 
             bike_dict['year'] = int(year)
-
 
             # make
             for make in make_list:
@@ -196,7 +187,6 @@ class Command(BaseCommand):
             # bike.year = #...
             bike.save()
 
-
         make_list = [
             ('aprilia', 'Aprilia'),
             ('beta', 'Beta'),
@@ -215,8 +205,6 @@ class Command(BaseCommand):
             ('yamaha', 'Yamaha'),
             ('zero', 'Zero')
         ]
-
-
 
         top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),('Wet Weight (lbs)', 'weight'), ('Dry Weight (lbs)', 'weight')]
 
@@ -313,45 +301,44 @@ class Command(BaseCommand):
         #     dict_writer.writeheader()
         #     dict_writer.writerows(data_list_of_dicts)
 
-            #################### NoGo Code Below ################
+        #################### NoGo Code Below ################
 
-            # bike = Bike()
-            # bike.make = make
-            #     if key in str(data_points):
-            #         print('it worked for: ' + key)
+        # bike = Bike()
+        # bike.make = make
+        #     if key in str(data_points):
+        #         print('it worked for: ' + key)
 
-            #         class="page-title"
+        #         class="page-title"
 
-            # table_data_points = ""
-            #
-            # bike = Bike()
-            #
-            # bike.year = #...
-            # # ...
-            # bike.save()
+        # table_data_points = ""
+        #
+        # bike = Bike()
+        #
+        # bike.year = #...
+        # # ...
+        # bike.save()
 
-            # for anchor in item.find_all('a'):
-            #     if general_count % 2 == 0:
-            #         bike_text = anchor.get_text()
-            #         sub_url = anchor.get('href')
-            #         bike_page_url = full_url(sub_url)
-            #
-            #         data_list_of_dicts.append(bike_page(bike_page_url))
-            #
-            #         print(data_list_of_dicts)
-            #
-            #         print('\n')
-            #         # print(str(anchor) + '\n')
-            #
-            #         print('Page count: ' + str(general_count / 2))
-            #     general_count += 1
-            # page_count -= 1
+        # for anchor in item.find_all('a'):
+        #     if general_count % 2 == 0:
+        #         bike_text = anchor.get_text()
+        #         sub_url = anchor.get('href')
+        #         bike_page_url = full_url(sub_url)
+        #
+        #         data_list_of_dicts.append(bike_page(bike_page_url))
+        #
+        #         print(data_list_of_dicts)
+        #
+        #         print('\n')
+        #         # print(str(anchor) + '\n')
+        #
+        #         print('Page count: ' + str(general_count / 2))
+        #     general_count += 1
+        # page_count -= 1
 
         # psudo Process Code:
         # loop over ever page
         # look over the results on the page
         # visit the link for that result
-
 
         # Failed attempts 1,2,3...
         # import sys
@@ -385,7 +372,6 @@ class Command(BaseCommand):
         # print(js_test.text)
         #
 
-
         # <----------------Another way of doing it ----------------->
         # sess = dryscrape.Session()
         # url = 'https://www.dirtrider.com/Off-Road-Motorcycle-search-hub'
@@ -397,9 +383,7 @@ class Command(BaseCommand):
         #     print ('Bike Link: ', link.at_xpath(".//a"))
         #
 
-
         # Gets all the items and the div contains an image src, the 'title' of the bike (it contains the year, make, model, and most of the time it has an MSRP (price)
-
 
         # documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
@@ -431,10 +415,6 @@ class Command(BaseCommand):
         #     else:
         #         return None
         # time.sleep(2)
-        # bike_dict = {'img_src': 'https://www.harpersphoto.co.uk/user/products/large/no%20image.gif',
-        #         'price': 99999, 'displacement': 0, 'seatheight': 0, 'wet_weight': None, 'dry_weight': None,
-        #         'starter': 'Kick', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 1900, 'make': 'Unknown',
-        #         'model': 'Unknown'}
 
         # if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2014-ktm-150-sx' or bike_page_url == 'https://www.dirtrider.com/2014-triumph-tiger-800-xc-abs-se' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
         #     bike_dict = {
@@ -449,4 +429,5 @@ class Command(BaseCommand):
         #     # bike.make = make
         #     # bike.year = #...
         #     bike.save()
+
     pass
