@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # write the code here
-        page_count = 43
+        page_count = 48
         data_list_of_dicts = []
         missed_pages = []
 
