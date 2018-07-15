@@ -34,6 +34,11 @@
 
 <style>
 
+    .select_font {
+        font-family: 'Libre Baskerville', serif;
+        font-size: 20px;
+    }
+
     .font_Baskerville {
         font-family: 'Libre Baskerville', serif;
         font-size: 30px;
@@ -102,18 +107,37 @@
     <div id="nav_bar" style="padding-top: 20px; margin: 0px; background-color: black">
         <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
-
-    <div>
-        <select class="v-select" v-model="category">
-            <option value="foo">Off-Road</option>
-            <option>Motocross</option>
-            <option>Adventure</option>
-            <option>Trials</option>
-            <option>Mini</option>
-            <option>Enduro</option>
-        </select>
+    <div class="container">
+        <div class="row">
+            <div class="col s4 select_font">
+                <h6 class="center">Select Category</h6>
+                <select class="v-select center" v-model="category" @change="get_bikes">
+                    <option>All</option>
+                    <option value="Off-Road">Off-Road</option>
+                    <option value="Motocross">Motocross</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Enduro">Enduro</option>
+                </select>
+            </div>
+            <div class="col s4 select_font">
+                <h6 class="center">Select Engine Type</h6>
+                <select class="v-select center" v-model="engine_type" @change="get_bikes">
+                    <option>All</option>
+                    <option value="Two-stroke">Two-stroke</option>
+                    <option value="Four-stroke">Four-stroke</option>
+                    <option value="Electric">Electric</option>
+                </select>
+            </div>
+            <div class="col s4 select_font">
+                <h6 class="center">Select Starter Type</h6>
+                <select class="v-select center" v-model="starter" @change="get_bikes">
+                    <option>All</option>
+                    <option value="Kick">Kick</option>
+                    <option value="Electric">Electric</option>
+                </select>
+            </div>
+        </div>
     </div>
-
 
     <!--Start of the bike body (9/12 boxes)-->
     <div id="main_content" class="background_color" style="padding: 0px; margin: 0px">
@@ -214,9 +238,9 @@
                 welcome: 'Welcome to Moto.io. <br> Here you can this simple app was created to save you time trying to pick through all the stats of dirt bikes. Look to the right side of the page and drag your top priorities in order starting with the most important at the top. As you do the top three motorcycles that fit your priorities will adjust on the screen. That\'s it!!!. Have fun. <br> -Shane',
 
                 // todo build up a dictionary of filters and send it to the back
-                engine_type: '',
-                category: '',
-                starter: '',
+                engine_type: 'All',
+                category: 'All',
+                starter: 'All',
 
 
                 options: [{
@@ -242,6 +266,7 @@
                 get_bikes: function () {
                     let app = this
                     priorities_list = []
+                    filters_dict = {}
                     document.getElementById('welcome').style.display = "none"
 
 
@@ -251,9 +276,25 @@
                     }
                     console.log(priorities_list)
 
+
+                    console.log(app.engine_type)
+                    if (app.engine_type != 'All') {
+                        filters_dict['engine_type'] = app.engine_type
+                    }
+                    console.log(app.starter)
+                    if (app.starter != 'All') {
+                        filters_dict['starter'] = app.starter
+                    }
+                    console.log(app.category)
+                    if (app.category != 'All') {
+                        filters_dict['category'] = app.category
+                    }
+                    console.log(filters_dict)
+
+
                     axios.post("{% url 'gomoto:get_bikes' %}",
                         {
-                            priorities_list
+                            priorities_list, filters_dict
                         }, {
                             headers: {
                                 'X-CSRFToken': '{{ csrf_token }}',

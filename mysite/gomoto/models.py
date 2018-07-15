@@ -19,8 +19,6 @@ class Bike(models.Model):
         (OFF_ROAD, 'Off-Road'),
         (MOTOCROSS, 'Motocross'),
         (ADVENTURE, 'Adventure'),
-        (TRIALS, 'Trials'),
-        (MINI, 'Mini'),
         (ENDURO, 'Enduro'),
 
     )
@@ -64,12 +62,6 @@ class Bike(models.Model):
 
     def __str__(self):
         return str(self.year) + ' ' + self.make + " " + self.model
-
-
-    def top_3_bikes(self):
-        return {'text': self.text}
-
-
 
 
 

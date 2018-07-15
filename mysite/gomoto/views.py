@@ -14,28 +14,29 @@ def index(request):
 
 
 def get_bikes(request):
-    priorities_dict = json.loads(request.body)
-    print(priorities_dict)
-    priorities_list = priorities_dict["priorities_list"]
-    priorities_list
-
-
-
-
-    # print(priorities_list)
+    data_from_vue = json.loads(request.body)
+    print(data_from_vue)
+    priorities_list = data_from_vue["priorities_list"]
+    filters_dict = data_from_vue["filters_dict"]
+    # print(filters_list)
+    print()
+    print(priorities_list)
     print()
 
     response_dictionary = {}
-    score_list = [1, 2, 3, 4]
-    filter_dict = {}
+
+
     bikes = Bike.objects.all()
 
 
+
     # This gives me all bikes
-
-    bikes = bikes.filter(**filter_dict)
+    print(filters_dict)
+    bikes = bikes.filter(**filters_dict)
+    filters_dict = {}
     print(len(bikes), end=' <--- filtered bike count \n')
-
+    if len(bikes) < 3:
+        JsonResponse({'welcome':'return_list'})
     # mean_list = {}
 
 
@@ -49,12 +50,12 @@ def get_bikes(request):
         print(property)
         for bike in bikes:
             property_value = getattr(bike, property)
-            print(property_value)
+            # print(property_value)
             if property_value is None:
                 none_count += 1
             elif property_value is not None:
                 property_set.append(property_value)
-                print(property_value)
+                # print(property_value)
 
         # mean_list[property]=mean(property_set)
         property_mean = mean(property_set)
@@ -76,9 +77,9 @@ def get_bikes(request):
         for field in keys:
             values.append(getattr(bike,field))
         return_list.append(dict(zip(keys, values)))
-        print()
-        print(return_list)
-        print()
+        # print()
+        # print(return_list)
+        # print()
 
     return_data = {'bikes':return_list}
 
@@ -94,7 +95,7 @@ def std_dev_calc(property_mean, standard_dev, bikes, priorities_list):
         count_bikes += 1
         for property in priorities_list:
             weighted = count / len(priorities_list)
-            print(weighted)
+            # print(weighted)
             bike_prop_value = getattr(bike, property)
             if bike_prop_value is not None:
                 z_score = (bike_prop_value - property_mean) / standard_dev * weighted
