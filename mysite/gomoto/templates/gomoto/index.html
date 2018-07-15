@@ -92,7 +92,7 @@
 </style>
 
 <body class="background_color">
-<div  id="app">
+<div id="app">
 
     <!--Start Navbar-->
     <div id="nav_bar" style="padding-top: 20px; margin: 0px; background-color: black">
@@ -100,31 +100,31 @@
     </div>
     <!--<div id="filter_container">-->
 
-        <div id="engine_type">
-            <select v-model="engine_type" multiple>
-                <option>Four-stroke</option>
-                <option>Two-stroke</option>
-                <option>Electric</option>
-            </select>
-        </div>
+    <!--<div id="engine_type">-->
+        <!--<select v-model="engine_type" multiple>-->
+            <!--<option value="Four-stroke">Four-stroke</option>-->
+            <!--&lt;!&ndash;<option>Two-stroke</option>&ndash;&gt;-->
+            <!--&lt;!&ndash;<option>Electric</option>&ndash;&gt;-->
+        <!--</select>-->
+    <!--</div>-->
 
-        <!--<div id="category">-->
-            <!--<select v-model="category" multiple>-->
-                <!--<option>Off-Road</option>-->
-                <!--<option>Motocross</option>-->
-                <!--<option>Adventure</option>-->
-                <!--<option>Trials</option>-->
-                <!--<option>Mini</option>-->
-                <!--<option>Enduro</option>-->
-            <!--</select>-->
-        <!--</div>-->
+    <!--<div id="category">-->
+    <!--<select v-model="category" multiple>-->
+    <!--<option>Off-Road</option>-->
+    <!--<option>Motocross</option>-->
+    <!--<option>Adventure</option>-->
+    <!--<option>Trials</option>-->
+    <!--<option>Mini</option>-->
+    <!--<option>Enduro</option>-->
+    <!--</select>-->
+    <!--</div>-->
 
-        <!--<div id="starter">-->
-            <!--<select v-model="starter" multiple>-->
-                <!--<option>Kick</option>-->
-                <!--<option>Electric</option>-->
-            <!--</select>-->
-        <!--</div>-->
+    <!--<div id="starter">-->
+    <!--<select v-model="starter" multiple>-->
+    <!--<option>Kick</option>-->
+    <!--<option>Electric</option>-->
+    <!--</select>-->
+    <!--</div>-->
     <!--</div>-->
 
     <!--Start of the bike body (9/12 boxes)-->
@@ -203,7 +203,8 @@
         </div>
     </div>
 
-
+<footer>
+</footer>
     <!--
     arrow_back
     arrow_downward
@@ -222,7 +223,7 @@
             delimiters: ['[[', ']]'],
             data: {
                 bikes: [],
-
+                pick: '',
                 welcome: 'Welcome to Moto.io. <br> Here you can this simple app was created to save you time trying to pick through all the stats of dirt bikes. Look to the right side of the page and drag your top priorities in order starting with the most important at the top. As you do the top three motorcycles that fit your priorities will adjust on the screen. That\'s it!!!. Have fun. <br> -Shane',
 
                 // todo build up a dictionary of filters and send it to the back
