@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # write the code here
-        page_count = 48
+        page_count = 2
         data_list_of_dicts = []
         missed_pages = []
 
@@ -42,7 +42,7 @@ class Command(BaseCommand):
 
             sess.visit(full_url)
 
-            # print('Status: ', sess.status_code())
+            print('Status: ', sess.status_code())
 
             response = sess.body()
             page_soup = BeautifulSoup(response, "lxml")
