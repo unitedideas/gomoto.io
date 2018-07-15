@@ -51,23 +51,22 @@ class Command(BaseCommand):
 
         def bike_page(bike_page_url):
 
-
+            print(bike_page_url, end=' < bike_page_url \n')
             bike_page_data = requests.get(bike_page_url)
 
             bike_page_text = bike_page_data.content
 
-            # print(bike_page_text)
+            print('Visiting the Bike Page URL...')
+            print(bike_page_url)
 
-            # print('Visiting the Bike Page URL...')
-            # print(bike_page_url)
-
-            # print('Status: ' + str(bike_page_data.status_code))
+            print('Status: ' + str(bike_page_data.status_code))
 
             bike_soup = BeautifulSoup(bike_page_text, "lxml")
 
-            # Getbike image src
 
+            # Getbike image src
             data_points = bike_soup.find(class_='field-image')
+            print(data_points)
 
             image = data_points.find('img')
             if image['data-1000src']:
