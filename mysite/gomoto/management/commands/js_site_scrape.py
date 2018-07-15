@@ -9,7 +9,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # write the code here
         page_count = 48
-        general_count = 1
         data_list_of_dicts = []
         missed_pages = []
 
@@ -51,25 +50,7 @@ class Command(BaseCommand):
 
 
         def bike_page(bike_page_url):
-            # time.sleep(2)
-            # bike_dict = {'img_src': 'https://www.harpersphoto.co.uk/user/products/large/no%20image.gif',
-            #         'price': 99999, 'displacement': 0, 'seatheight': 0, 'wet_weight': None, 'dry_weight': None,
-            #         'starter': 'Kick', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 1900, 'make': 'Unknown',
-            #         'model': 'Unknown'}
 
-            # if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2014-ktm-150-sx' or bike_page_url == 'https://www.dirtrider.com/2014-triumph-tiger-800-xc-abs-se' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
-            #     bike_dict = {
-            #         'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct',
-            #         'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320,
-            #         'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 2016, 'make': 'Husqvarna',
-            #         'model': '701 Enduro'}
-            #
-            #     print('saving to table')
-            #     print(bike_dict)
-            #     bike = Bike(**bike_dict)
-            #     # bike.make = make
-            #     # bike.year = #...
-            #     bike.save()
 
             bike_page_data = requests.get(bike_page_url)
 
@@ -450,4 +431,23 @@ class Command(BaseCommand):
         #     # if none of the keys exist set value of sent key to None
         #     else:
         #         return None
+        # time.sleep(2)
+        # bike_dict = {'img_src': 'https://www.harpersphoto.co.uk/user/products/large/no%20image.gif',
+        #         'price': 99999, 'displacement': 0, 'seatheight': 0, 'wet_weight': None, 'dry_weight': None,
+        #         'starter': 'Kick', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 1900, 'make': 'Unknown',
+        #         'model': 'Unknown'}
+
+        # if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2014-ktm-150-sx' or bike_page_url == 'https://www.dirtrider.com/2014-triumph-tiger-800-xc-abs-se' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
+        #     bike_dict = {
+        #         'img_src': 'https://www.dirtrider.com/sites/dirtrider.com/files/styles/1000_1x_/public/buyers_guide/2017/2017_Husqvarna_Enduro_701.jpg?itok=XP0WDuct',
+        #         'price': 11799, 'displacement': 693, 'seatheight': 36, 'wet_weight': None, 'dry_weight': 320,
+        #         'starter': 'Electric', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 2016, 'make': 'Husqvarna',
+        #         'model': '701 Enduro'}
+        #
+        #     print('saving to table')
+        #     print(bike_dict)
+        #     bike = Bike(**bike_dict)
+        #     # bike.make = make
+        #     # bike.year = #...
+        #     bike.save()
     pass
