@@ -28,7 +28,7 @@ class Bike(models.Model):
     TYPE_OF_ENGINE = (
         (FOUR_STROKE, 'Four-stroke'),
         (TWO_STROKE, 'Two-stroke'),
-        (ELECTRIC, "Electric"),
+        (ELECTRIC, 'Electric'),
 
     )
 
