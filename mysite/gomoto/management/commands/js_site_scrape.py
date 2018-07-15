@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # write the code here
-        page_count = 46
+        page_count = 43
         data_list_of_dicts = []
         missed_pages = []
 
@@ -97,7 +97,6 @@ class Command(BaseCommand):
                     value = data_value
                     if key[0] == 'MSRP':
                         # data_value = data_points[count].span.get_text()
-                        # re.
                         value = ''.join(re.findall(r'\d+', data_value))
 
                     if value:
@@ -105,7 +104,10 @@ class Command(BaseCommand):
                         try:
                             value = int(value)
                         except:
-                            value = 12499
+                            value = None
+
+                    if key[0] == 'Dry Weight (lbs)':
+                        value += 25
 
                     bike_dict[key[1]] = value
                     # print(bike_dict[key[1]])
@@ -115,7 +117,7 @@ class Command(BaseCommand):
                     # print('No Data for: ' + key[1])
 
             # Get data from tables
-            cat_list = ['Off-Road', 'Motocross', 'Adventure', 'Trials', 'Mini']
+            cat_list = ['Off-Road', 'Motocross', 'Adventure', 'Trials', 'Mini', 'Enduro']
 
             data_points = bike_soup.find(class_='panel-pane pane-entity-field pane-node-field-page-sections')
             spans = data_points.find_all('span')
@@ -130,21 +132,24 @@ class Command(BaseCommand):
                     else:
                         bike_dict[key[1]] = value
 
-                    if key[0] == 'Valve Configuration' and bike_dict[key[1]] == None:
-                        bike_dict[key[1]] = 'Electric'
+                        if key[0] == 'Valve Configuration' and bike_dict[key[1]] == None:
+                            bike_dict[key[1]] = 'Electric'
 
-                    if bike_dict[key[1]] == 'Competition':
-                        bike_dict[key[1]] = 'Motocross'
+                        if bike_dict[key[1]] == 'Competition':
+                            bike_dict[key[1]] = 'Motocross'
 
-                    if bike_dict[key[1]] == 'Reed Valve':
-                        bike_dict[key[1]] = 'Two-stroke'
-                    elif bike_dict[key[1]] == 'Electric':
-                        bike_dict[key[1]] = 'Electric'
-                    else:
-                        bike_dict[key[1]] = 'Four-stroke'
+                        if bike_dict[key[1]] == 'Electric / Kick':
+                            bike_dict[key[1]] = 'Electric'
 
-                    if bike_dict['category'] not in cat_list:
-                        bike_dict['category'] = 'Off-Road'
+                        if bike_dict[key[1]] == 'Reed  Valve':
+                            bike_dict[key[1]] = 'Two-stroke'
+                        elif bike_dict[key[1]] == 'Electric':
+                            bike_dict[key[1]] = 'Electric'
+                        elif bike_dict[key[1]] == 'DOHC' or bike_dict[key[1]] == 'OHV' or bike_dict[key[1]] == 'SOHC'  :
+                            bike_dict[key[1]] = 'Four-stroke'
+
+                        if bike_dict['category'] not in cat_list:
+                            bike_dict['category'] = 'Off-Road'
 
             # Get year, make, model
 
@@ -167,24 +172,12 @@ class Command(BaseCommand):
 
                     # print(bike_dict['make'])
 
-                    # This is still execution todo item
-                    # else:
-                    #     hope = ''.join(re.findall(r'\b[^\d\W]+a{1}\b', title))
-                    #     bike_dict['make'] = hope
-                    # model
-
                     model = ''.join(re.findall(r'(?<=' + make[0] + '\s).*', title))
                     bike_dict['model'] = model.title()
 
-                    # print(bike_dict['model'])
-
-            # print(bike_dict)
-            # return bike_dict
 
             print('saving to table')
             bike = Bike(**bike_dict)
-            # bike.make = make
-            # bike.year = #...
             bike.save()
 
         make_list = [
@@ -206,11 +199,25 @@ class Command(BaseCommand):
             ('zero', 'Zero')
         ]
 
-        top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),('Wet Weight (lbs)', 'weight'), ('Dry Weight (lbs)', 'weight')]
+        top_five_keys = [
+            ('MSRP', 'price'),
+            ('Displacement (CC)', 'displacement'),
+            ('Seat Height (in)', 'seatheight'),
+            ('Wet Weight (lbs)', 'weight'),
+            ('Dry Weight (lbs)', 'weight')
+        ]
 
-        table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve Configuration', 'engine_type')]
+        table_keys = [
+            ('Starter', 'starter'),
+            ('Manufacturer Type', 'category'),
+            ('Valve Configuration', 'engine_type')
+        ]
 
-        title_keys = ['year', 'make', 'model', ]
+        title_keys = [
+            'year',
+            'make',
+            'model',
+        ]
 
         while page_count > 0:
             page_soup = page_session(page_count)

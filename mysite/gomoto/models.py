@@ -10,6 +10,7 @@ class Bike(models.Model):
     ADVENTURE = 'Adventure'
     TRIALS = 'Trials'
     MINI = 'Mini'
+    ENDURO = 'Enduro'
     TWO_STROKE = 'Two-stroke'
     FOUR_STROKE = "Four-stroke"
     ELECTRIC = "Electric"
@@ -20,6 +21,7 @@ class Bike(models.Model):
         (ADVENTURE, 'Adventure'),
         (TRIALS, 'Trials'),
         (MINI, 'Mini'),
+        (ENDURO, 'Enduro'),
 
     )
 
