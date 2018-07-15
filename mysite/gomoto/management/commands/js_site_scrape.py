@@ -238,8 +238,7 @@ class Command(BaseCommand):
 
 
 
-        top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
-                         ('Wet Weight (lbs)', 'weight'), ('Dry Weight (lbs)', 'weight')]
+        top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),('Wet Weight (lbs)', 'weight'), ('Dry Weight (lbs)', 'weight')]
 
         table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve Configuration', 'engine_type')]
 
