@@ -52,10 +52,10 @@ class Command(BaseCommand):
 
         def bike_page(bike_page_url):
             # time.sleep(2)
-            bike_dict = {'img_src': 'https://www.harpersphoto.co.uk/user/products/large/no%20image.gif',
-                    'price': 99999, 'displacement': 0, 'seatheight': 0, 'wet_weight': None, 'dry_weight': None,
-                    'starter': 'Kick', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 1900, 'make': 'Unknown',
-                    'model': 'Unknown'}
+            # bike_dict = {'img_src': 'https://www.harpersphoto.co.uk/user/products/large/no%20image.gif',
+            #         'price': 99999, 'displacement': 0, 'seatheight': 0, 'wet_weight': None, 'dry_weight': None,
+            #         'starter': 'Kick', 'category': 'Off-Road', 'engine_type': 'Four-stroke', 'year': 1900, 'make': 'Unknown',
+            #         'model': 'Unknown'}
 
             # if bike_page_url == 'https://www.dirtrider.com/2016-husqvarna-701-enduro' or bike_page_url == 'https://www.dirtrider.com/2014-ktm-150-sx' or bike_page_url == 'https://www.dirtrider.com/2014-triumph-tiger-800-xc-abs-se' or bike_page_url == 'https://www.dirtrider.com/2017-beta-125-rr-s':
             #     bike_dict = {
@@ -162,10 +162,12 @@ class Command(BaseCommand):
                         bike_dict[key[1]] = 'Motocross'
 
 
-                    if bike_dict[key[1]] == 'Reed  Valve':
+                    if bike_dict[key[1]] == 'Reed Valve':
                         bike_dict[key[1]] = 'Two-stroke'
                     elif bike_dict[key[1]] == 'Electric':
                         bike_dict[key[1]] = 'Electric'
+                    else:
+                        bike_dict[key[1]] = 'Four-stroke'
 
                     if bike_dict['category'] not in cat_list:
                         bike_dict['category'] = 'Off-Road'
@@ -237,7 +239,7 @@ class Command(BaseCommand):
 
 
         top_five_keys = [('MSRP', 'price'), ('Displacement (CC)', 'displacement'), ('Seat Height (in)', 'seatheight'),
-                         ('Wet Weight (lbs)', 'wet_weight'), ('Dry Weight (lbs)', 'dry_weight')]
+                         ('Wet Weight (lbs)', 'weight'), ('Dry Weight (lbs)', 'weight')]
 
         table_keys = [('Starter', 'starter'), ('Manufacturer Type', 'category'), ('Valve Configuration', 'engine_type')]
 
