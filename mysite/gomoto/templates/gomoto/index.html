@@ -192,16 +192,12 @@
                 welcome: 'Welcome to Moto.io. <br> Here you can this simple app was created to save you time trying to pick through all the stats of dirt bikes. Look to the right side of the page and drag your top priorities in order starting with the most important at the top. As you do the top three motorcycles that fit your priorities will adjust on the screen. That\'s it!!!. Have fun. <br> -Shane',
 
                 // todo build up a dictionary of filters and send it to the back
-                filter_list:{},
                 options: [{
                     id: 'price',
                     name: 'Low Price'
                 }, {
                     id: 'seatheight',
                     name: 'Low Seat Height'
-                }, {
-                    id: 'dry_weight',
-                    name: 'Dry Weight'
                 }, {
                     id: 'year',
                     name: 'Newer Year'
@@ -210,8 +206,8 @@
                     name: 'More CC'
                 },
                     {
-                    id: 'wet_weight',
-                    name: 'Wet Weight'
+                    id: 'weight',
+                    name: 'Weight'
                 }
                 ],
             },
@@ -223,7 +219,8 @@
                     document.getElementById('welcome').style.display = "none";
 
 
-                    for (i = 0; i < app.options.length; i++) {
+                    for (i = 0; i < app.options.length; i++){
+                        console.log(app.options[i].id)
                         priorities_list.push(app.options[i].id)
                     }
                     console.log(priorities_list)

@@ -15,36 +15,46 @@ def index(request):
 
 def get_bikes(request):
     priorities_dict = json.loads(request.body)
+    print(priorities_dict)
     priorities_list = priorities_dict["priorities_list"]
+    priorities_list
+
+
+
 
     # print(priorities_list)
     print()
-    # todo this will be the top three bikes from the bike_score_list
+
     response_dictionary = {}
     score_list = [1, 2, 3, 4]
-    filter_dict = {'engine_type':'Four-stroke', 'category': 'Off-Road', 'starter':'Kick'}
+    filter_dict = {}
     bikes = Bike.objects.all()
 
-    # todo implement filter on the VUE (index.html) send back a dictionary
+
     # This gives me all bikes
 
     bikes = bikes.filter(**filter_dict)
     print(len(bikes), end=' <--- filtered bike count \n')
 
     # mean_list = {}
-    # todo will need to sort the list of dicts - max to min
+
+
     bike_score_list = []
+    print(bike_score_list)
     print(priorities_list)
     for property in priorities_list:
         property_set = []
         count = 0
         none_count = 0
+        print(property)
         for bike in bikes:
             property_value = getattr(bike, property)
+            print(property_value)
             if property_value is None:
                 none_count += 1
             elif property_value is not None:
                 property_set.append(property_value)
+                print(property_value)
 
         # mean_list[property]=mean(property_set)
         property_mean = mean(property_set)
@@ -83,11 +93,11 @@ def std_dev_calc(property_mean, standard_dev, bikes, priorities_list):
         count = len(priorities_list)
         count_bikes += 1
         for property in priorities_list:
-            weight = count / len(priorities_list)
+            weighted = count / len(priorities_list)
             bike_prop_value = getattr(bike, property)
             if bike_prop_value is not None:
-                z_score = (bike_prop_value - property_mean) / standard_dev * weight
-                if property == 'seatheight' or property == 'dry_weight' or property == 'wet_weight':
+                z_score = (bike_prop_value - property_mean) / standard_dev * weighted
+                if property == 'seatheight' or property == 'weighted' or property == 'wet_weight':
                     z_score *= -1
                 count -= 1
             else:
@@ -174,3 +184,16 @@ def std_dev_calc(property_mean, standard_dev, bikes, priorities_list):
     # # for attribute in :
     # #     put each in a dictionary and then all three in a list
     #     print(dir(__bikes__))
+
+
+    # bikes = Bike.objects.all()
+    # print(len(bikes), end=' <------bikes with dry weight')
+    # for bike in bikes:
+    #     if bike.wet_weight == None:
+    #         print()
+    #         print(bike.wet_weight, end=' <<---before')
+    #         new_weight = bike.dry_weight
+    #         bike.wet_weight = new_weight
+    #         print()
+    #         print(bike.wet_weight, end=' <<---after')
+    #         bike.save()
