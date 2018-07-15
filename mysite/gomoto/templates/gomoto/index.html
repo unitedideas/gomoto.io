@@ -107,6 +107,8 @@
     <div id="nav_bar" style="padding-top: 20px; margin: 0px; background-color: black">
         <img style="width: 30%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
+
+
     <div class="container">
         <div class="row">
             <div class="col s4 select_font">
@@ -136,6 +138,17 @@
                     <option value="Electric">Electric</option>
                 </select>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s4">
+        </div>
+
+        <div class="col s4 m4 l4 center font_Baskerville">[[message]]
+        </div>
+
+        <div class="col s4">
         </div>
     </div>
 
@@ -236,6 +249,7 @@
             data: {
                 bikes: [],
                 welcome: 'Welcome to Moto.io. <br> Here you can this simple app was created to save you time trying to pick through all the stats of dirt bikes. Look to the right side of the page and drag your top priorities in order starting with the most important at the top. As you do the top three motorcycles that fit your priorities will adjust on the screen. That\'s it!!!. Have fun. <br> -Shane',
+                message: '',
 
                 // todo build up a dictionary of filters and send it to the back
                 engine_type: 'All',
@@ -304,6 +318,7 @@
                         .then(function (response) {
                             console.log(response)
                             app.bikes = response.data.bikes
+                            app.message = response.data.message
                             console.log(bikes)
 
 

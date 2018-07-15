@@ -36,8 +36,8 @@ def get_bikes(request):
     filters_dict = {}
     print(len(bikes), end=' <--- filtered bike count \n')
     if len(bikes) < 3:
-        JsonResponse({'welcome':'return_list'})
-    # mean_list = {}
+        return JsonResponse({'message':'There are no motorcycle that meet these filters. GOMOTO some more!'})
+
 
 
     bike_score_list = []
@@ -82,6 +82,7 @@ def get_bikes(request):
         # print()
 
     return_data = {'bikes':return_list}
+    # print(return_data)
 
     return JsonResponse(return_data)
 
