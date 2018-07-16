@@ -213,15 +213,26 @@
 
             </div>
             <!--Start of the Sidebar (3/12 boxes)-->
-            <draggable style="padding-left: 3px" class="dragArea col s3 m3 l3 right" v-model="options"
-                       @change="get_bikes">
+            <draggable style="padding-left: 3px" class="dragArea col s3 m3 l3 right" :options="{group:'people'}"
+                       v-model="options" @change="get_bikes">
                 <div v-for="(element, index) in options">
                     <div class="center">
-                        <div id="m_buttons" class="btn-large"><i style=" font-size: 30px;" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
+                        <div id="m_buttons" class="btn-large">
+                            <i style=" font-size: 30px;" class="material-icons left">arrow_drop_down_circle</i>[[element.name]]
                         </div>
                     </div>
                 </div>
             </draggable>
+
+
+            <div class="drag">
+                <h2>Un-Used</h2>
+                <h6>Drag here to remove from filters</h6>
+                <draggable style="padding-left: 3px" class="dragArea col s3 m3 l3 right" :options="{group:'people'}"
+                       v-model="list">
+                    <div class="center" v-for="element in list">[[element.name]]</div>
+                </draggable>
+            </div>
             <!--End Sidebar-->
 
 
@@ -229,6 +240,7 @@
     </div>
 
     <footer>
+
     </footer>
     <!--
     arrow_back
@@ -274,6 +286,11 @@
                     name: 'Weight'
                 }
                 ],
+
+                list: [{
+                    name: "John"
+                }, ],
+
             },
             methods: {
 
@@ -320,12 +337,18 @@
                             app.bikes = response.data.bikes
                             app.message = response.data.message
                             console.log(bikes)
-
-
                         })
-
-
                 },
+                add: function () {
+                    this.list.push({
+                        name: 'Juan'
+                    });
+                },
+                replace: function () {
+                    this.list = [{
+                        name: 'Edgard'
+                    }]
+                }
 
             },
 
