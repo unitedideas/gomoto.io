@@ -36,7 +36,8 @@ def get_bikes(request):
     filters_dict = {}
     print(len(bikes), end=' <--- filtered bike count \n')
     if len(bikes) < 3:
-        return JsonResponse({'message':'There are no motorcycle that meet these filters. GOMOTO some more!'})
+        # return JsonResponse({'bikes':[]}) #<--- Matthew
+        return JsonResponse({'message':'There are no motorcycle that meet these filters. GOMOTO some more!', 'bikes':[]})
 
 
 
