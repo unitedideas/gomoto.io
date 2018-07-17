@@ -33,9 +33,8 @@ ALLOWED_HOSTS = [
     'gomoto2-dev.us-west-2.elasticbeanstalk.com',
     'localhost',
     '127.0.0.1',
+    'gomoto.io',
     'www.gomoto.io',
-    '52.26.43.20',
-    '35.166.145.193',
 ]
 
 
