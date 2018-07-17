@@ -34,6 +34,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'www.gomoto.io',
+    '52.26.43.20',
+    '35.166.145.193',
 ]
 
 
