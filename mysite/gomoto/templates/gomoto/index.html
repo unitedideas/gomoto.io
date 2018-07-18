@@ -34,6 +34,10 @@
 
 <style>
 
+    a:hover {
+        background-color: #E8710C !important;
+    }
+
     #top_drag {
         background-image: url("{% static 'gomoto/images/GoMoto_Logho02.png' %}");
         background-size: 100%;
@@ -135,7 +139,7 @@
 
     <!--Start Navbar-->
     <div id="nav_bar" style="padding-top: 20px; margin: 0px;">
-    <img style="width: 50%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
+        <img style="width: 50%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
     </div>
 
 
@@ -252,7 +256,8 @@
                            v-model="options" @change="get_bikes">
                     <div style="padding-right: 5px" v-for="(element, index) in options">
                         <div>
-                            <a style="font-size: medium; color:rgba(0,0,0,.8); text-align:left;padding-top: 0px;padding-right: 12px;padding-left: 3px;" class="m_buttons btn-large center">
+                            <a style="font-size: medium; color:rgba(0,0,0,.8); text-align:left;padding-top: 0px;padding-right: 12px;padding-left: 3px;"
+                               class="m_buttons btn-large center">
                                 <i style=" font-size: 30px;" class="material-icons left">import_export</i>[[element.name]]
                             </a>
                         </div>
@@ -341,7 +346,6 @@
                         console.log(app.options[i].id)
                         priorities_list.push(app.options[i].id)
                     }
-
 
 
                     console.log(priorities_list)
