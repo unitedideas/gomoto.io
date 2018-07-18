@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    </script>
+</head>
+<body>
+ <h2>Login</h2>
+            {% if message == 'bad_recaptcha' %}
+        <h3 style="color:red">Please select the Recaptcha</h3>
+        {% endif %}
+        <form action="{% url 'todo:login' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{next}}"/>
+            <input type="text" name="username" placeholder="username" required/>
+            <input type="password" name="password" placeholder="password" required/>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="6Lc8dWEUAAAAABjUdXmBSCkJ3lf4BNyXQQyC9MMq"></div>
+            <input type="submit" value="login"/>
+        </form>
+</body>
+</html>
