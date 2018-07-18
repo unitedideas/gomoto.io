@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 try:
-    from mysite.secret import SECRET_KEY
+    from mysite.secret import SECRET_KEY, GOOGLE_RECAPTCHA_SECRET_KEY
 except ImportError:
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
