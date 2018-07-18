@@ -1,6 +1,7 @@
 from django.db import models
 import birthday
 
+
 # Create your models here.
 
 
@@ -8,7 +9,6 @@ import birthday
 #  ^----------------<-----------------------<------------------------<---------------------------<----------------------------------<-V
 
 class UserProfile(models.Model):
-
     GENDER = (
         (MALE, 'Male'),
         (FEMALE, 'Female'),
@@ -31,15 +31,3 @@ class UserProfile(models.Model):
     # twilio 'Lookup' API
     e_c_phonenumber = models.CharField(max_length=300)
     address = models.CharField(max_length=300)
-
-
-
-
-
-
-
-
-
-
-
-
