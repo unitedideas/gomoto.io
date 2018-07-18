@@ -8,9 +8,9 @@
 
 </head>
 <body>
+
 <section class="section">
     <div class="container">
-
         <h2>Login</h2>
         <form action="{% url 'lobosevents:login' %}" method="post">
             {% csrf_token %}
@@ -23,5 +23,6 @@
         </form>
     </div>
 </section>
+
 </body>
 </html>
