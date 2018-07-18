@@ -252,15 +252,15 @@
                            v-model="options" @change="get_bikes">
                     <div style="padding-right: 5px" v-for="(element, index) in options">
                         <div>
-                            <a class="m_buttons btn-large center">
+                            <a style="font-size: large; color:rgba(0,0,0,.8); text-align:center;padding-top: 0px;padding-right: 12px;padding-left: 3px;" class="m_buttons btn-large center">
                                 <i style=" font-size: 30px;" class="material-icons left">import_export</i>[[element.name]]
                             </a>
                         </div>
                     </div>
                 </draggable>
 
-                <h2>The Pits</h2>
-                <h6>Filters below will not be used</h6>
+                <h2 style="width:210px">The Pits</h2>
+                <h6 style="width:212px">Filters below will not be used</h6>
                 <draggable id="pits" class="dragArea row" :options="{group:'people'}"
                            v-model="list">
                     <div style="padding-right: 5px" class="m_buttons btn-large" v-for="element in list"><i
