@@ -26,8 +26,35 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=300)
     state = models.CharField(max_length=300)
     zip_code = models.CharField(max_length=300)
+
+    # e_c = emergemcy contact
     e_c_name = models.CharField(max_length=300)
 
     # twilio 'Lookup' API
     e_c_phonenumber = models.CharField(max_length=300)
     address = models.CharField(max_length=300)
+
+
+
+class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
