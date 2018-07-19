@@ -41,62 +41,46 @@ def event_registration(request):
     #
     # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
+def profile(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('lobosevents:profile'))
 
-# @check_recaptcha
+@check_recaptcha
 def register(request):
     if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:register') + '?message=bad_recaptcha')
+        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     username = request.POST['username']
     email = request.POST['email']
     password = request.POST['password']
     user = User.objects.create_user(username, email, password)
     login(request, user)
-    return HttpResponseRedirect(reverse('lobosevents:profile'))
+    return HttpResponseRedirect(reverse('lobosevents:index'))
 
 
-# @check_recaptcha
-def user_login(request):
+@check_recaptcha
+def mylogin(request):
     if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:login') + '?message=bad_recaptcha')
+        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
+
 
     if user is not None:
         login(request, user)
         if 'next' in request.POST and request.POST['next'] != '':
             return HttpResponseRedirect(request.POST['next'])
-        return HttpResponseRedirect(reverse('lobosevents:event_registration'))
-    return HttpResponseRedirect(reverse('lobosevents:login'))
+        return HttpResponseRedirect(reverse('lobosevents:index'))
+    return HttpResponseRedirect(reverse('lobosevents:login_register'))
 
 
-# @check_recaptcha
-def user_register(request):
-    if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:login') + '?message=bad_recaptcha')
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
-
-    if user is not None:
-        login(request, user)
-        if 'next' in request.POST and request.POST['next'] != '':
-            return HttpResponseRedirect(request.POST['next'])
-        return HttpResponseRedirect(reverse('lobosevents:event_registration'))
-    return HttpResponseRedirect(reverse('lobosevents:login'))
-
-
-def user_logout(request):
+def mylogout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('lobosevents:login'))
+    return HttpResponseRedirect(reverse('lobosevents:login_register'))
 
 
-def profile(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('lobosevents:profile'))
 
-
-def login_success(request):
+def login_register(request):
     message = request.GET.get('message', '')
     next = request.GET.get('next', '')
-    return render(request, 'lobosevents/login.html', {'next': next, 'message': message})
+    return render(request, 'lobosevents/login_register.html', {'next': next, 'message': message})

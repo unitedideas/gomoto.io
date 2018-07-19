@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Registration</title>
 
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -11,22 +11,22 @@
 
 <section class="section">
     <div class="container">
-        <h2>Register</h2>
-        {% if message == 'bad_recaptcha' %}
-        <h3 style="color:red">Please select the Recaptcha</h3>
-        {% endif %}
-        <form action="{% url 'lobosevents:register' %}" method="post">
+        <h2>Login</h2>
+        <form action="{% url 'lobosevents:login' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{next}}"/>
             <input type="text" name="username" placeholder="username" required/>
-            <input type="text" name="email" placeholder="email" required/>
             <input type="password" name="password" placeholder="password" required/>
             <script src='https://www.google.com/recaptcha/api.js'></script>
             <div class="g-recaptcha" data-sitekey="6Lc8dWEUAAAAABjUdXmBSCkJ3lf4BNyXQQyC9MMq"></div>
-            <input type="submit" value="register"/>
+            <input type="submit" value="login"/>
         </form>
     </div>
 </section>
 
 </body>
 </html>
+
+
+
+

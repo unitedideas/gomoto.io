@@ -1,8 +1,8 @@
 from functools import wraps
 from django.contrib import messages
 import requests, sys
-sys.path.insert(0, 'mysite/mysite/secret.py')
-import secrets
+# sys.path.insert(0, 'mysite/mysite/secret.py')
+# import secret
 
 
 def check_recaptcha(view_func):
@@ -12,7 +12,7 @@ def check_recaptcha(view_func):
         if request.method == 'POST':
             recaptcha_response = request.POST.get('g-recaptcha-response')
             data = {
-                'secret': secrets.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'sitekey': '6LckA2UUAAAAAAqQPE4dgvsio1rqLHsDZkN28icC',
                 'response': recaptcha_response
             }
             r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Register</title>
+    <style>
+        body {
+            margin-left: 30px;
+        }
+    </style>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+<body>
+<section class="section">
+    <div class="container">
+
+
+        <h2>Register</h2>
+        {% if message == 'bad_recaptcha' %}
+        <h3 style="color:red">Please select the Recaptcha</h3>
+        {% endif %}
+        <form action="{% url 'lobosevents:register' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{next}}"/>
+            <input type="text" name="username" placeholder="username" required/>
+            <input type="text" name="email" placeholder="email" required/>
+            <input type="password" name="password" placeholder="password" required/>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="6LckA2UUAAAAAAqQPE4dgvsio1rqLHsDZkN28icC"></div>
+            <input type="submit" value="register"/>
+        </form>
+
+
+        <h2>Login</h2>
+        <form action="{% url 'lobosevents:login' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{next}}"/>
+            <input type="text" name="username" placeholder="username" required/>
+            <input type="password" name="password" placeholder="password" required/>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="6LckA2UUAAAAAAqQPE4dgvsio1rqLHsDZkN28icC"></div>
+            <input type="submit" value="login"/>
+        </form>
+
+    </div>
+</section>
+</body>
+</html>
