@@ -1,8 +1,6 @@
 from functools import wraps
 from django.contrib import messages
 import requests, sys
-# sys.path.insert(0, 'mysite/mysite/secret.py')
-# import secret
 
 
 def check_recaptcha(view_func):

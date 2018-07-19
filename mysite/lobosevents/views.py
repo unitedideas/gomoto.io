@@ -1,29 +1,11 @@
-from django.shortcuts import render, reverse
-from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
-from django.contrib.auth.decorators import login_required
 from .decorators import check_recaptcha
-from django.conf import settings
-from django.contrib import messages
-import json
-import urllib
-
 from django.shortcuts import render, reverse
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate
-from statistics import *
-from datetime import time
-from cmath import sqrt
-from collections import OrderedDict
-import json, numpy, importlib, datetime, operator
-from django.db.models import Avg, Max, Min, Sum
-from .models import Profile, UserEvent
-from django.conf import settings
-from django.contrib import messages
-import json
-import urllib
-
+from tablib import Dataset
+from .resources import PersonResource
 
 def index(request):
     return HttpResponse("Hello, world. You're at the lobos registration page.")
@@ -84,3 +66,19 @@ def login_register(request):
     message = request.GET.get('message', '')
     next = request.GET.get('next', '')
     return render(request, 'lobosevents/login_register.html', {'next': next, 'message': message})
+
+
+def simple_upload(request):
+    if request.method == 'POST':
+        person_resource = PersonResource()
+        dataset = Dataset()
+        new_persons = request.FILES['myfile']
+
+        imported_data = dataset.load(new_persons.read())
+        result = person_resource.import_data(dataset, dry_run=True)  # Test the data import
+
+        if not result.has_errors():
+            person_resource.import_data(dataset, dry_run=False)  # Actually import now
+
+    return render(request, 'core/simple_upload.html')
+
