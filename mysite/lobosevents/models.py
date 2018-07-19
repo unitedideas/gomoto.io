@@ -1,5 +1,4 @@
 from django.db import models
-import birthday
 
 
 # Create your models here.
@@ -36,7 +35,8 @@ class UserProfile(models.Model):
 
 
 
-class
+class UserEvent(models.Model):
+    pass
 
 
 
