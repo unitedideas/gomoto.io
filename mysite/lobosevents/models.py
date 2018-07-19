@@ -34,7 +34,6 @@ class UserProfile(models.Model):
     address = models.CharField(max_length=300)
 
 
-
 class UserEvent(models.Model):
     userprofile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     bike_year = models.IntegerField(max_length=300)
@@ -43,7 +42,6 @@ class UserEvent(models.Model):
     bike_displacement = models.IntegerField(max_length=300)
     omra_number = models.IntegerField(max_length=300)
     ama_number = models.IntegerField(max_length=300)
-
 
 
 class Event(models.Model):
@@ -64,32 +62,3 @@ class UserSpecialTests(models.Model):
     specialtest = models.ForeignKey(specialtest, on_delete=models.CASCADE)
     start_time = models.TimeField()
     stop_time = models.TimeField()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
