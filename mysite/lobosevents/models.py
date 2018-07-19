@@ -18,9 +18,10 @@ class UserProfile(models.Model):
         (FEMALE, 'Female'),
         (MALE, 'Male'),
     )
-    user = models.ForeignKey(User,  null=True, blank=True, on_delete=models.CASCADE)
+
+    user = models.ForeignKey(User, null=True, blank=True,on_delete=models.CASCADE)
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
-    birth_date = models.CharField(max_length=300, null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
 
     # twilio 'Lookup' API
     phone_number = models.CharField(max_length=300, null=True, blank=True)
@@ -33,10 +34,10 @@ class UserProfile(models.Model):
 
     # todo every event or keep on the user profile?
     # e_c = emergemcy contact
-    e_c_name = models.CharField(max_length=300, null=True, blank=True)
+    emergency_contact_name = models.CharField(max_length=300, null=True, blank=True)
 
     # twilio 'Lookup' API
-    e_c_phonenumber = models.CharField(max_length=300, null=True, blank=True)
+    emergency_contact_contact = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' Contact Info'
@@ -81,10 +82,12 @@ class UserEvent(models.Model):
 
 
 class UserSpecialTest(models.Model):
+
+    user = models.ForeignKey(User, null=True, blank=True,on_delete=models.CASCADE)
     specialtest = models.ForeignKey(SpecialTest, on_delete=models.CASCADE)
-    start_time = models.CharField(max_length=300, null=True, blank=True)
-    stop_time = models.CharField(max_length=300, null=True, blank=True)
+    start_time = models.TimeField(max_length=300, null=True, blank=True)
+    stop_time = models.TimeField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return str(self.specialtest.event)
+        return str(self.specialtest + ' ' + self.user)
 
