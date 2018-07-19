@@ -29,7 +29,7 @@ def index(request):
     return HttpResponse("Hello, world. You're at the lobos registration page.")
 
 
-@login_required
+# @login_required
 def event_registration(request):
     pass
     # todo_text = request.POST['todo_item_id_key_in_template']
@@ -42,7 +42,7 @@ def event_registration(request):
     # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
 
-@check_recaptcha
+# @check_recaptcha
 def register(request):
     if not request.recaptcha_is_valid:
         return HttpResponseRedirect(reverse('lobosevents:register') + '?message=bad_recaptcha')
@@ -54,7 +54,7 @@ def register(request):
     return HttpResponseRedirect(reverse('lobosevents:profile'))
 
 
-@check_recaptcha
+# @check_recaptcha
 def user_login(request):
     if not request.recaptcha_is_valid:
         return HttpResponseRedirect(reverse('lobosevents:login') + '?message=bad_recaptcha')
@@ -70,7 +70,7 @@ def user_login(request):
     return HttpResponseRedirect(reverse('lobosevents:login'))
 
 
-@check_recaptcha
+# @check_recaptcha
 def user_register(request):
     if not request.recaptcha_is_valid:
         return HttpResponseRedirect(reverse('lobosevents:login') + '?message=bad_recaptcha')
