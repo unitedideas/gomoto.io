@@ -76,12 +76,12 @@ class SpecialTest(models.Model):
     special_test_num = models.IntegerField(max_length=30, null=True, blank=True)
 
     def __str__(self):
-        return ' - ' + str(self.event)+ ' - ' + ' Special Test ' + str(self.special_test_num)
+        return str(self.event)+ ' - ' + ' Special Test ' + str(self.special_test_num)
 
 
 class UserEvent(models.Model):
-    event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     bike_year = models.IntegerField(null=True, blank=True)
     bike_make = models.CharField(max_length=300, null=True, blank=True)
     bike_model = models.CharField(max_length=300, null=True, blank=True)
@@ -97,7 +97,7 @@ class UserEvent(models.Model):
 
 
 class UserSpecialTest(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     specialtest = models.ForeignKey(SpecialTest, on_delete=models.CASCADE)
     start_time = models.TimeField(max_length=300, null=True, blank=True)
     stop_time = models.TimeField(max_length=300, null=True, blank=True)
