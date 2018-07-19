@@ -26,7 +26,7 @@ import urllib
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the lobos index.")
+    return HttpResponse("Hello, world. You're at the lobos registration page.")
 
 
 @login_required
