@@ -87,6 +87,7 @@ class UserEvent(models.Model):
     bike_model = models.CharField(max_length=300, null=True, blank=True)
     bike_displacement = models.IntegerField(null=True, blank=True)
     placard = models.IntegerField(null=True, blank=True)
+    confirmation = models.CharField(max_length=300, null=True, blank=True)
 
     # todo every event or put on the user profile?
     omra_number = models.IntegerField()
