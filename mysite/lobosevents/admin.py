@@ -7,3 +7,4 @@ admin.site.register(UserEvent)
 admin.site.register(Event)
 admin.site.register(SpecialTest)
 admin.site.register(UserSpecialTest)
+
