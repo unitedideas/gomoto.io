@@ -18,7 +18,7 @@ from cmath import sqrt
 from collections import OrderedDict
 import json, numpy, importlib, datetime, operator
 from django.db.models import Avg, Max, Min, Sum
-from .models import UserProfile, UserEvent
+from .models import Profile, UserEvent
 from django.conf import settings
 from django.contrib import messages
 import json
