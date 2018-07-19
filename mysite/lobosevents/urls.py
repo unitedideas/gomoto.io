@@ -1,16 +1,14 @@
 from django.urls import path, include
 
-from mysite.lobosevents.templates.lobosevents import views
+from . import views
 
-app_name = 'todo'
+app_name = 'lobosevents'
 
 urlpatterns = [
 
-    path('', views.index, name='index'),
-    path('add_todo/', views.add_todo, name='add_todo'),
-    path('login_register/', views.login_register, name='login_register'),
-    path('removed_item/', views.remove_todo, name='todo_remove_unicorn'),
-    path('login/', views.mylogin, name='login'),
-    path('logout/', views.mylogout, name='logout'),
+    path('event_registration/', views.event_registration, name='event_registration'),
+    path('profile/', views.profile, name='profile'),
+    path('user_login/', views.user_login, name='user_login'),
+    path('user_logout/', views.user_logout, name='user_logout'),
     path('register/', views.register, name='register'),
 ]

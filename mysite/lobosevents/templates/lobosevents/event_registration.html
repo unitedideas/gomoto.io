@@ -384,11 +384,7 @@
     <div style="font-size: 25px" v-for="(value,key) of form">
         <span style='background-color: yellow'>{{key}}: </span><span style="background-color: green">{{ value }}</span>
     </div>
-
-
 </div>
-
-
 
 <script>
     new Vue({
@@ -424,54 +420,53 @@
         },  //<---- end data
         methods: {
 
-            get_bikes: function () {
-                let app = this
-                priorities_list = []
-                filters_dict = {}
-                //document.getElementById('welcome').style.display = "none"
-                this.show_welcome = false
-
-                for (i = 0; i < app.options.length; i++) {
-                    console.log(app.options[i].id)
-                    priorities_list.push(app.options[i].id)
-                }
-
-
-                console.log(priorities_list)
-
-
-                console.log(app.engine_type)
-                if (app.engine_type != 'All') {
-                    filters_dict['engine_type'] = app.engine_type
-                }
-                console.log(app.starter)
-                if (app.starter != 'All') {
-                    filters_dict['starter'] = app.starter
-                }
-                console.log(app.category)
-                if (app.category != 'All') {
-                    filters_dict['category'] = app.category
-                }
-                console.log(filters_dict)
-
-
-                axios.post("{% url 'gomoto:get_bikes' %}",
-                    {
-                        priorities_list, filters_dict
-                    }, {
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        }
-                    })
-
-                    .then(function (response) {
-                        console.log(response)
-                        app.bikes = response.data.bikes
-                        app.message = response.data.message
-                        console.log(bikes)
-                    })
-            }, //<---- End of get_bikes function
-
+            // get_bikes: function () {
+            //     let app = this
+            //     priorities_list = []
+            //     filters_dict = {}
+            //     //document.getElementById('welcome').style.display = "none"
+            //     this.show_welcome = false
+            //
+            //     for (i = 0; i < app.options.length; i++) {
+            //         console.log(app.options[i].id)
+            //         priorities_list.push(app.options[i].id)
+            //     }
+            //
+            //
+            //     console.log(priorities_list)
+            //
+            //
+            //     console.log(app.engine_type)
+            //     if (app.engine_type != 'All') {
+            //         filters_dict['engine_type'] = app.engine_type
+            //     }
+            //     console.log(app.starter)
+            //     if (app.starter != 'All') {
+            //         filters_dict['starter'] = app.starter
+            //     }
+            //     console.log(app.category)
+            //     if (app.category != 'All') {
+            //         filters_dict['category'] = app.category
+            //     }
+            //     console.log(filters_dict)
+            //
+            //
+            //     axios.post("{% url 'gomoto:get_bikes' %}",
+            //         {
+            //             priorities_list, filters_dict
+            //         }, {
+            //             headers: {
+            //                 'X-CSRFToken': '{{ csrf_token }}',
+            //             }
+            //         })
+            //
+            //         .then(function (response) {
+            //             console.log(response)
+            //             app.bikes = response.data.bikes
+            //             app.message = response.data.message
+            //             console.log(bikes)
+            //         })
+            // }, //<---- End of get_bikes function
 
 
         }, //<---- End of Methods

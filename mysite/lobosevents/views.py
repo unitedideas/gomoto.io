@@ -31,26 +31,15 @@ def index(request):
 
 @login_required
 def event_registration(request):
-    todo_text = request.POST['todo_item_id_key_in_template']
-    todo_item = TodoItem.objects.get(pk=todo_text)
-    todo_item.delete()
-    # item_on_list = question.choice_set.get(pk=request.POST['choice'])
-    # save data from request.POST in database
-    # redirect back to the index page (HttpResponseRedirect)
-
-    return HttpResponseRedirect(reverse('todo:index'))
-
-
-@login_required
-def event_registration(request):
-    todo_text = request.POST['todo_item_id_key_in_template']
-    todo_item = TodoItem.objects.get(pk=todo_text)
-    todo_item.delete()
-    # item_on_list = question.choice_set.get(pk=request.POST['choice'])
-    # save data from request.POST in database
-    # redirect back to the index page (HttpResponseRedirect)
-
-    return HttpResponseRedirect(reverse('lobosevents:event_registration_form'))
+    pass
+    # todo_text = request.POST['todo_item_id_key_in_template']
+    # todo_item = TodoItem.objects.get(pk=todo_text)
+    # todo_item.delete()
+    # # item_on_list = question.choice_set.get(pk=request.POST['choice'])
+    # # save data from request.POST in database
+    # # redirect back to the index page (HttpResponseRedirect)
+    #
+    # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
 
 @check_recaptcha
@@ -66,7 +55,7 @@ def register(request):
 
 
 @check_recaptcha
-def mylogin(request):
+def user_login(request):
     if not request.recaptcha_is_valid:
         return HttpResponseRedirect(reverse('lobosevents:login') + '?message=bad_recaptcha')
     username = request.POST['username']
@@ -77,16 +66,37 @@ def mylogin(request):
         login(request, user)
         if 'next' in request.POST and request.POST['next'] != '':
             return HttpResponseRedirect(request.POST['next'])
-        return HttpResponseRedirect(reverse('lobosevents:event_registration_form'))
+        return HttpResponseRedirect(reverse('lobosevents:event_registration'))
     return HttpResponseRedirect(reverse('lobosevents:login'))
 
 
-def mylogout(request):
+@check_recaptcha
+def user_register(request):
+    if not request.recaptcha_is_valid:
+        return HttpResponseRedirect(reverse('lobosevents:login') + '?message=bad_recaptcha')
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        login(request, user)
+        if 'next' in request.POST and request.POST['next'] != '':
+            return HttpResponseRedirect(request.POST['next'])
+        return HttpResponseRedirect(reverse('lobosevents:event_registration'))
+    return HttpResponseRedirect(reverse('lobosevents:login'))
+
+
+def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('lobosevents:login'))
 
 
-def login_register(request):
+def profile(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('lobosevents:profile'))
+
+
+def login_success(request):
     message = request.GET.get('message', '')
     next = request.GET.get('next', '')
     return render(request, 'lobosevents/login.html', {'next': next, 'message': message})
