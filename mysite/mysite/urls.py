@@ -22,3 +22,6 @@ urlpatterns = [
     path('', include('lobosevents.urls')),
 
 ]
+admin.site.site_header = "Lobos Events Database"
+admin.site.site_title = "Lobos MC"
+admin.site.index_title = "Lobos Events Database"
