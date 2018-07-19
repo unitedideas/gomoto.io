@@ -1,5 +1,4 @@
 from functools import wraps
-import secret
 from django.contrib import messages
 import requests, sys
 sys.path.insert(0, 'mysite/mysite/secret.py')

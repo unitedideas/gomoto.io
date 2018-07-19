@@ -51,7 +51,7 @@ def register(request):
     password = request.POST['password']
     user = User.objects.create_user(username, email, password)
     login(request, user)
-    return HttpResponseRedirect(reverse('todo:index'))
+    return HttpResponseRedirect(reverse('lobosevents:profile'))
 
 
 @check_recaptcha
