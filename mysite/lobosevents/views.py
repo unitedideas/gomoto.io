@@ -6,6 +6,8 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate
 from tablib import Dataset
 from .resources import PersonResource
+from django.core.mail import send_mail
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the lobos registration page.")
@@ -36,6 +38,14 @@ def register(request):
     password = request.POST['password']
     user = User.objects.create_user(username, email, password)
     login(request, user)
+    send_mail(
+        'Subject here',
+        'Here is the message.',
+        'from@example.com',
+        ['to@example.com'],
+        fail_silently=False,
+    )
+
     return HttpResponseRedirect(reverse('lobosevents:index'))
 
 
@@ -81,4 +91,34 @@ def simple_upload(request):
             person_resource.import_data(dataset, dry_run=False)  # Actually import now
 
     return render(request, 'core/simple_upload.html')
+
+
+
+
+send_mail(
+    'Subject here',
+    'Here is the message.',
+    'from@example.com',
+    ['to@example.com'],
+    fail_silently=False,
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

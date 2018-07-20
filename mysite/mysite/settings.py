@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+
+from mysite.secret import *
+
 try:
-    from mysite.secret import SECRET_KEY, GOOGLE_RECAPTCHA_SECRET_KEY
+    from mysite.secret import SECRET_KEY
 except ImportError:
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -36,6 +39,14 @@ ALLOWED_HOSTS = [
     'gomoto.io',
     'www.gomoto.io',
 ]
+
+# Email
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_PORT = EMAIL_PORT
+EMAIL_USE_TLS = EMAIL_USE_TLS
+DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
 
 
 # Application definition
