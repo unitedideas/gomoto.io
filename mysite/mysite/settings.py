@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django-import_export',
+    'import_export',
 ]
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
