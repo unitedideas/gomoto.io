@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="shortcut icon" type="image/png" href="{% static 'gomoto/images/GoMoto_favicon.png' %}"/>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
@@ -57,7 +58,7 @@
 
     .select_font {
         font-family: 'Libre Baskerville', serif;
-        font-size: 20px;
+        font-size: 15px;
     }
 
     .font_Baskerville {
@@ -90,7 +91,7 @@
     }
 
     #nav_bar {
-        text-align: center;
+        text-align: left;
         padding-top: 1%;
         margin: 0;
     }
@@ -129,22 +130,30 @@
         font-family: "American Typewriter";
     }
 
+    #select_cont {
+        margin-left: 235px;
+    }
+
+
 </style>
 
 <body class="background_color container">
 <div id="app">
 
-    <!--Start Navbar-->
-    <div id="nav_bar" style="padding-top: 20px; margin: 0px;">
-        <img style="width: 50%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
-    </div>
+    <!--&lt;!&ndash;Start Navbar&ndash;&gt;-->
+    <!--<div id="nav_bar" style="padding-top: 20px;">-->
+        <!--<img style="width: 50%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>-->
+    <!--</div>-->
 
 
-    <div class="container">
+    <div id='select_cont' class="container">
+        <div id="nav_bar" style="padding-top: 20px;">
+            <img style="width: 82.75%; height: 20%;" src="{% static 'gomoto/images/GoMoto_Logo.png' %}"/>
+        </div>
         <div class="row">
-            <div class="col s2 select_font input-field ">
-                <h6 class="center">Category</h6>
-                <select class="v-select center" v-model="category" @change="get_bikes">
+            <div class="col s2 center select_font input-field ">
+                <h6 class="center">Category <br> Type</h6>
+                <select class="v-select center select_font" v-model="category" @change="get_bikes">
                     <option value="" disabled selected>Choose a Category</option>
                     <option value="All">All</option>
                     <option value="Off-Road">Off-Road</option>
@@ -155,8 +164,8 @@
             </div>
 
             <div class="col s2 select_font input-field">
-                <h6 class="center">Engine</h6>
-                <select class="v-select center" v-model="engine_type" @change="get_bikes">
+                <h6 class="center">Engine <br> Type</h6>
+                <select class="v-select center select_font" v-model="engine_type" @change="get_bikes">
                     <option value="" disabled selected>Choose an Engine Type</option>
                     <option>All</option>
                     <option value="Two-stroke">Two-stroke</option>
@@ -165,8 +174,8 @@
                 </select>
             </div>
             <div class="col s2 select_font input-field">
-                <h6 class="center">Starter</h6>
-                <select class="v-select center" v-model="starter" @change="get_bikes">
+                <h6 class="center">Starter <br> Type</h6>
+                <select class="v-select center select_font" v-model="starter" @change="get_bikes">
                     <option value="" disabled selected>Choose a Starter Type</option>
                     <option>All</option>
                     <option value="Kick">Kick</option>
@@ -174,10 +183,10 @@
                 </select>
             </div>
             <div class="col s2 select_font input-field">
-                <h6 class="center">Min. CC</h6>
-                <select class="v-select center" v-model="min_cc" @change="get_bikes">
+                <h6 class="center">Minimum <br> CC</h6>
+                <select class="v-select center select_font" v-model="min_cc" @change="get_bikes">
                     <option value="" disabled selected>Choose a Min. CC</option>
-                    <option>All</option>
+                    <option value="0">All</option>
                     <option value="100">100 CC</option>
                     <option value="200">200 CC</option>
                     <option value="300">300 CC</option>
@@ -188,26 +197,26 @@
                 </select>
             </div>
             <div class="col s2 select_font input-field">
-                <h6 class="center">Min. Year</h6>
-                <select class="v-select center" v-model="min_year" @change="get_bikes">
+                <h6 class="center">Minimum <br> Year</h6>
+                <select class="v-select center select_font" v-model="min_year" @change="get_bikes">
                     <option value="" disabled selected>Choose a Min. Year</option>
-                    <option>All</option>
+                    <option value="0">All</option>
                     <option value="2004">2004</option>
-                    <option value="2005">2004</option>
-                    <option value="2006">2004</option>
-                    <option value="2007">2004</option>
-                    <option value="2008">2004</option>
-                    <option value="2009">2004</option>
-                    <option value="2010">2004</option>
-                    <option value="2011">2004</option>
-                    <option value="2012">2004</option>
-                    <option value="2013">2004</option>
-                    <option value="2014">2004</option>
-                    <option value="2015">2004</option>
-                    <option value="2016">2004</option>
-                    <option value="2017">2004</option>
-                    <option value="2018">2004</option>
-                    <option value="2019">2004</option>
+                    <option value="2005">2005</option>
+                    <option value="2006">2006</option>
+                    <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
                 </select>
             </div>
         </div>
@@ -327,8 +336,8 @@
                 engine_type: 'All',
                 category: 'All',
                 starter: 'All',
-                min_cc: 'All',
-                min_year: 'All',
+                min_cc: '0',
+                min_year: '0',
 
                 show_welcome: true,
 
@@ -386,9 +395,8 @@
                         filters_dict['category'] = app.category
                     }
 
-                   filters_dict['displacement__gte'] = app.min_cc
-                   filters_dict['year__gte'] = app.min_year
-
+                    filters_dict['displacement__gte'] = app.min_cc
+                    filters_dict['year__gte'] = app.min_year
 
 
                     console.log(filters_dict)
