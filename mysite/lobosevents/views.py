@@ -10,12 +10,13 @@ from django.core.mail import send_mail
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the lobos registration page.")
+    return render(request, 'lobosevents/event_registration.html')
 
 
 # @login_required
 def event_registration(request):
-    pass
+    return render(request, 'lobosevents/event_registration.html')
+
     # todo_text = request.POST['todo_item_id_key_in_template']
     # todo_item = TodoItem.objects.get(pk=todo_text)
     # todo_item.delete()

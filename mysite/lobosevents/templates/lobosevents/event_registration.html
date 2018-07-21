@@ -378,13 +378,6 @@
 
         </div>
     </div>
-
-    <br>----------------------------------------------------
-    <br>This shows the data that will go to the database
-    <br>----------------------------------------------------
-    <div style="font-size: 25px" v-for="(value,key) of form">
-        <span style='background-color: yellow'>{{key}}: </span><span style="background-color: green">{{ value }}</span>
-    </div>
 </div>
 
 <script>
@@ -398,7 +391,7 @@
                 birth_year: '',
                 birth_month: '',
                 birth_day: '',
-                birth_date: 'This will be year/month/day', //this.birth_year + '/' + this.birth_month +'/'+ this.birth_day
+                birth_date: 'This will be year/month/day', //this.birth_year.toString() + '/' + this.birth_month.toString() +'/'+ this.birth_day.toString()
                 email: '',
                 phone: '',
                 country: '',
