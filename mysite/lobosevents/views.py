@@ -13,6 +13,24 @@ def index(request):
     return render(request, 'lobosevents/event_registration.html')
 
 
+def heroes(request):
+    return render(request, 'lobosevents/heroes_changelist.html')
+
+
+def cancelorder(request):
+    return render(request, 'lobosevents/cancelorder.html')
+
+
+def event_reg_confirmation(request):
+    return render(request, 'lobosevents/event_reg_confirmation.html')
+
+
+def profile(request):
+    return render(request, 'lobosevents/profile.html')
+
+
+
+
 # @login_required
 def event_registration(request):
     return render(request, 'lobosevents/event_registration.html')
@@ -26,9 +44,6 @@ def event_registration(request):
     #
     # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
-def profile(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('lobosevents:profile'))
 
 @check_recaptcha
 def register(request):
