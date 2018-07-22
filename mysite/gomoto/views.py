@@ -4,7 +4,7 @@ from statistics import *
 from datetime import time
 from cmath import sqrt
 from collections import OrderedDict
-import json, numpy, importlib, datetime, operator
+import json, importlib, datetime, operator
 from django.db.models import Avg, Max, Min, Sum
 from .models import Bike
 
