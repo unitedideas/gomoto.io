@@ -29,7 +29,6 @@ def get_bikes(request):
     bikes = Bike.objects.all()
 
 
-
     # This gives me all bikes
     print(filters_dict)
     bikes = bikes.filter(**filters_dict)
