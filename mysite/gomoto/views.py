@@ -26,6 +26,7 @@ def get_bikes(request):
     response_dictionary = {}
 
 
+
     bikes = Bike.objects.all()
 
 
