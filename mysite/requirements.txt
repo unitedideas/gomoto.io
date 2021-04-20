@@ -86,7 +86,7 @@ proto-google-cloud-error-reporting-v1beta1==0.15.3
 proto-google-cloud-logging-v2==0.91.3
 protobuf==3.5.1
 psutil==5.4.6
-py==1.5.2
+py==1.10.0
 pyasn1==0.4.3
 pyasn1-modules==0.2.2
 pycparser==2.18
