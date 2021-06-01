@@ -121,7 +121,7 @@ Twisted==17.9.0
 txaio==2.8.2
 ujson==1.35
 unicodecsv==0.14.1
-urllib3==1.22
+urllib3==1.26.5
 virtualenv==16.0.0
 virtualenv-clone==0.2.6
 wcwidth==0.1.7
